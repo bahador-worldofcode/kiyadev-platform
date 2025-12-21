@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# --- PRIVATE & INTERNAL FILES (DO NOT UPLOAD) ---
+KiyaDev_Strategy.md
+project_structure_with_content.txt
+project_structure.txt
+project_tree_with_content.py
+project_tree.py
+run_tree_with_content.bat
+run_tree.bat
