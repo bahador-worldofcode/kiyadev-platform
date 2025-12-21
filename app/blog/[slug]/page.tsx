@@ -15,7 +15,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
       <article className="min-h-screen bg-[#020202] text-white pb-32 relative overflow-x-hidden selection:bg-blue-500/30">
         
         {/* Background Layers */}
-        <div className="fixed inset-0 bg-[url('/noise.png')] opacity-[0.02] pointer-events-none" />
+        <div className="fixed inset-0 bg-[url('/noise.svg')] opacity-[0.02] pointer-events-none" />
         <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-blue-900/10 to-transparent opacity-60" />
 
         <div className="container mx-auto max-w-5xl px-4 relative z-10 pt-16">

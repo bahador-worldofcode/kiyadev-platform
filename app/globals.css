@@ -1,1 +1,5 @@
 @import "tailwindcss";
+/* افکت نئونی برای گرید */
+.bg-grid-pattern {
+  mask-image: linear-gradient(to bottom, transparent, 10%, white, 90%, transparent);
+}
