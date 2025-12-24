@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, Send, MessageCircle, Code2, Heart } from "lucide-react";
+import { Phone, Send, MessageCircle, Code2, Heart, Library } from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -81,11 +82,23 @@ export default function Footer() {
         {/* بخش پایین: اطلاعات و کپی‌رایت */}
         <div className="grid gap-8 md:grid-cols-2 items-end">
           
-          {/* توضیحات برند (برگشت داده شد) */}
+          {/* توضیحات برند */}
           <div className="text-center md:text-right space-y-4">
-            <h3 className="text-2xl font-bold text-white tracking-wider">
-              Kiya<span className="text-blue-500">Dev</span>
-            </h3>
+            <div className="flex items-center justify-center md:justify-start gap-4">
+              <h3 className="text-2xl font-bold text-white tracking-wider">
+                Kiya<span className="text-blue-500">Dev</span>
+              </h3>
+              
+              {/* لینک پارتنرها - دقیقا مشابه تیوآن */}
+              <Link 
+                href="/partners" 
+                title="Partners & Projects"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition-all opacity-70 hover:opacity-100"
+              >
+                <Library className="w-4 h-4" />
+              </Link>
+            </div>
+
             <p className="text-sm leading-7 text-gray-400 max-w-md mx-auto md:mx-0">
               ما یک تیم دانشجویی پیشرو هستیم که با استفاده از تکنولوژی‌های لبه دانش (Next.js, AI, Blockchain) کسب‌وکار شما را متحول می‌کنیم. هدف ما ارائه کیفیت جهانی با قیمت منطقی است.
             </p>
