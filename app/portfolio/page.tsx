@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image"; // اضافه شده
 import { 
   ArrowRight, ExternalLink, Layers, 
   Cpu, Database, Globe, Zap, ShieldCheck, 
@@ -11,13 +12,13 @@ import {
 import { projects } from "@/lib/data"; 
 
 const categories = ["All", "Web3", "SaaS", "PWA", "AI"];
-
 const methodologyData = [
   {
     title: "مهندسی نرم‌افزار و معماری سیستم (Software Architecture)",
     icon: Database,
     description: `
-      در کیا دِو، هیچ پروژه‌ای بدون طراحی معماری دقیق شروع نمی‌شود. تمام نمونه‌کارهایی که در بالا مشاهده می‌کنید، حاصل ساعت‌ها تحلیل نیازمندی‌ها و طراحی UML است.
+      در کیا دِو، هیچ پروژه‌ای بدون طراحی معماری دقیق شروع نمی‌شود.
+      تمام نمونه‌کارهایی که در بالا مشاهده می‌کنید، حاصل ساعت‌ها تحلیل نیازمندی‌ها و طراحی UML است.
       ما برای پروژه‌های بزرگ (Scale-Up) از معماری میکروسرویس (Microservices) استفاده می‌کنیم تا اجزای سیستم مستقل عمل کنند.
       برای دیتابیس، اصول نرمال‌سازی (Normalization) تا سطح 3NF رعایت می‌شود تا افزونگی داده به صفر برسد.
       کدهای ما بر اساس اصول SOLID و Clean Architecture نوشته می‌شوند، بنابراین اگر روزی بخواهید فیچر جدیدی اضافه کنید، سیستم دچار فروپاشی نمی‌شود.
@@ -27,8 +28,10 @@ const methodologyData = [
     title: "توسعه فرانت‌اند با Next.js و تکنولوژی‌های لبه دانش",
     icon: Globe,
     description: `
-      چرا سایت‌های ما متفاوت هستند؟ چون ما از قالب آماده استفاده نمی‌کنیم. تمام پروژه‌های بالا با فریم‌ورک Next.js (نسخه ۱۵ به بالا) و React توسعه داده شده‌اند.
-      استفاده از تکنولوژی SSR (Server Side Rendering) باعث می‌شود محتوای سایت شما قبل از رسیدن به مرورگر کاربر، در سرور ساخته شود؛ این یعنی گوگل عاشق سایت شما خواهد شد.
+      چرا سایت‌های ما متفاوت هستند؟
+      چون ما از قالب آماده استفاده نمی‌کنیم. تمام پروژه‌های بالا با فریم‌ورک Next.js (نسخه ۱۵ به بالا) و React توسعه داده شده‌اند.
+      استفاده از تکنولوژی SSR (Server Side Rendering) باعث می‌شود محتوای سایت شما قبل از رسیدن به مرورگر کاربر، در سرور ساخته شود؛
+      این یعنی گوگل عاشق سایت شما خواهد شد.
       ما از Tailwind CSS برای استایل‌دهی استفاده می‌کنیم که حجم فایل‌های CSS را به کمتر از ۱۰ کیلوبایت می‌رساند.
       تمام انیمیشن‌ها با Framer Motion و به صورت سخت‌افزاری (GPU Accelerated) اجرا می‌شوند تا حس نرم بودن (Smoothness) را به کاربر منتقل کنند.
     `
@@ -37,7 +40,8 @@ const methodologyData = [
     title: "بهینه‌سازی عملکرد و سرعت لود (Core Web Vitals)",
     icon: Zap,
     description: `
-      سرعت، ویژگی رقابتی ماست. در تمام پروژه‌های کیا دِو، ما متریک‌های حیاتی گوگل (LCP, FID, CLS) را بهینه می‌کنیم.
+      سرعت، ویژگی رقابتی ماست.
+      در تمام پروژه‌های کیا دِو، ما متریک‌های حیاتی گوگل (LCP, FID, CLS) را بهینه می‌کنیم.
       تصاویر به صورت خودکار به فرمت WebP تبدیل می‌شوند. فونت‌ها به صورت لوکال و با تکنیک pre-load بارگذاری می‌شوند.
       ما از تکنیک‌های Code Splitting و Lazy Loading استفاده می‌کنیم تا کاربر در بازدید اول، فقط کدهای همان صفحه را دانلود کند، نه کل سایت را.
       نتیجه؟ لود شدن سایت در کمتر از ۱ ثانیه حتی با اینترنت موبایل.
@@ -47,7 +51,8 @@ const methodologyData = [
     title: "رابط کاربری و تجربه کاربری (UI/UX Design)",
     icon: Layout,
     description: `
-      کد خوب بدون ظاهر خوب، دیده نمی‌شود. فرآیند طراحی ما در Figma شروع می‌شود.
+      کد خوب بدون ظاهر خوب، دیده نمی‌شود.
+      فرآیند طراحی ما در Figma شروع می‌شود.
       ما بر اساس روانشناسی رنگ‌ها و رفتار کاربر (User Behavior)، وایرفریم‌ها و پروتوتایپ‌ها را طراحی می‌کنیم.
       رعایت اصول دسترسی‌پذیری (Accessibility) برای ما یک الزام است تا سایت توسط همه افراد قابل استفاده باشد.
       طراحی‌های ما "موبایل-فرست" (Mobile-First) هستند؛ یعنی سایت شما در گوشی موبایل حتی بهتر از دسکتاپ نمایش داده می‌شود.
@@ -57,7 +62,8 @@ const methodologyData = [
     title: "امنیت سایبری و حفاظت از داده‌ها",
     icon: ShieldCheck,
     description: `
-      امنیت در کیا دِو یک آپشن نیست، یک ضرورت است. تمام درخواست‌های API با توکن‌های JWT و پروتکل OAuth2 ایمن‌سازی می‌شوند.
+      امنیت در کیا دِو یک آپشن نیست، یک ضرورت است.
+      تمام درخواست‌های API با توکن‌های JWT و پروتکل OAuth2 ایمن‌سازی می‌شوند.
       ما جلوی حملات رایج مثل SQL Injection، XSS و CSRF را در لایه کد می‌گیریم.
       اطلاعات حساس کاربران (مثل رمز عبور) با الگوریتم‌های هشینگ پیشرفته (Bcrypt/Argon2) رمزنگاری می‌شوند.
       سرورهای ما مجهز به فایروال‌های لایه اپلیکیشن (WAF) هستند تا در برابر حملات DDoS مقاوم باشند.
@@ -67,7 +73,8 @@ const methodologyData = [
     title: "سئو تکنیکال و ساختار معنایی (Semantic SEO)",
     icon: Search,
     description: `
-      نوشتن کد تمیز کافی نیست، کد باید توسط گوگل فهمیده شود. ما از تگ‌های HTML5 معنایی (Semantic Tags) استفاده می‌کنیم (Header, Main, Article, Aside).
+      نوشتن کد تمیز کافی نیست، کد باید توسط گوگل فهمیده شود.
+      ما از تگ‌های HTML5 معنایی (Semantic Tags) استفاده می‌کنیم (Header, Main, Article, Aside).
       تمام صفحات دارای متاتگ‌های داینامیک و اسکیما مارک‌آپ (Schema Markup) جیسون (JSON-LD) هستند.
       ساختار URLها استاندارد و Human-readable است.
       ما نقشه سایت (Sitemap.xml) و فایل Robots.txt را به صورت خودکار و دقیق تولید می‌کنیم تا خزنده‌های گوگل هیچ صفحه‌ای را از قلم نیندازند.
@@ -77,7 +84,8 @@ const methodologyData = [
     title: "تست‌نویسی و تضمین کیفیت (QA & Testing)",
     icon: Cpu,
     description: `
-      ما باگ‌ها را قبل از مشتری پیدا می‌کنیم. پروژه‌های کیا دِو دارای تست‌های خودکار (Unit Tests & Integration Tests) هستند.
+      ما باگ‌ها را قبل از مشتری پیدا می‌کنیم.
+      پروژه‌های کیا دِو دارای تست‌های خودکار (Unit Tests & Integration Tests) هستند.
       ما از ابزارهایی مثل Jest و Cypress برای شبیه‌سازی رفتار کاربر استفاده می‌کنیم.
       هیچ کدی بدون پاس کردن تست‌ها وارد نسخه اصلی (Production) نمی‌شود. این یعنی پایداری صد در صدی نرم‌افزار شما.
     `
@@ -86,7 +94,8 @@ const methodologyData = [
     title: "استقرار و پشتیبانی (DevOps & Deployment)",
     icon: Rocket,
     description: `
-      پایان کدنویسی، شروع تعهد ماست. ما پروژه‌ها را روی زیرساخت‌های ابری مدرن (مثل Vercel یا سرورهای لینوکس اختصاصی) مستقر می‌کنیم.
+      پایان کدنویسی، شروع تعهد ماست.
+      ما پروژه‌ها را روی زیرساخت‌های ابری مدرن (مثل Vercel یا سرورهای لینوکس اختصاصی) مستقر می‌کنیم.
       سیستم‌های مانیتورینگ لحظه‌ای (Real-time Monitoring) راه‌اندازی می‌شوند تا در صورت بروز هرگونه خطا، تیم فنی بلافاصله مطلع شود.
       پایپ‌لاین‌های CI/CD ما باعث می‌شوند که آپدیت‌های جدید سایت شما تنها با یک کلیک و بدون حتی یک لحظه قطعی (Zero Downtime) اعمال شوند.
     `
@@ -123,14 +132,14 @@ export default function PortfolioPage() {
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-300 max-w-4xl leading-relaxed md:leading-normal">
-                مجموعه‌ای از بهترین آثار مهندسی شده توسط تیم <strong>کیا دِو</strong>. 
+                مجموعه‌ای از بهترین آثار مهندسی شده توسط تیم <strong>کیا دِو</strong>.
                 اینجا جایی است که خطوط کد به اثر هنری تبدیل می‌شوند و ایده‌ها جان می‌گیرند.
             </p>
         </div>
       </div>
 
       {/* ---------------------------------------------------------- */}
-      {/* FILTER TABS (STATIC - FIXED ISSUE) */}
+      {/* FILTER TABS */}
       {/* ---------------------------------------------------------- */}
       <div className="container mx-auto max-w-6xl px-6 mb-12">
         <div className="flex flex-wrap items-center gap-3">
@@ -169,12 +178,27 @@ export default function PortfolioPage() {
                         key={project.id}
                         className="group relative rounded-3xl bg-[#0a0a0a] border border-white/10 overflow-hidden hover:border-blue-500/50 transition-all duration-300 flex flex-col"
                     >
-                        <div className={`h-56 w-full bg-gradient-to-br ${project.gradient} relative p-6 flex items-end overflow-hidden`}>
-                             <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
-                             {/* Decorative circles */}
-                             <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/20 blur-2xl rounded-full" />
+                        {/* بخش تصویر پروژه */}
+                        <div className={`h-56 w-full relative p-6 flex items-end overflow-hidden ${project.image ? 'bg-black' : `bg-gradient-to-br ${project.gradient}`}`}>
                              
-                             <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-mono border border-white/10 text-white font-bold">
+                             {/* اگر عکس داشت نشان بده */}
+                             {project.image && (
+                                <Image 
+                                    src={project.image} 
+                                    alt={project.title} 
+                                    fill 
+                                    className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                                />
+                             )}
+
+                             <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+                             
+                             {/* اگر عکس نداشت، دایره تزئینی را نشان بده */}
+                             {!project.image && (
+                                <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/20 blur-2xl rounded-full" />
+                             )}
+                             
+                             <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-mono border border-white/10 text-white font-bold z-10">
                                 {project.category}
                              </div>
                         </div>
@@ -194,9 +218,14 @@ export default function PortfolioPage() {
                             </div>
 
                             <div className="mt-auto">
-                                <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-gray-200 transition-colors shadow-lg shadow-white/5">
+                                <a 
+                                    href={project.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full flex items-center justify-center gap-2 bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-gray-200 transition-colors shadow-lg shadow-white/5"
+                                >
                                     <ExternalLink size={16} /> مشاهده دمو
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </motion.div>
@@ -225,7 +254,8 @@ export default function PortfolioPage() {
                    پشت پرده <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400">فناوری‌های کیا دِو</span>
                 </h2>
                 <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
-                    ما فقط کد نمی‌نویسیم؛ ما راهکارهای دیجیتال را مهندسی می‌کنیم. 
+                   ما فقط کد نمی‌نویسیم؛
+                   ما راهکارهای دیجیتال را مهندسی می‌کنیم. 
                     در این بخش بخوانید که پروژه‌های بالا چگونه با استانداردهای جهانی ساخته شده‌اند و چرا گوگل و کاربران عاشق آن‌ها هستند.
                 </p>
             </div>

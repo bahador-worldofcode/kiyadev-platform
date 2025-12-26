@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, ExternalLink } from "lucide-react"; // آیکون گیت‌هاب حذف شد
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { projects } from "@/lib/data"; // خواندن از دیتای مرکزی
+import Image from "next/image"; // <--- این خط طلایی اضافه شد
+import { projects } from "@/lib/data";
 
 export default function Portfolio() {
   // نمایش تنها ۳ پروژه اول در صفحه اصلی
@@ -45,10 +46,26 @@ export default function Portfolio() {
               transition={{ delay: index * 0.2 }}
               className="group relative rounded-3xl bg-white/5 border border-white/10 overflow-hidden hover:border-white/20 transition-all duration-500 hover:-translate-y-2 flex flex-col"
             >
-              {/* تصویر گرادینت */}
-              <div className={`h-48 w-full bg-gradient-to-br ${project.gradient} relative overflow-hidden flex items-end p-4`}>
+              {/* بخش تصویر یا گرادینت */}
+              <div className={`h-48 w-full relative overflow-hidden flex items-end p-4 ${project.image ? 'bg-black' : `bg-gradient-to-br ${project.gradient}`}`}>
+                
+                {/* حالت ۱: اگر پروژه عکس داشت */}
+                {project.image && (
+                   <Image 
+                     src={project.image} 
+                     alt={project.title} 
+                     fill 
+                     className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                   />
+                )}
+
+                {/* حالت ۲: اگر پروژه عکس نداشت (نمایش افکت‌های نوری قبلی) */}
+                {!project.image && (
+                   <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/20 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700" />
+                )}
+                
+                {/* لایه تاریک روی عکس برای خوانایی متن روی آن */}
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-                <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/20 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700" />
                 
                 {/* دسته‌بندی روی تصویر */}
                 <div className="relative z-10 bg-black/40 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-mono border border-white/10 text-white font-bold">
@@ -75,12 +92,17 @@ export default function Portfolio() {
                   ))}
                 </div>
 
-                {/* دکمه تکی و تمام عرض */}
+                {/* دکمه */}
                 <div className="mt-auto pt-6 border-t border-white/5">
-                  <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-gray-200 transition-colors shadow-lg shadow-white/5">
+                  <a 
+                    href={project.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-gray-200 transition-colors shadow-lg shadow-white/5"
+                  >
                     <ExternalLink className="w-4 h-4" />
                     مشاهده دمو
-                  </button>
+                  </a>
                 </div>
               </div>
             </motion.div>
