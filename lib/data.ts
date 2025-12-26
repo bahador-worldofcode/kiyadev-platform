@@ -1,13 +1,13 @@
 export const projects = [
   {
     id: 1,
-    title: "Vira Exchange",
+    title: "Tivan Ex (صرافی تیوان اکس)", // <--- نام جدید جایگزین شد
     category: "Web3",
-    description: "یک صرافی غیرمتمرکز با قابلیت اتصال به متامسک، نمودارهای لحظه‌ای تریدینگ ویو و هسته معاملاتی فوق سریع.",
-    tags: ["Next.js", "Solidity", "Web3.js", "Tailwind"],
+    description: "پلتفرم معاملاتی رمزارز با موتور مچینگ اختصاصی (۱۰۰k تراکنش در ثانیه)، نمودارهای تریدینگ ویو، احراز هویت هوشمند AI و امنیت کیف پول سرد.",
+    tags: ["Next.js", "TypeScript", "Tailwind", "Web3"],
     gradient: "from-yellow-400 via-orange-500 to-red-500",
-    image: null,
-    link: "#",
+    image: "/projects/tivan-ex.png", // <--- عکس جدید
+    link: "https://tivan-ex.vercel.app/", // <--- لینک جدید
     github: "#"
   },
   {
@@ -17,8 +17,8 @@ export const projects = [
     description: "داشبورد جامع مدیریت منابع انسانی با قابلیت گزارش‌گیری پیشرفته، چارت‌های تعاملی و حالت دارک‌مود اختصاصی.",
     tags: ["React", "TypeScript", "Recharts", "Supabase"],
     gradient: "from-blue-400 via-indigo-500 to-purple-600",
-    image: "/projects/alpha-dashboard.png", // <--- عکس جدید ست شد
-    link: "https://alpha-system-eight.vercel.app/", // <--- لینک جدید ست شد
+    image: "/projects/alpha-dashboard.png",
+    link: "https://alpha-system-eight.vercel.app/",
     github: "#"
   },
   {
@@ -39,7 +39,7 @@ export const projects = [
     description: "چت‌بات هوشمند فارسی مبتنی بر GPT-4 با قابلیت یادگیری مکالمات و پاسخگویی تخصصی.",
     tags: ["Python", "FastAPI", "OpenAI", "React"],
     gradient: "from-pink-500 via-rose-500 to-yellow-500",
-    image: null,
+    image: null, // فقط این مانده
     link: "#",
     github: "#"
   },
