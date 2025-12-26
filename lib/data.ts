@@ -1,4 +1,5 @@
 export const projects = [
+  // --- ۳ پروژه اول (نمایش در صفحه اصلی + آرشیو) ---
   {
     id: 1,
     title: "Tivan Ex (صرافی تیوان اکس)",
@@ -32,15 +33,39 @@ export const projects = [
     link: "https://luxe-shop-ten.vercel.app/",
     github: "#"
   },
+  
+  // --- پروژه‌های بعدی (نمایش فقط در آرشیو Portfolio) ---
   {
     id: 4,
-    title: "MindOrbit AI (دستیار هوشمند)", // <--- نام جدید
+    title: "MindOrbit AI (دستیار هوشمند)",
     category: "AI",
-    description: "دستیار هوشمند با رابط کاربری چت (Chat UI)، قابلیت ایده‌پردازی، تولید محتوا و کدنویسی. متصل به مدل‌های زبانی پیشرفته.", // <--- توضیحات جدید
-    tags: ["Next.js", "OpenAI API", "Tailwind", "React"], // <--- تکنولوژی‌ها
+    description: "دستیار هوشمند با رابط کاربری چت (Chat UI)، قابلیت ایده‌پردازی، تولید محتوا و کدنویسی. متصل به مدل‌های زبانی پیشرفته.",
+    tags: ["Next.js", "OpenAI API", "Tailwind", "React"],
     gradient: "from-pink-500 via-rose-500 to-yellow-500",
-    image: "/projects/mind-orbit.png", // <--- عکس جدید
-    link: "https://mind-orbit-lyart.vercel.app/", // <--- لینک جدید
+    image: "/projects/mind-orbit.png",
+    link: "https://mind-orbit-lyart.vercel.app/",
     github: "#"
   },
+  {
+    id: 5,
+    title: "Coconut (فروشگاه کوکونات)",
+    category: "StartUp", // دسته‌بندی استارتاپ
+    description: "مارکت‌پلیس هایپرلوکال برای خرید آنلاین میوه و پروتئین در شهر پرند. با قابلیت انبارداری هوشمند و ارسال فوری.",
+    tags: ["Next.js", "TypeScript", "PWA", "Leaflet Map"],
+    gradient: "from-green-500 via-emerald-500 to-lime-500",
+    image: "/projects/coconut.png", // عکس کوکونات
+    link: "https://www.cocodelivery.ir/",
+    github: "#"
+  },
+  {
+    id: 6,
+    title: "Soughat Shop (سوغات شاپ)",
+    category: "Fintech", // دسته‌بندی فین‌تک/کریپتو
+    description: "اولین پلتفرم ارسال هدیه به ایران با پرداخت ارزی و کریپتو (Tether/Solana). پل ارتباطی ایرانیان خارج از کشور.",
+    tags: ["Next.js", "Blockchain Payment", "Solana", "E-Commerce"],
+    gradient: "from-rose-500 via-pink-600 to-purple-600",
+    image: "/projects/soughat-shop.png", // عکس سوغات شاپ
+    link: "https://soughat.shop/",
+    github: "#"
+  }
 ];
