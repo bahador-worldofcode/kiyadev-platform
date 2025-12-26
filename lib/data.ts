@@ -1,13 +1,13 @@
 export const projects = [
   {
     id: 1,
-    title: "Tivan Ex (صرافی تیوان اکس)", // <--- نام جدید جایگزین شد
+    title: "Tivan Ex (صرافی تیوان اکس)",
     category: "Web3",
     description: "پلتفرم معاملاتی رمزارز با موتور مچینگ اختصاصی (۱۰۰k تراکنش در ثانیه)، نمودارهای تریدینگ ویو، احراز هویت هوشمند AI و امنیت کیف پول سرد.",
     tags: ["Next.js", "TypeScript", "Tailwind", "Web3"],
     gradient: "from-yellow-400 via-orange-500 to-red-500",
-    image: "/projects/tivan-ex.png", // <--- عکس جدید
-    link: "https://tivan-ex.vercel.app/", // <--- لینک جدید
+    image: "/projects/tivan-ex.png",
+    link: "https://tivan-ex.vercel.app/",
     github: "#"
   },
   {
@@ -34,13 +34,13 @@ export const projects = [
   },
   {
     id: 4,
-    title: "Kiya AI Chat",
+    title: "MindOrbit AI (دستیار هوشمند)", // <--- نام جدید
     category: "AI",
-    description: "چت‌بات هوشمند فارسی مبتنی بر GPT-4 با قابلیت یادگیری مکالمات و پاسخگویی تخصصی.",
-    tags: ["Python", "FastAPI", "OpenAI", "React"],
+    description: "دستیار هوشمند با رابط کاربری چت (Chat UI)، قابلیت ایده‌پردازی، تولید محتوا و کدنویسی. متصل به مدل‌های زبانی پیشرفته.", // <--- توضیحات جدید
+    tags: ["Next.js", "OpenAI API", "Tailwind", "React"], // <--- تکنولوژی‌ها
     gradient: "from-pink-500 via-rose-500 to-yellow-500",
-    image: null, // فقط این مانده
-    link: "#",
+    image: "/projects/mind-orbit.png", // <--- عکس جدید
+    link: "https://mind-orbit-lyart.vercel.app/", // <--- لینک جدید
     github: "#"
   },
 ];
