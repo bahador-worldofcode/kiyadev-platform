@@ -1,26 +1,90 @@
+// C:\projects\KiyaDev\kiyadev-platform\app\partners\page.tsx
+
 "use client";
 
-import { ExternalLink, Globe, Code2, ShoppingBag, Truck, Gem, Briefcase, Network, Bitcoin } from "lucide-react";
+import { 
+  ExternalLink, 
+  ShoppingBag, 
+  Truck, 
+  Gem, 
+  Briefcase, 
+  Network, 
+  Bitcoin, 
+  ArrowRight,
+  Zap,             // برای Nexus Solana
+  Bot,             // برای Mind Orbit
+  LayoutDashboard, // برای Alpha System
+  Shirt            // برای Luxe Shop
+} from "lucide-react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
-// لیست پروژه‌ها
+// لیست کامل ۸ همکار تجاری و پروژه
 const partners = [
+  // 1. Tivan Ex
   {
     id: 1,
-    title: "صرافی تیوان اکس",
-    description: "تیوان اکس، پیشرو در ارائه خدمات نوین بلاک‌چین در ایران. ما با بهره‌گیری از تکنولوژی‌های امنیتی روز دنیا و ذخیره‌سازی سرد، دارایی شما را تضمین می‌کنیم.",
+    title: "صرافی تیوان اکس | TivanEx",
+    description: "پلتفرم معاملاتی نسل ۳ با امنیت سایبری در کلاس جهانی. خرید و فروش آنی بیت‌کوین و تتر با موتور مچینگ فراصوت و کیف پول سرد.",
     features: ["بلاکچین و Web3", "امنیت بانکی", "تراکنش آنی"],
-    url: "https://alpha-system-eight.vercel.app", 
+    url: "https://tivan-ex.vercel.app", 
     icon: Bitcoin,
     color: "text-emerald-400",
     borderColor: "group-hover:border-emerald-500/50",
     glow: "group-hover:shadow-emerald-500/20"
   },
+  // 2. Nexus Solana
   {
     id: 2,
+    title: "نکسوس سولانا | توکن‌ساز",
+    description: "اولین پلتفرم No-Code ساخت توکن روی شبکه سولانا. ایجاد ارز دیجیتال شخصی و میم‌کوین در کمتر از ۱ دقیقه با هزینه ناچیز و امنیت بلاکچینی.",
+    features: ["ساخت توکن SPL", "شبکه پرسرعت سولانا", "بدون کدنویسی"],
+    url: "https://nexus-solana-taupe.vercel.app",
+    icon: Zap,
+    color: "text-fuchsia-400", 
+    borderColor: "group-hover:border-fuchsia-500/50",
+    glow: "group-hover:shadow-fuchsia-500/20"
+  },
+  // 3. Mind Orbit
+  {
+    id: 3,
+    title: "مایند اوربیت | هوش مصنوعی",
+    description: "دستیار هوشمند مبتنی بر مدل‌های پیشرفته زبانی (LLM). پاسخگویی به سوالات، تولید محتوا، کدنویسی و حل مسائل پیچیده با پشتیبانی کامل فارسی.",
+    features: ["چت‌بات هوشمند", "تولید محتوا و کد", "مدل زبانی Gemini"],
+    url: "https://mind-orbit-lyart.vercel.app",
+    icon: Bot,
+    color: "text-cyan-400",
+    borderColor: "group-hover:border-cyan-500/50",
+    glow: "group-hover:shadow-cyan-500/20"
+  },
+  // 4. Alpha System
+  {
+    id: 4,
+    title: "آلفا سیستم | داشبورد مدیریتی",
+    description: "سامانه جامع مدیریت منابع سازمانی (ERP). مدیریت هوشمند پرسنل، حقوق و دستمزد، و کنترل پروژه‌ها با ابزارهای بصری و نمودارهای تحلیلی.",
+    features: ["پنل مدیریت ERP", "مدیریت پروژه‌ها (Kanban)", "تحلیل داده‌ها"],
+    url: "https://alpha-system-eight.vercel.app",
+    icon: LayoutDashboard,
+    color: "text-orange-400",
+    borderColor: "group-hover:border-orange-500/50",
+    glow: "group-hover:shadow-orange-500/20"
+  },
+  // 5. Luxe Shop
+  {
+    id: 5,
+    title: "لوکس شاپ | استایل و مد",
+    description: "فروشگاه اینترنتی مدرن پوشاک و اکسسوری. تجربه خریدی لوکس با رابط کاربری مینیمال، سبد خرید هوشمند و فرآیند پرداخت آسان.",
+    features: ["فروشگاه آنلاین مدرن", "مد و فشن", "تجربه کاربری عالی"],
+    url: "https://luxe-shop-ten.vercel.app",
+    icon: Shirt,
+    color: "text-amber-400",
+    borderColor: "group-hover:border-amber-500/50",
+    glow: "group-hover:shadow-amber-500/20"
+  },
+  // 6. Coconut
+  {
+    id: 6,
     title: "فروشگاه آنلاین کوکونات",
-    description: "بازار آنلاین میوه و پروتئین شهر پرند. خرید آنلاین تازه‌ترین محصولات با تحویل فوری درب منزل. تجربه‌ای راحت و سریع.",
+    description: "بازار آنلاین میوه و پروتئین شهر پرند. خرید آنلاین تازه‌ترین محصولات با تحویل فوری درب منزل. تجربه‌ای راحت و سریع برای شهروندان.",
     features: ["مارکت‌پلیس محلی", "لجستیک هوشمند", "تحویل فوری"],
     url: "https://cocodelivery.ir", 
     icon: Truck,
@@ -28,8 +92,9 @@ const partners = [
     borderColor: "group-hover:border-green-500/50",
     glow: "group-hover:shadow-green-500/20"
   },
+  // 7. Alef Gem
   {
-    id: 3,
+    id: 7,
     title: "گالری جواهرات اَلِف جِم",
     description: "طراحی و ساخت جواهرات دست‌ساز با طلای ۱۸ عیار و سنگ‌های قیمتی اصل. ترکیب هنر مینیمال و مدرن برای خلق آثار ماندگار.",
     features: ["لوکس و فشن", "سنگ‌های قیمتی", "طراحی اختصاصی"],
@@ -39,8 +104,9 @@ const partners = [
     borderColor: "group-hover:border-purple-500/50",
     glow: "group-hover:shadow-purple-500/20"
   },
+  // 8. Soughat Shop
   {
-    id: 4,
+    id: 8,
     title: "سوغات شاپ اینترنشنال",
     description: "اولین پلتفرم ارسال هدیه به ایران با پرداخت ارزی و کریپتو. پل ارتباطی ایرانیان خارج از کشور با عزیزانشان.",
     features: ["پرداخت کریپتو", "فین‌تک فرامرزی", "E-Commerce"],
@@ -57,9 +123,9 @@ export default function PartnersPage() {
     <div className="min-h-screen bg-slate-950 pt-24 pb-10 px-4 sm:px-8 relative overflow-hidden">
       
       {/* بک‌گراند نوری */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
       
-      <div className="container mx-auto max-w-5xl">
+      <div className="container mx-auto max-w-6xl">
         
         {/* هدر صفحه */}
         <div className="mb-12">
@@ -68,16 +134,16 @@ export default function PartnersPage() {
                 بازگشت به خانه
             </Link>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-3">
-                <Network className="text-emerald-500" />
-                شبکه همکاران تجاری
+                <Network className="text-blue-500" />
+                شبکه پروژه‌ها و همکاران
             </h1>
             <p className="text-slate-400 max-w-2xl leading-8 text-lg">
-                کیادو بخشی از یک اکوسیستم بزرگتر است. در این بخش، مجموعه‌ای از پروژه‌های منتخب و کسب‌وکارهای معتبری که از زیرساخت‌های فنی یا مالی مشترک استفاده می‌کنند را معرفی می‌کنیم.
+                کیا دِو (KiyaDev) خالق و پشتیبان اکوسیستمی از سرویس‌های دیجیتال است. در اینجا می‌توانید تمامی پروژه‌های توسعه یافته توسط تیم ما و شرکای تجاری را مشاهده کنید.
             </p>
         </div>
 
         {/* گرید کارت‌ها */}
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
           {partners.map((partner) => (
             <a
               key={partner.id}
@@ -94,11 +160,11 @@ export default function PartnersPage() {
                   </div>
                   <div className="rounded-full bg-slate-950 border border-slate-800 px-3 py-1 flex items-center gap-1">
                      <Briefcase size={12} className="text-slate-500" />
-                    <span className="text-[10px] text-slate-500 font-mono uppercase">Partner</span>
+                    <span className="text-[10px] text-slate-500 font-mono uppercase">Project</span>
                   </div>
                 </div>
 
-                <h2 className="mb-3 text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">
+                <h2 className="mb-3 text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
                   {partner.title}
                 </h2>
                 
@@ -119,7 +185,7 @@ export default function PartnersPage() {
               {/* فوتر کارت */}
               <div className="mt-auto border-t border-slate-800 pt-4 flex items-center justify-between">
                 <span className={`text-xs font-bold transition-colors ${partner.color}`}>
-                  بازدید از وب‌سایت
+                  مشاهده وب‌سایت
                 </span>
                 <div className="flex items-center gap-1 text-slate-600 group-hover:text-white transition-colors">
                   <span className="text-xs font-mono hidden sm:inline-block">{partner.url.replace('https://', '')}</span>
