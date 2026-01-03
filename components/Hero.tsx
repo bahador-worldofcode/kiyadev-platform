@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Code2, Terminal } from "lucide-react";
-import Link from "next/link"; // ایمپورت کردن کامپوننت لینک
+import Link from "next/link"; 
 import ProjectModal from "./ProjectModal";
 
 export default function Hero() {
@@ -13,18 +13,18 @@ export default function Hero() {
     <>
       <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden px-6 py-20 lg:py-0">
         
-        {/* بک‌گراند نوری پس‌زمینه */}
-        <div className="absolute top-0 right-0 h-[500px] w-[500px] bg-blue-600/20 blur-[120px] rounded-full mix-blend-screen" />
-        <div className="absolute bottom-0 left-0 h-[500px] w-[500px] bg-purple-600/20 blur-[120px] rounded-full mix-blend-screen" />
+        {/* اصلاح شد: اضافه کردن pointer-events-none برای اینکه این لایه‌ها مانع کلیک نشوند */}
+        <div className="absolute top-0 right-0 h-[500px] w-[500px] bg-blue-600/20 blur-[120px] rounded-full mix-blend-screen pointer-events-none" />
+        <div className="absolute bottom-0 left-0 h-[500px] w-[500px] bg-purple-600/20 blur-[120px] rounded-full mix-blend-screen pointer-events-none" />
 
         <div className="container mx-auto grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           
-          {/* بخش متن (سمت راست) */}
+          {/* اصلاح شد: اضافه کردن relative و z-10 برای اطمینان از کلیک‌خور بودن دکمه‌ها در موبایل */}
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col items-start space-y-6 text-right"
+            className="relative z-10 flex flex-col items-start space-y-6 text-right"
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-sm text-blue-400">
               <span className="relative flex h-2 w-2">
@@ -46,16 +46,16 @@ export default function Hero() {
               {/* دکمه اصلی: باز کردن مودال */}
               <button 
                 onClick={() => setIsModalOpen(true)}
-                className="flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 font-bold text-white transition-all hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/30"
+                className="flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 font-bold text-white transition-all hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/30 active:scale-95"
               >
                 سفارش پروژه
                 <ArrowLeft className="h-5 w-5" />
               </button>
               
-              {/* دکمه دوم: لینک به صفحه نمونه‌کارها (بروزرسانی شده) */}
+              {/* دکمه دوم: لینک به صفحه نمونه‌کارها */}
               <Link 
                 href="/portfolio"
-                className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-8 py-4 font-bold text-white transition-all hover:bg-white/10 hover:border-white/30"
+                className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-8 py-4 font-bold text-white transition-all hover:bg-white/10 hover:border-white/30 active:scale-95"
               >
                 دیدن نمونه‌کارها
               </Link>
@@ -67,7 +67,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative flex items-center justify-center"
+            className="relative flex items-center justify-center z-0"
           >
             {/* کارت شیشه‌ای متحرک */}
             <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-xl shadow-2xl">
