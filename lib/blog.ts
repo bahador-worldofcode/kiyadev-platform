@@ -1,45 +1,54 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import { supabase } from "@/lib/supabase";
 
-const postsDirectory = path.join(process.cwd(), "content/blog");
+// تعریف ساختار دیتای پست (مطابق با جدول جدید)
+export interface Post {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string;
+  published_date: string | null;
+  tag: string | null;
+  image_url: string | null;
+  reading_time: string | null;
+}
 
-export function getSortedPostsData() {
-  // اگر پوشه بلاگ هنوز ساخته نشده بود، خطا نده و یک لیست خالی برگردان
-  if (!fs.existsSync(postsDirectory)) {
+// تابع ۱: دریافت تمام پست‌های منتشر شده (برای صفحه اصلی و لیست بلاگ)
+export async function getSortedPostsData() {
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('is_published', true) // فقط پست‌های منتشر شده
+    .order('created_at', { ascending: false }); // جدیدترین‌ها اول
+
+  if (error) {
+    console.error("Error fetching posts:", error);
     return [];
   }
 
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
-    const slug = fileName.replace(/\.md$/, "");
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const matterResult = matter(fileContents);
-
-    return {
-      slug,
-      ...(matterResult.data as { title: string; date: string; excerpt: string; tag: string }),
-    };
-  });
-
-  return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
+  // مپ کردن نام فیلدها برای هماهنگی با کامپوننت‌های قبلی
+  return data.map((post) => ({
+    ...post,
+    date: post.published_date, // کامپوننت‌های ما date می‌شناسند، نه published_date
+    tag: post.tag || "عمومی",
+  }));
 }
 
-export function getPostData(slug: string) {
-  const fullPath = path.join(postsDirectory, `${slug}.md`);
+// تابع ۲: دریافت یک پست خاص بر اساس اسلاگ (برای صفحه داخلی مقاله)
+export async function getPostData(slug: string) {
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('slug', slug)
+    .single();
 
-  // چک کردن برای جلوگیری از کراش سایت در صورت نبود فایل
-  if (!fs.existsSync(fullPath)) {
-    throw new Error("PostNotFound");
+  if (error || !data) {
+    throw new Error("Post not found");
   }
 
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const matterResult = matter(fileContents);
-  
   return {
-    slug,
-    content: matterResult.content,
-    ...(matterResult.data as { title: string; date: string; tag: string }),
+    ...data,
+    date: data.published_date,
+    tag: data.tag || "عمومی",
   };
 }

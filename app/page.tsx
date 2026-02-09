@@ -8,12 +8,14 @@ import Pricing from "@/components/Pricing";
 import BlogSection from "@/components/BlogSection";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
-// وارد کردن تابع خواندن مقالات
+// وارد کردن تابع جدید (که الان async است)
 import { getSortedPostsData } from "@/lib/blog";
 
-export default function Home() {
-  // خواندن مقالات در سمت سرور
-  const posts = getSortedPostsData();
+// تبدیل کامپوننت به async برای استفاده از await
+export default async function Home() {
+  // دریافت لیست پست‌ها از Supabase
+  // اگر پستی نباشد، آرایه خالی [] برمی‌گردد و سایت کرش نمی‌کند
+  const posts = await getSortedPostsData();
 
   return (
     <main className="min-h-screen bg-black text-white selection:bg-purple-500/30">
@@ -25,7 +27,7 @@ export default function Home() {
       <Portfolio />
       <Pricing />
       
-      {/* پاس دادن مقالات به بخش بلاگ */}
+      {/* پاس دادن مقالات (یا آرایه خالی) به بخش بلاگ */}
       <BlogSection posts={posts} />
       
       <FAQ />

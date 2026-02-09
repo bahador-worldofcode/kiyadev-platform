@@ -89,7 +89,7 @@ export default function Footer() {
                 Kiya<span className="text-blue-500">Dev</span>
               </h3>
               
-              {/* لینک پارتنرها - دقیقا مشابه تیوآن */}
+              {/* لینک پارتنرها */}
               <Link 
                 href="/partners" 
                 title="Partners & Projects"
@@ -104,13 +104,21 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* کپی‌رایت انگلیسی */}
+          {/* کپی‌رایت انگلیسی + لینک بلاگ */}
           <div className="text-center md:text-left space-y-2">
             <p className="text-xs text-gray-500 font-mono" dir="ltr">
               © 2025 KiyaDev. All rights reserved.
             </p>
             <div className="flex items-center justify-center md:justify-start gap-2 text-xs text-gray-600 font-mono" dir="ltr">
               Built with <Heart className="h-3 w-3 text-red-500 fill-red-500" /> & Next.js 15
+              
+              {/* === دکمه مخفی بلاگ === */}
+              <span className="mx-1 text-gray-800">|</span>
+              <Link href="/blog" className="hover:text-blue-500 transition-colors cursor-pointer">
+                Blog
+              </Link>
+              {/* ======================= */}
+
             </div>
           </div>
 
