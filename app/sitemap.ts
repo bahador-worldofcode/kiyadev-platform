@@ -1,14 +1,16 @@
 import { MetadataRoute } from 'next';
 import { getSortedPostsData } from '@/lib/blog';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://kiyadev.ir';
 
-  // ۱. دریافت تمام مقالات بلاگ برای ساخت لینک‌های داینامیک
-  const posts = getSortedPostsData();
-  const blogUrls = posts.map((post) => ({
+  // ۱. دریافت تمام مقالات از دیتابیس Supabase
+  // نکته: تابع getSortedPostsData الان async است و باید await شود
+  const posts = await getSortedPostsData();
+  
+  const blogUrls = posts.map((post: any) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(),
+    lastModified: new Date(post.created_at || new Date()),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }));
@@ -17,6 +19,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     '',
     '/portfolio',
+    '/partners',
+    '/blog', // اضافه کردن خود صفحه اصلی بلاگ
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
