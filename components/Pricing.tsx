@@ -8,7 +8,7 @@ import ProjectModal from "./ProjectModal"; // ایمپورت مودال
 const plans = [
   {
     name: "لندینگ پیج (شروع)",
-    price: "۱,۰۰۰,۰۰۰",
+    price: "۵,۰۰۰,۰۰۰",
     period: "شروع قیمت از",
     description: "مناسب برای معرفی شخصی یا محصول خاص",
     features: [
@@ -25,7 +25,7 @@ const plans = [
   },
   {
     name: "سایت شرکتی / فروشگاهی",
-    price: "۵,۰۰۰,۰۰۰",
+    price: "۲۰,۰۰۰,۰۰۰",
     period: "شروع قیمت از",
     description: "پکیج کامل برای ورود قدرتمند به بازار",
     features: [
@@ -108,8 +108,8 @@ export default function Pricing() {
                 <div className="mb-8">
                   <h3 className="text-lg font-medium text-gray-300">{plan.name}</h3>
                   <div className="mt-4 flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-white">{plan.price}</span>
-                    <span className="text-sm text-gray-500">تومان</span>
+                        <span className="text-3xl font-bold text-white">{plan.price}</span>
+                        <span className="text-sm text-gray-500">تومان</span>
                   </div>
                   <p className="text-xs text-gray-500 mt-1">{plan.period}</p>
                   <p className="mt-4 text-sm text-gray-400">{plan.description}</p>
