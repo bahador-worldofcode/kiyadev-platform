@@ -1,5 +1,3 @@
-// C:\projects\KiyaDev\kiyadev-platform\app\partners\page.tsx
-
 "use client";
 
 import { 
@@ -14,11 +12,12 @@ import {
   Zap,             // برای Nexus Solana
   Bot,             // برای Mind Orbit
   LayoutDashboard, // برای Alpha System
-  Shirt            // برای Luxe Shop
+  Shirt,           // برای Luxe Shop
+  Sparkles         // برای قلاب جادویی
 } from "lucide-react";
 import Link from "next/link";
 
-// لیست کامل ۸ همکار تجاری و پروژه
+// لیست کامل ۹ همکار تجاری و پروژه
 const partners = [
   // 1. Tivan Ex
   {
@@ -115,6 +114,18 @@ const partners = [
     color: "text-rose-400",
     borderColor: "group-hover:border-rose-500/50",
     glow: "group-hover:shadow-rose-500/20"
+  },
+  // 9. Gholab Jadooi
+  {
+    id: 9,
+    title: "قلاب جادویی | دست‌بافت‌های فانتزی",
+    description: "فروشگاه آنلاین و تخصصی دست‌بافت‌های فانتزی، عروسک‌های آمیگورومی و دسته گل‌های کاموایی جاودان. خلق شده با ظرافت و هنر دست.",
+    features: ["فروشگاه آنلاین", "دست‌سازه", "E-Commerce"],
+    url: "https://www.gholabjadooi.ir", 
+    icon: Sparkles,
+    color: "text-pink-400",
+    borderColor: "group-hover:border-pink-500/50",
+    glow: "group-hover:shadow-pink-500/20"
   }
 ];
 
@@ -144,56 +155,61 @@ export default function PartnersPage() {
 
         {/* گرید کارت‌ها */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
-          {partners.map((partner) => (
-            <a
-              key={partner.id}
-              href={partner.url}
-              target="_blank"
-              rel="dofollow" 
-              className={`group relative flex flex-col justify-between rounded-3xl border border-slate-800 bg-slate-900/50 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${partner.borderColor} ${partner.glow}`}
-            >
-              <div>
-                {/* هدر کارت */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`rounded-2xl p-3 bg-slate-950 border border-slate-800 ${partner.color}`}>
-                    <partner.icon size={28} strokeWidth={1.5} />
+          {partners.map((partner) => {
+            // حل خطای ری‌اکت: اختصاص آیکون به یک متغیر با حرف بزرگ
+            const Icon = partner.icon;
+
+            return (
+              <a
+                key={partner.id}
+                href={partner.url}
+                target="_blank"
+                rel="dofollow" 
+                className={`group relative flex flex-col justify-between rounded-3xl border border-slate-800 bg-slate-900/50 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${partner.borderColor} ${partner.glow}`}
+              >
+                <div>
+                  {/* هدر کارت */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`rounded-2xl p-3 bg-slate-950 border border-slate-800 ${partner.color}`}>
+                      <Icon size={28} strokeWidth={1.5} />
+                    </div>
+                    <div className="rounded-full bg-slate-950 border border-slate-800 px-3 py-1 flex items-center gap-1">
+                       <Briefcase size={12} className="text-slate-500" />
+                      <span className="text-[10px] text-slate-500 font-mono uppercase">Project</span>
+                    </div>
                   </div>
-                  <div className="rounded-full bg-slate-950 border border-slate-800 px-3 py-1 flex items-center gap-1">
-                     <Briefcase size={12} className="text-slate-500" />
-                    <span className="text-[10px] text-slate-500 font-mono uppercase">Project</span>
+
+                  <h2 className="mb-3 text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                    {partner.title}
+                  </h2>
+                  
+                  <p className="text-sm leading-7 text-slate-400 mb-6 text-justify opacity-80 group-hover:opacity-100 transition-opacity">
+                    {partner.description}
+                  </p>
+
+                  {/* تگ‌ها */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {partner.features.map((feature, idx) => (
+                      <span key={idx} className="text-[11px] bg-slate-950/80 text-slate-500 border border-slate-800 px-2.5 py-1 rounded-lg">
+                        {feature}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                <h2 className="mb-3 text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                  {partner.title}
-                </h2>
-                
-                <p className="text-sm leading-7 text-slate-400 mb-6 text-justify opacity-80 group-hover:opacity-100 transition-opacity">
-                  {partner.description}
-                </p>
-
-                {/* تگ‌ها */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {partner.features.map((feature, idx) => (
-                    <span key={idx} className="text-[11px] bg-slate-950/80 text-slate-500 border border-slate-800 px-2.5 py-1 rounded-lg">
-                      {feature}
-                    </span>
-                  ))}
+                {/* فوتر کارت */}
+                <div className="mt-auto border-t border-slate-800 pt-4 flex items-center justify-between">
+                  <span className={`text-xs font-bold transition-colors ${partner.color}`}>
+                    مشاهده وب‌سایت
+                  </span>
+                  <div className="flex items-center gap-1 text-slate-600 group-hover:text-white transition-colors">
+                    <span className="text-xs font-mono hidden sm:inline-block">{partner.url.replace('https://', '')}</span>
+                    <ExternalLink size={14} />
+                  </div>
                 </div>
-              </div>
-
-              {/* فوتر کارت */}
-              <div className="mt-auto border-t border-slate-800 pt-4 flex items-center justify-between">
-                <span className={`text-xs font-bold transition-colors ${partner.color}`}>
-                  مشاهده وب‌سایت
-                </span>
-                <div className="flex items-center gap-1 text-slate-600 group-hover:text-white transition-colors">
-                  <span className="text-xs font-mono hidden sm:inline-block">{partner.url.replace('https://', '')}</span>
-                  <ExternalLink size={14} />
-                </div>
-              </div>
-            </a>
-          ))}
+              </a>
+            );
+          })}
         </div>
       </div>
     </div>
