@@ -2,10 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Phone, Layers } from "lucide-react"; // آیکون Layers برای نمونه‌کارها اضافه شد
+import { usePathname } from "next/navigation"; 
+import { Phone, Layers } from "lucide-react";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  // دریافت آدرس صفحه فعلی
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +18,11 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // شرط ضدگلوله: چه مرورگر اسلش بگذارد، چه نگذارد، اگر کلمه catalog در مسیر بود هدر محو می‌شود
+  if (pathname && pathname.includes('/catalog')) {
+    return null;
+  }
 
   return (
     <header
@@ -25,7 +34,7 @@ export default function Header() {
     >
       <div className="container mx-auto px-6 flex items-center justify-center gap-4 md:gap-8">
         
-        {/* ۱. لوگو */}
+        {/* لوگو */}
         <Link href="/" className="flex items-center gap-2 group">
           <div className={`relative w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded-xl shadow-lg transition-all duration-300 ${
               isScrolled ? "bg-blue-600 text-white shadow-blue-500/20" : "bg-white/10 text-white backdrop-blur-sm border border-white/20"
@@ -48,7 +57,7 @@ export default function Header() {
         {/* خط جداکننده اول */}
         <div className={`hidden sm:block h-6 md:h-8 w-[1px] rounded-full transition-colors ${isScrolled ? "bg-slate-300" : "bg-white/20"}`}></div>
 
-        {/* ۲. دکمه نمونه‌کارها (جدید) - لینک به صفحه آرشیو */}
+        {/* دکمه نمونه‌کارها */}
         <Link 
           href="/portfolio" 
           className={`hidden sm:flex items-center gap-2 text-sm font-bold transition-colors hover:scale-105 ${
@@ -59,10 +68,10 @@ export default function Header() {
           نمونه‌کارها
         </Link>
 
-        {/* خط جداکننده دوم (فقط در دسکتاپ برای زیبایی) */}
+        {/* خط جداکننده دوم */}
         <div className={`h-6 md:h-8 w-[1px] rounded-full transition-colors ${isScrolled ? "bg-slate-300" : "bg-white/20"}`}></div>
 
-        {/* ۳. دکمه تماس */}
+        {/* دکمه تماس */}
         <a
           href="tel:09168038017"
           className={`flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 shadow-xl ${
