@@ -6,7 +6,8 @@ import { Printer, FileText, CheckSquare, PenTool, CircleDollarSign, CheckCircle2
 
 export default function ContractPage() {
   return (
-    <div className="min-h-screen bg-slate-100 py-8 px-4 font-sans print:p-0 print:bg-white text-slate-900" dir="rtl">
+    // حذف کلاس font-sans برای اعمال فونت وزیرمتن از فایل layout سایت
+    <div className="min-h-screen bg-slate-100 py-8 px-4 print:p-0 print:bg-white text-slate-900" dir="rtl">
       
       {/* دکمه پرینت / ذخیره پی‌دی‌اف - فقط در صفحه نمایش دیده می‌شود */}
       <div className="max-w-[210mm] mx-auto mb-6 flex justify-end print:hidden">
@@ -23,12 +24,18 @@ export default function ContractPage() {
       <div className="max-w-[210mm] min-h-[297mm] mx-auto bg-white p-8 md:p-12 shadow-2xl print:shadow-none print:p-4 rounded-xl print:rounded-none border border-slate-200 print:border-none">
         
         {/* هدر قرارداد */}
-        <div className="flex justify-between items-start border-b-2 border-slate-800 pb-6 mb-8">
-          <div>
-            <h1 className="text-3xl font-black text-slate-900 mb-2">فرم سفارش و قرارداد طراحی پلتفرم</h1>
-            <p className="text-slate-500 font-bold">تیم توسعه و مهندسی نرم‌افزار کیادِو</p>
+        <div className="flex flex-col md:flex-row justify-between items-start border-b-2 border-slate-800 pb-6 mb-8 gap-4">
+          <div className="flex items-center gap-4">
+            {/* اضافه شدن لوگوی پلتفرم کیادِو */}
+            <div className="w-16 h-16 bg-slate-900 rounded-xl flex items-center justify-center p-2 shadow-md">
+              <img src="/icon.png" alt="لوگو کیادِو" className="w-full h-full object-contain" />
+            </div>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-black text-slate-900 mb-2">فرم سفارش و قرارداد طراحی پلتفرم</h1>
+              <p className="text-slate-500 font-bold">تیم توسعه و مهندسی نرم‌افزار کیادِو</p>
+            </div>
           </div>
-          <div className="text-sm font-medium text-slate-600 space-y-2 border border-slate-200 p-3 rounded-lg">
+          <div className="text-sm font-medium text-slate-600 space-y-2 border border-slate-200 p-3 rounded-lg w-full md:w-auto">
             <div className="flex gap-2"><span className="w-16">تاریخ:</span> <span>....../....../۱۴۰</span></div>
             <div className="flex gap-2"><span className="w-16">شماره:</span> <span>........................</span></div>
             <div className="flex gap-2"><span className="w-16">پیوست:</span> <span>ندارد</span></div>

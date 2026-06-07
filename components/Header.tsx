@@ -1,3 +1,4 @@
+// components/Header.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -19,8 +20,8 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // شرط ضدگلوله: چه مرورگر اسلش بگذارد، چه نگذارد، اگر کلمه catalog در مسیر بود هدر محو می‌شود
-  if (pathname && pathname.includes('/catalog')) {
+  // شرط ضدگلوله: محو شدن هدر در صفحات کاتالوگ و قرارداد
+  if (pathname && (pathname.includes('/catalog') || pathname.includes('/contract'))) {
     return null;
   }
 
