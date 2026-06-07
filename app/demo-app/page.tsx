@@ -49,7 +49,8 @@ export default function DemoAppPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pt-24 pb-20 px-4 sm:px-6 relative overflow-hidden font-sans">
+    // حذف کلاس font-sans برای اعمال فونت وزیرمتن پروژه
+    <div className="min-h-screen bg-slate-950 text-white pt-24 pb-20 px-4 sm:px-6 relative overflow-hidden">
       
       {/* بک‌گراند */}
       <div className="absolute top-0 right-0 w-full h-[500px] bg-blue-900/10 blur-[150px] pointer-events-none" />
@@ -113,7 +114,7 @@ export default function DemoAppPage() {
                 <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay"></div>
                 <div className="bg-slate-900/80 backdrop-blur-md rounded-xl p-4 flex items-center gap-4 relative z-10">
                   <BellRing className="text-yellow-400 w-6 h-6 animate-bounce" />
-                  <p className="text-white font-bold text-sm md:text-base tracking-wide">
+                  <p className="text-white font-bold text-sm md:text-base tracking-wide leading-loose">
                     {storeData.announcement}
                   </p>
                 </div>
