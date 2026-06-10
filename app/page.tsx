@@ -5,6 +5,7 @@ import Services from "@/components/Services";
 import About from "@/components/About";
 import Portfolio from "@/components/Portfolio";
 import Pricing from "@/components/Pricing";
+import Representatives from "@/components/Representatives";
 import BlogSection from "@/components/BlogSection";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
@@ -29,6 +30,9 @@ export default async function Home() {
       
       {/* پاس دادن مقالات (یا آرایه خالی) به بخش بلاگ */}
       <BlogSection posts={posts} />
+
+      {/* بخش جدید نمایش قدرت شبکه نمایندگان کشوری */}
+      <Representatives />
       
       <FAQ />
       <Footer />
