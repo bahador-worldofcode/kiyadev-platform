@@ -20,8 +20,8 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // شرط ضدگلوله: محو شدن هدر در صفحات کاتالوگ و قرارداد
-  if (pathname && (pathname.includes('/catalog') || pathname.includes('/contract'))) {
+ // شرط ضدگلوله: محو شدن هدر در صفحات کاتالوگ، قرارداد و راهنما
+  if (pathname && (pathname.includes('/catalog') || pathname.includes('/contract') || pathname.includes('/guide'))) {
     return null;
   }
 
