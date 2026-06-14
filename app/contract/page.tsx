@@ -37,13 +37,15 @@ export default function ContractPage() {
           <div className="text-sm font-medium text-slate-600 space-y-3 bg-slate-50 border border-slate-200 p-4 rounded-xl w-full md:w-auto min-w-[200px]">
             <div className="flex items-center justify-between gap-4">
               <span className="w-12 text-slate-500">تاریخ:</span> 
-              <span className="tracking-widest font-mono text-slate-800">۱۴۰_ / _ _ / _ _</span>
+              {/* اصلاح فرمت تاریخ با LTR */}
+              <span className="tracking-widest font-mono text-slate-800" dir="ltr">۱۴۰_ / _ _ / _ _</span>
             </div>
             <div className="flex items-center justify-between gap-4">
               <span className="w-12 text-slate-500">شماره:</span> 
               <span className="flex-1 border-b border-dashed border-slate-400 h-4 min-w-[100px]"></span>
             </div>
-            <div className="flex items-center justify-between gap-4">
+            {/* تغییر کلاس به justify-start برای چسبیدن "ندارد" به ابتدای بلاک */}
+            <div className="flex items-center justify-start gap-4">
               <span className="w-12 text-slate-500">پیوست:</span> 
               <span className="font-bold text-slate-800">ندارد</span>
             </div>
