@@ -20,7 +20,7 @@ export default function ContractPage() {
       </div>
 
       {/* برگه اصلی A4 */}
-      <div className="max-w-[210mm] min-h-[297mm] mx-auto bg-white p-5 md:p-12 shadow-2xl print:shadow-none print:p-4 rounded-xl print:rounded-none border border-slate-200 print:border-none w-full relative overflow-hidden">
+      <div className="max-w-[210mm] min-h-[297mm] mx-auto bg-white p-6 md:p-12 shadow-2xl print:shadow-none print:p-4 rounded-xl print:rounded-none border border-slate-200 print:border-none w-full relative overflow-hidden">
         
         {/* هدر قرارداد */}
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start border-b-2 border-slate-800 pb-6 mb-8 gap-6">
@@ -30,22 +30,25 @@ export default function ContractPage() {
             </div>
             <div>
               <h1 className="text-2xl md:text-3xl font-black text-slate-900 mb-2">فرم سفارش و قرارداد طراحی</h1>
-              <p className="text-slate-500 font-bold">تیم توسعه و مهندسی نرم‌افزار کیادِو</p>
+              <p className="text-slate-500 font-bold text-sm md:text-base">تیم توسعه و مهندسی نرم‌افزار کیادِو</p>
             </div>
           </div>
           
-          <div className="text-sm font-medium text-slate-600 space-y-3 bg-slate-50 border border-slate-200 p-4 rounded-xl w-full md:w-auto min-w-[200px]">
-            <div className="flex items-center justify-between gap-4">
-              <span className="w-12 text-slate-500">تاریخ:</span> 
-              <span className="tracking-widest font-mono text-slate-800">۱۴۰_ / _ _ / _ _</span>
+          {/* اصلاح کامل بخش تاریخ، شماره و پیوست متناسب با ساختار کاملاً راست‌چین و اصیل فارسی */}
+          <div className="text-sm font-bold text-slate-700 space-y-3 bg-slate-50 border border-slate-200 p-4 rounded-xl w-full md:w-56 shrink-0 text-right shadow-sm">
+            <div className="flex items-center gap-1.5">
+              <span className="text-slate-500 shrink-0">تاریخ:</span>
+              <span className="flex-1 border-b border-dotted border-slate-400 h-4 mb-1"></span>
+              <span className="text-slate-800 font-mono font-normal" dir="ltr">/ &nbsp; / ۱۴۰</span>
             </div>
-            <div className="flex items-center justify-between gap-4">
-              <span className="w-12 text-slate-500">شماره:</span> 
-              <span className="flex-1 border-b border-dashed border-slate-400 h-4 min-w-[100px]"></span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-slate-500 shrink-0">شماره:</span>
+              <span className="flex-1 border-b border-dotted border-slate-400 h-4 mb-1"></span>
             </div>
-            <div className="flex items-center justify-between gap-4">
-              <span className="w-12 text-slate-500">پیوست:</span> 
-              <span className="font-bold text-slate-800">ندارد</span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-slate-500 shrink-0">پیوست:</span>
+              <span className="flex-1 border-b border-dotted border-slate-400 h-4 mb-1"></span>
+              <span className="text-slate-800 font-black text-xs">ندارد</span>
             </div>
           </div>
         </div>
