@@ -28,9 +28,9 @@ export default function Portfolio() {
             </p>
           </div>
           
-          {/* دکمه مشاهده آرشیو کامل */}
+          {/* دکمه مشاهده پروژه‌های بیشتر */}
           <Link href="/portfolio" className="group flex items-center gap-2 text-white border-b border-white/30 pb-1 hover:border-white transition-all hover:gap-4 cursor-pointer">
-            مشاهده آرشیو کامل
+            مشاهده پروژه‌های بیشتر
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
           </Link>
         </div>

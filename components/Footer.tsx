@@ -1,7 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, Send, MessageCircle, Code2, Heart, Library, MapPin } from "lucide-react";
+import { 
+  Phone, 
+  Send, 
+  MessageCircle, 
+  Code2, 
+  Heart, 
+  Library, 
+  MapPin, 
+  BookOpen, 
+  FileCheck, 
+  HelpCircle 
+} from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
@@ -80,10 +91,10 @@ export default function Footer() {
         </div>
 
         {/* بخش پایین: اطلاعات و کپی‌رایت */}
-        <div className="grid gap-8 md:grid-cols-2 items-start">
+        <div className="grid gap-8 md:grid-cols-12 items-start">
           
-          {/* توضیحات برند و آدرس دفتر */}
-          <div className="text-center md:text-right space-y-4">
+          {/* ستون اول (بزرگتر): توضیحات برند و آدرس دفتر */}
+          <div className="md:col-span-5 text-center md:text-right space-y-4">
             <div className="flex items-center justify-center md:justify-start gap-4">
               <h3 className="text-2xl font-bold text-white tracking-wider">
                 Kiya<span className="text-blue-500">Dev</span>
@@ -103,7 +114,7 @@ export default function Footer() {
               ما یک تیم دانشجویی پیشرو هستیم که با استفاده از تکنولوژی‌های لبه دانش (Next.js, AI, Blockchain) کسب‌وکار شما را متحول می‌کنیم. هدف ما ارائه کیفیت جهانی با قیمت منطقی است.
             </p>
 
-            {/* آدرس دفتر اضافه شده */}
+            {/* آدرس دفتر */}
             <div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3 max-w-md mx-auto md:mx-0">
               <MapPin className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
               <p className="text-sm leading-relaxed text-gray-400 text-right">
@@ -113,30 +124,55 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* کپی‌رایت انگلیسی + لینک بلاگ، دمو و جذب نماینده */}
-          <div className="text-center md:text-left space-y-2 h-full flex flex-col justify-end">
+          {/* ستون دوم (جدید): دسترسی سریع و قراردادها */}
+          <div className="md:col-span-3 text-center md:text-right space-y-4 flex flex-col items-center md:items-start pt-2 md:pl-4 lg:pl-8">
+            <h4 className="text-base font-bold text-white tracking-wider mb-2">
+              خدمات و دسترسی سریع
+            </h4>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/catalog" className="flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors">
+                  <BookOpen className="w-4 h-4" />
+                  <span>کاتالوگ خدمات و تعرفه‌ها</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/contract" className="flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors">
+                  <FileCheck className="w-4 h-4" />
+                  <span>ثبت سفارش و قرارداد رسمی</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/guide" className="flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors">
+                  <HelpCircle className="w-4 h-4" />
+                  <span>راهنمای کاتالوگ</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* ستون سوم: کپی‌رایت انگلیسی + لینک بلاگ، دمو و جذب نماینده */}
+          <div className="md:col-span-4 text-center md:text-left space-y-2 h-full flex flex-col justify-end mt-6 md:mt-0 pt-2">
             <p className="text-xs text-gray-500 font-mono" dir="ltr">
               © 2026 KiyaDev. All rights reserved.
             </p>
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-xs text-gray-600 font-mono mt-2" dir="ltr">
+            <div className="flex flex-wrap items-center justify-center md:justify-start md:flex-row-reverse gap-2 text-xs text-gray-600 font-mono mt-2" dir="ltr">
               Built with <Heart className="h-3 w-3 text-red-500 fill-red-500" /> & Next.js 15
               
-              <span className="mx-1 text-gray-800 hidden sm:inline">|</span>
-              <Link href="/blog" className="hover:text-blue-500 transition-colors cursor-pointer">
+              <span className="mx-1 text-gray-800 hidden lg:inline">|</span>
+              <Link href="/blog" className="hover:text-blue-500 transition-colors cursor-pointer mt-2 lg:mt-0">
                 Blog
               </Link>
 
-              <span className="mx-1 text-gray-800">|</span>
-              <Link href="/demo-app" className="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer animate-pulse">
+              <span className="mx-1 text-gray-800 hidden lg:inline">|</span>
+              <Link href="/demo-app" className="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer animate-pulse mt-2 lg:mt-0">
                 Live App Demo
               </Link>
               
-              {/* لینک مربوط به صفحه جذب شریک تجاری و نماینده */}
-              <span className="mx-1 text-gray-800 hidden sm:inline">|</span>
-              <Link href="/partnership" className="text-yellow-400 hover:text-yellow-300 font-bold transition-colors cursor-pointer w-full sm:w-auto mt-2 sm:mt-0 text-center sm:text-left">
+              <span className="mx-1 text-gray-800 hidden lg:inline">|</span>
+              <Link href="/partnership" className="text-yellow-400 hover:text-yellow-300 font-bold transition-colors cursor-pointer w-full lg:w-auto mt-2 lg:mt-0 text-center lg:text-left">
                 همکاری و جذب نماینده
               </Link>
-
             </div>
           </div>
 
