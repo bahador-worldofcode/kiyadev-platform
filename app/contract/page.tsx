@@ -146,18 +146,30 @@ export default function ContractPage() {
             <CircleDollarSign className="w-5 h-5 text-blue-600 shrink-0" /> ماده ۳: مبلغ قرارداد و شرایط پرداخت
           </h2>
           <div className="px-2 space-y-4 text-sm md:text-base leading-loose">
-            <div className="flex flex-wrap items-baseline text-justify">
-              مبلغ کل این قرارداد با توجه به پکیج انتخابی، برابر با 
-              <span className="w-32 md:w-48 mx-2 border-b-2 border-dashed border-slate-400 inline-block text-center h-4"></span> 
-              تومان تعیین می‌گردد.
+            
+            {/* اصلاح ۱: مبلغ کل قرارداد */}
+            <div className="text-justify leading-loose">
+              ارزش کل قرارداد با توجه به امکانات پکیج انتخابی،
+              <span className="inline-block whitespace-nowrap mx-1">
+                مبلغ 
+                <span className="w-32 md:w-48 mx-2 border-b-2 border-dashed border-slate-400 inline-block h-4"></span> 
+                تومان
+              </span>
+              توافق و تعیین گردید.
             </div>
+
             <ul className="list-none space-y-4 mt-4">
               <li className="flex items-start gap-2 text-justify">
                 <span className="w-2 h-2 rounded-full bg-blue-500 mt-3 shrink-0"></span>
-                <div className="flex flex-wrap items-baseline w-full">
-                  <span className="font-bold ml-1">پیش‌پرداخت (بیعانه):</span> پرداخت مبلغ 
-                  <span className="w-24 md:w-40 mx-2 border-b-2 border-dotted border-slate-400 inline-block h-4"></span> 
-                  تومان همزمان با امضای این قرارداد جهت استارت پروژه الزامی می‌باشد.
+                {/* اصلاح ۲: پیش‌پرداخت */}
+                <div className="w-full text-justify leading-loose">
+                  <span className="font-bold ml-1">پیش‌پرداخت (بیعانه):</span> 
+                  <span className="inline-block whitespace-nowrap mx-1">
+                    مبلغ 
+                    <span className="w-24 md:w-40 mx-2 border-b-2 border-dotted border-slate-400 inline-block h-4"></span> 
+                    تومان،
+                  </span>
+                  همزمان با امضای این قرارداد توسط کارفرما پرداخت گردید.
                 </div>
               </li>
               <li className="flex items-start gap-2 text-justify">
