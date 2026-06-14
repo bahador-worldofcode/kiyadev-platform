@@ -8,6 +8,20 @@ export default function ContractPage() {
   return (
     <div className="min-h-screen bg-slate-100 py-8 px-4 print:p-0 print:bg-white text-slate-900 overflow-x-hidden w-full" dir="rtl">
       
+      {/* استایل‌های اختصاصی برای حذف حاشیه پرینتر و حفظ رنگ‌های پس‌زمینه */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @media print {
+          @page {
+            size: A4;
+            margin: 0;
+          }
+          body {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+        }
+      `}} />
+
       {/* دکمه پرینت / ذخیره پی‌دی‌اف */}
       <div className="max-w-[210mm] mx-auto mb-6 flex justify-end print:hidden w-full">
         <button 
@@ -37,14 +51,12 @@ export default function ContractPage() {
           <div className="text-sm font-medium text-slate-600 space-y-3 bg-slate-50 border border-slate-200 p-4 rounded-xl w-full md:w-auto min-w-[200px]">
             <div className="flex items-center justify-between gap-4">
               <span className="w-12 text-slate-500">تاریخ:</span> 
-              {/* اصلاح فرمت تاریخ با LTR */}
               <span className="tracking-widest font-mono text-slate-800" dir="ltr">۱۴۰_ / _ _ / _ _</span>
             </div>
             <div className="flex items-center justify-between gap-4">
               <span className="w-12 text-slate-500">شماره:</span> 
               <span className="flex-1 border-b border-dashed border-slate-400 h-4 min-w-[100px]"></span>
             </div>
-            {/* تغییر کلاس به justify-start برای چسبیدن "ندارد" به ابتدای بلاک */}
             <div className="flex items-center justify-start gap-4">
               <span className="w-12 text-slate-500">پیوست:</span> 
               <span className="font-bold text-slate-800">ندارد</span>
