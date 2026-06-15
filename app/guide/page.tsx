@@ -11,32 +11,39 @@ export default function GuidePage() {
 
     const downloadA4Pages = async () => {
         setIsDownloading(true);
-        
+
         // حل باگ معروف html2canvas: برگرداندن اسکرول به بالای صفحه قبل از عکس گرفتن
         window.scrollTo({ top: 0, behavior: 'instant' });
         
         // یک مکث کوتاه تا اسکرول انجام بشه و صفحه لود بشه
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 800));
 
         try {
             const pages = document.querySelectorAll('.a4-page');
+            
             for (let i = 0; i < pages.length; i++) {
                 const page = pages[i] as HTMLElement;
+
                 const canvas = await html2canvas(page, {
-                    scale: 2, // کیفیت روی 2 تنظیم شد تا رم سیستم کم نیاره و ارور نده
+                    scale: 1.5, // مقیاس به 1.5 کاهش یافت تا رم سیستم کم نیاره و کرش نکنه
                     useCORS: true, 
                     allowTaint: true, // برای حل مشکل عکس گرفتن از کیوآرکد و SVG
                     backgroundColor: "#ffffff",
                     logging: false
                 });
-                
+
                 const link = document.createElement('a');
-                link.download = `KiyaDev-Catalog-Page-${i + 1}.png`;
-                link.href = canvas.toDataURL('image/png', 1.0);
+                // تغییر به فرمت JPG برای کاهش شدید فشار روی حافظه مرورگر
+                link.download = `KiyaDev-Catalog-Page-${i + 1}.jpg`;
+                link.href = canvas.toDataURL('image/jpeg', 0.9);
                 link.click();
                 
-                // مکث بین دانلود هر عکس تا مرورگر هنگ نکنه
-                await new Promise(resolve => setTimeout(resolve, 800));
+                // خالی کردن حافظه کانواس به صورت دستی
+                canvas.width = 0;
+                canvas.height = 0;
+
+                // مکث بیشتر بین دانلود هر عکس تا مرورگر هنگ نکنه
+                await new Promise(resolve => setTimeout(resolve, 1200));
             }
         } catch (error) {
             console.error("خطا در ایجاد تصویر:", error);
@@ -112,12 +119,12 @@ export default function GuidePage() {
                     {isDownloading ? (
                         <>
                             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                            در حال ذخیره عکس‌ها...
+                            در حال آماده‌سازی عکس‌ها...
                         </>
                     ) : (
                         <>
                             <Download className="w-5 h-5" />
-                            ذخیره کاتالوگ کامل (۳ صفحه)
+                            ذخیره کاتالوگ به عنوان عکس
                         </>
                     )}
                 </button>
@@ -200,15 +207,19 @@ export default function GuidePage() {
                             ما دقیقاً چه کار می‌کنیم؟
                         </h2>
                         <p className="text-slate-800 leading-relaxed text-sm font-bold text-justify">
-                            ما یک <strong>شرکت نرم‌افزاری</strong> هستیم که صفر تا صد <strong>وب‌سایت و اپلیکیشن موبایل اختصاصی</strong> برای کسب‌وکار شما می‌سازیم. با خرید هر یک از پکیج‌های زیر، کار طراحی سایت و اپلیکیشن شما انجام می‌شود؛ تنها فرق این پکیج‌ها در امکانات جانبی و گستردگی آن‌هاست.
+                            ما یک <strong>شرکت نرم‌افزاری</strong> هستیم که صفر تا صد <strong>وب‌سایت و اپلیکیشن موبایل اختصاصی</strong> برای کسب‌وکار شما می‌سازیم.
+                            با خرید هر یک از پکیج‌های زیر، کار طراحی سایت و اپلیکیشن شما انجام می‌شود؛
+                            تنها فرق این پکیج‌ها در امکانات جانبی و گستردگی آن‌هاست.
                         </p>
                     </div>
 
                     <div className="mb-5 bg-slate-50 p-4 rounded-2xl border border-slate-100">
                         <h2 className="text-lg font-black text-blue-700 mb-2">چرا کار ما تو بازار تکه؟</h2>
                         <p className="text-slate-700 leading-relaxed text-sm font-medium text-justify">
-                            ببینید، خیالتون رو راحت کنم؛ در تیم توسعه <strong>کیا دِو</strong>، ما اصلا سمت سایت‌سازهای کُند، تکراری و قالب‌های آماده مثل «وردپرس» نمیریم. 
-                            هر پروژه‌ای که دست می‌گیریم، از خط اول تا آخرش <strong>برای شما و از صفر طراحی و ساخته میشه</strong>! شما یک سایت با زیرساخت فوق‌العاده قوی به همراه <strong>«اپلیکیشن موبایل برای مدیریت کل کاسبی»</strong> تحویل می‌گیرید.
+                            ببینید، خیالتون رو راحت کنم؛
+                            در تیم توسعه <strong>کیا دِو</strong>، ما اصلا سمت سایت‌سازهای کُند، تکراری و قالب‌های آماده مثل «وردپرس» نمیریم.
+                            هر پروژه‌ای که دست می‌گیریم، از خط اول تا آخرش <strong>برای شما و از صفر طراحی و ساخته میشه</strong>!
+                            شما یک سایت با زیرساخت فوق‌العاده قوی به همراه <strong>«اپلیکیشن موبایل برای مدیریت کل کاسبی»</strong> تحویل می‌گیرید.
                         </p>
                     </div>
 
@@ -295,7 +306,7 @@ export default function GuidePage() {
                 {/* صفحه دوم کاتالوگ */}
                 <div className="a4-page flex flex-col p-8 bg-white" id="page-2">
                     
-                   <div className="mb-6">
+                    <div className="mb-6">
                         <h2 className="text-xl font-black text-slate-800 mb-4 border-b-2 border-slate-100 pb-2 flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                             چرا داشتن سایت از نون شب واجب‌تره؟
@@ -315,7 +326,8 @@ export default function GuidePage() {
                                             🛒 فروش اتوماتیک (حتی تو خواب!)
                                         </td>
                                         <td className="p-3 text-slate-700 font-medium leading-relaxed">
-                                            تو اینستاگرام باید تا صبح دایرکت جواب بدی و شماره کارت بفرستی! اما سایت مثل یک <strong className="text-slate-900">فروشنده ۲۴ ساعته</strong> عمل می‌کنه؛ مشتری خودش جنس رو می‌بینه و آنلاین پرداخت می‌کنه.
+                                            تو اینستاگرام باید تا صبح دایرکت جواب بدی و شماره کارت بفرستی!
+                                            اما سایت مثل یک <strong className="text-slate-900">فروشنده ۲۴ ساعته</strong> عمل می‌کنه؛ مشتری خودش جنس رو می‌بینه و آنلاین پرداخت می‌کنه.
                                         </td>
                                     </tr>
                                     <tr className="bg-slate-50 border-b border-slate-100">
@@ -331,7 +343,8 @@ export default function GuidePage() {
                                             🔍 جذب مشتری از گوگل
                                         </td>
                                         <td className="p-3 text-slate-700 font-medium leading-relaxed">
-                                            با داشتن سایت، هرکسی تو کل ایران داخل گوگل سرچ کنه، مستقیم میاد تو مغازه‌ت. این یعنی <strong className="text-slate-900">وصل شدن به سیل مشتریان جدید و ناشناس!</strong>
+                                            با داشتن سایت، هرکسی تو کل ایران داخل گوگل سرچ کنه، مستقیم میاد تو مغازه‌ت.
+                                            این یعنی <strong className="text-slate-900">وصل شدن به سیل مشتریان جدید و ناشناس!</strong>
                                         </td>
                                     </tr>
                                     <tr className="bg-slate-50 border-b border-slate-100">
@@ -362,7 +375,8 @@ export default function GuidePage() {
                         <div>
                             <h3 className="font-black text-emerald-800 text-[17px] mb-1">قرارداد قرص و محکم: اول ببین، بعد تسویه کن!</h3>
                             <p className="text-emerald-700 font-medium text-[14px]">
-                                برای شروع فقط یه بیعانه اولیه می‌گیریم. مابقی پول رو <strong>فقط زمانی پرداخت می‌کنید که سایت اختصاصی و اپلیکیشن‌تون رو کامل تحویل گرفتید</strong> و تایید کردید.
+                                برای شروع فقط یه بیعانه اولیه می‌گیریم.
+                                مابقی پول رو <strong>فقط زمانی پرداخت می‌کنید که سایت اختصاصی و اپلیکیشن‌تون رو کامل تحویل گرفتید</strong> و تایید کردید.
                             </p>
                         </div>
                     </div>
@@ -370,7 +384,8 @@ export default function GuidePage() {
                     <div className="bg-red-50 border-2 border-red-500 rounded-2xl p-5 mb-4 shadow-sm text-center mt-auto">
                         <h3 className="text-lg font-black text-red-600 mb-2">🔴 توجه خیلی مهم (حفظ حقوق نمایندگان)</h3>
                         <p className="text-slate-800 font-bold text-[15px] leading-relaxed">
-                            تیم برنامه‌نویسی کیا دِو، مستقیماً هیچ مشتری جدیدی رو پذیرش نمی‌کنه. <br/>
+                            تیم برنامه‌نویسی کیا دِو، مستقیماً هیچ مشتری جدیدی رو پذیرش نمی‌کنه.
+                            <br/>
                             برای استارت کار، <strong className="text-red-600">فقط و فقط از طریق نماینده‌ی رسمی ما که الان پیش شماست</strong> اقدام کنید. نماینده‌ی ما تمام قد کنار شماست.
                         </p>
                     </div>
@@ -407,12 +422,11 @@ export default function GuidePage() {
 
                     <div className="bg-indigo-50/50 border-2 border-dashed border-indigo-200 p-8 rounded-[2rem] mb-12">
                         <div className="inline-flex items-center justify-center gap-3 text-indigo-700 font-black text-2xl mb-5 w-full">
-                            {/* انیمیشن رو برای جلوگیری از ارور html2canvas حذف کردم */}
                             <Rocket className="w-8 h-8 text-indigo-600" />
                             شگفت‌زده خواهید شد!
                         </div>
                         <p className="text-slate-700 leading-[2.2] text-lg font-medium text-justify">
-                            با اسکن کیوآر کد اپلیکیشن (سمت چپ) و نصب آن روی گوشی اندرویدی خود، مدیریت وب‌سایت نمونه ما را به دست بگیرید. 
+                            با اسکن کیوآر کد اپلیکیشن (سمت چپ) و نصب آن روی گوشی اندرویدی خود، مدیریت وب‌سایت نمونه ما را به دست بگیرید.
                             <strong className="text-indigo-700 bg-indigo-100/50 px-2 py-1 rounded mx-1">قیمت‌ها را تغییر دهید، روی محصولات تخفیف بگذارید یا وضعیت فروشگاه را تغییر دهید</strong> 
                             و در همان لحظه (زیر ۱ ثانیه) با اسکن کیوآر کد وب‌سایت (سمت راست)، تغییرات را به صورت زنده مشاهده کنید.
                         </p>
@@ -440,7 +454,8 @@ export default function GuidePage() {
 
                     <div className="mt-12 bg-blue-50 border border-blue-100 rounded-2xl p-5 text-center shadow-sm">
                         <p className="text-blue-800 font-bold text-sm leading-relaxed">
-                            💡 راهنمایی: این یک دموی واقعی از تکنولوژی Real-time کیا دِو است. دقیقاً همین سرعت و کیفیت برای کسب‌وکار شما نیز پیاده‌سازی خواهد شد.
+                            💡 راهنمایی: این یک دموی واقعی از تکنولوژی Real-time کیا دِو است.
+                            دقیقاً همین سرعت و کیفیت برای کسب‌وکار شما نیز پیاده‌سازی خواهد شد.
                         </p>
                     </div>
 
