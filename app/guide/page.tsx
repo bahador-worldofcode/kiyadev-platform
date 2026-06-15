@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import html2canvas from "html2canvas";
-import { Download, Printer, ArrowRight } from "lucide-react";
+import { Download, Printer, ArrowRight, ScanLine, Rocket, Mic } from "lucide-react";
 import Link from "next/link";
+import QRCode from "react-qr-code"; // اضافه شدن پکیج تولید کیوآر کد
 
 export default function GuidePage() {
     const [isDownloading, setIsDownloading] = useState(false);
@@ -78,7 +79,9 @@ export default function GuidePage() {
                 }
             `}} />
 
-            {/* دکمه‌ها ثابت در بالای صفحه (حالت چسبان حذف شد) */}
+            {/* ========================================== */}
+            {/* بخش ۱: دکمه‌های کنترل (چاپ و دانلود) - مخفی در چاپ */}
+            {/* ========================================== */}
             <div className="relative z-50 mb-8 flex flex-wrap justify-center gap-4 print:hidden w-full max-w-4xl px-4">
                 <Link href="/" className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-2xl shadow-xl transition-all active:scale-95 text-sm md:text-base border-2 border-white/20">
                     <ArrowRight className="w-5 h-5" />
@@ -107,15 +110,75 @@ export default function GuidePage() {
                     ) : (
                         <>
                             <Download className="w-5 h-5" />
-                            ذخیره به عنوان عکس (۲ صفحه)
+                            ذخیره کاتالوگ کامل (۳ صفحه)
                         </>
                     )}
                 </button>
             </div>
 
+            {/* ========================================== */}
+            {/* بخش ۲: ویس‌های آموزشی (مخصوص نماینده) - مخفی در چاپ و عکس */}
+            {/* ========================================== */}
+            <div className="w-full max-w-4xl mx-auto mb-12 print:hidden px-4">
+                <div className="bg-slate-900 rounded-[2.5rem] p-6 md:p-8 shadow-2xl border border-slate-800 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/10 blur-3xl rounded-full pointer-events-none" />
+                    
+                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-5 mb-8 border-b border-white/10 pb-6">
+                        <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-4 rounded-3xl text-white shadow-lg shadow-blue-600/30">
+                            <Mic className="w-8 h-8" />
+                        </div>
+                        <div className="text-center md:text-right">
+                            <h2 className="text-2xl font-black text-white mb-2">آموزش صوتی ویژه نمایندگان کیا دِو</h2>
+                            <p className="text-blue-200/80 text-sm font-medium leading-relaxed max-w-2xl">
+                                همکار عزیز، شرایط کاری، نحوه پرزنت مشتری و شیوه تسویه حساب به طور کامل در ۳ فایل صوتی زیر توضیح داده شده است. لطفاً پیش از شروع فعالیت، با دقت به این نکات گوش دهید.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10">
+                        {/* Audio 1 */}
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-500 text-white text-xs font-bold shadow-md">۱</span>
+                                <h3 className="text-white font-bold text-sm">معرفی و کلیات کار</h3>
+                            </div>
+                            <audio controls className="w-full h-10 rounded-lg outline-none">
+                                <source src="/audio/voice-1.mp3" type="audio/mpeg" />
+                                مرورگر شما پشتیبانی نمی‌کند.
+                            </audio>
+                        </div>
+                        {/* Audio 2 */}
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-500 text-white text-xs font-bold shadow-md">۲</span>
+                                <h3 className="text-white font-bold text-sm">نحوه پرزنت و کاتالوگ</h3>
+                            </div>
+                            <audio controls className="w-full h-10 rounded-lg outline-none">
+                                <source src="/audio/voice-2.mp3" type="audio/mpeg" />
+                                مرورگر شما پشتیبانی نمی‌کند.
+                            </audio>
+                        </div>
+                        {/* Audio 3 */}
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-500 text-white text-xs font-bold shadow-md">۳</span>
+                                <h3 className="text-white font-bold text-sm">قرارداد و تسویه حساب</h3>
+                            </div>
+                            <audio controls className="w-full h-10 rounded-lg outline-none">
+                                <source src="/audio/voice-3.mp3" type="audio/mpeg" />
+                                مرورگر شما پشتیبانی نمی‌کند.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* ========================================== */}
+            {/* بخش ۳: صفحات کاتالوگ (A4) */}
+            {/* ========================================== */}
             <div className="a4-wrapper text-slate-900">
                 
-                {/* صفحه اول */}
+                {/* صفحه اول کاتالوگ */}
                 <div className="a4-page flex flex-col p-8 bg-white" id="page-1">
                     
                     <div className="flex items-center justify-between border-b-4 border-blue-600 pb-4 mb-5">
@@ -162,7 +225,6 @@ export default function GuidePage() {
                                     </tr>
                                 </thead>
                                 <tbody className="text-sm">
-                                    {/* این همون بخشیه که به زبان ساده تغییر کرد */}
                                     <tr className="bg-white border-b border-slate-100">
                                         <td className="p-2.5 font-bold text-slate-900 border-l border-slate-100">طراحی و ساخت کامل وب‌سایت (از صفر)</td>
                                         <td className="p-2.5 text-center text-blue-600 font-black border-l border-slate-100">✔</td>
@@ -223,11 +285,11 @@ export default function GuidePage() {
                     </div>
 
                     <div className="mt-5 text-center text-slate-400 font-bold text-xs">
-                        صفحه ۱ از ۲ - وب‌سایت رسمی: www.kiyadev.ir
+                        صفحه ۱ از ۳ - وب‌سایت رسمی: www.kiyadev.ir
                     </div>
                 </div>
 
-                {/* صفحه دوم */}
+                {/* صفحه دوم کاتالوگ */}
                 <div className="a4-page flex flex-col p-8 bg-white" id="page-2">
                     
                    <div className="mb-6">
@@ -323,7 +385,63 @@ export default function GuidePage() {
                     </div>
 
                     <div className="text-center text-slate-400 font-bold text-xs mt-2">
-                        صفحه ۲ از ۲ - کاتالوگ فروش | طراحی اختصاصی کیا دِو
+                        صفحه ۲ از ۳ - کاتالوگ فروش | طراحی اختصاصی کیا دِو
+                    </div>
+                </div>
+
+                {/* صفحه سوم کاتالوگ (جدید: کیوآر کدها و دمو) */}
+                <div className="a4-page flex flex-col p-8 bg-white" id="page-3">
+                    
+                    <div className="flex items-center justify-between border-b-4 border-blue-600 pb-4 mb-8">
+                        <div>
+                            <h1 className="text-3xl font-black text-slate-900 mb-1">تست زنده تکنولوژی (Live Demo)</h1>
+                            <p className="text-slate-500 font-bold text-base">همین الان قدرت سیستم را با گوشی خود لمس کنید</p>
+                        </div>
+                        <div className="bg-blue-600 text-white p-3 rounded-2xl shadow-lg">
+                            <ScanLine className="w-8 h-8" />
+                        </div>
+                    </div>
+
+                    <div className="bg-indigo-50/50 border-2 border-dashed border-indigo-200 p-8 rounded-[2rem] mb-12">
+                        <div className="inline-flex items-center justify-center gap-3 text-indigo-700 font-black text-2xl mb-5 w-full">
+                            <Rocket className="w-8 h-8 animate-pulse" />
+                            شگفت‌زده خواهید شد!
+                        </div>
+                        <p className="text-slate-700 leading-[2.2] text-lg font-medium text-justify">
+                            با اسکن کیوآر کد اپلیکیشن (سمت چپ) و نصب آن روی گوشی اندرویدی خود، مدیریت وب‌سایت نمونه ما را به دست بگیرید. 
+                            <strong className="text-indigo-700 bg-indigo-100/50 px-2 py-1 rounded mx-1">قیمت‌ها را تغییر دهید، روی محصولات تخفیف بگذارید یا وضعیت فروشگاه را تغییر دهید</strong> 
+                            و در همان لحظه (زیر ۱ ثانیه) با اسکن کیوآر کد وب‌سایت (سمت راست)، تغییرات را به صورت زنده مشاهده کنید.
+                        </p>
+                    </div>
+
+                    <div className="flex flex-row gap-8 justify-center items-center mb-auto">
+                        {/* QR سایت */}
+                        <div className="bg-slate-50 p-6 rounded-[2rem] shadow-sm border border-slate-100 text-center flex flex-col items-center flex-1">
+                            <div className="bg-white p-4 rounded-2xl mb-5 shadow-sm border border-slate-100">
+                                <QRCode value="https://www.kiyadev.ir/demo-app" size={180} level="M" />
+                            </div>
+                            <h4 className="font-bold text-slate-900 text-xl">وب‌سایت نمونه</h4>
+                            <p className="text-sm text-slate-500 mt-2 font-medium">اسکن برای مشاهده زنده سایت</p>
+                        </div>
+
+                        {/* QR اپلیکیشن */}
+                        <div className="bg-slate-50 p-6 rounded-[2rem] shadow-sm border border-slate-100 text-center flex flex-col items-center flex-1">
+                            <div className="bg-white p-4 rounded-2xl mb-5 shadow-sm border border-slate-100">
+                                <QRCode value="https://github.com/bahadorbahador11111-cmd/Kiyadev-App/releases/download/v1.0.0/Kiyadev.App.v1.apk" size={180} level="M" />
+                            </div>
+                            <h4 className="font-bold text-slate-900 text-xl">اپلیکیشن مدیریت</h4>
+                            <p className="text-sm text-slate-500 mt-2 font-medium">اسکن برای نصب روی اندروید</p>
+                        </div>
+                    </div>
+
+                    <div className="mt-12 bg-blue-50 border border-blue-100 rounded-2xl p-5 text-center shadow-sm">
+                        <p className="text-blue-800 font-bold text-sm leading-relaxed">
+                            💡 راهنمایی: این یک دموی واقعی از تکنولوژی Real-time کیا دِو است. دقیقاً همین سرعت و کیفیت برای کسب‌وکار شما نیز پیاده‌سازی خواهد شد.
+                        </p>
+                    </div>
+
+                    <div className="text-center text-slate-400 font-bold text-xs mt-6">
+                        صفحه ۳ از ۳ - کاتالوگ فروش | طراحی اختصاصی کیا دِو
                     </div>
                 </div>
 
