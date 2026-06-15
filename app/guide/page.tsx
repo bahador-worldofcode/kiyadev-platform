@@ -1,58 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import html2canvas from "html2canvas";
-import { Download, Printer, ArrowRight, ScanLine, Rocket, Mic } from "lucide-react";
+import React from "react";
+import { Printer, ArrowRight, ScanLine, Rocket, Mic } from "lucide-react";
 import Link from "next/link";
 import { QRCodeCanvas } from "qrcode.react";
 
 export default function GuidePage() {
-    const [isDownloading, setIsDownloading] = useState(false);
-
-    const downloadA4Pages = async () => {
-        setIsDownloading(true);
-
-        // حل باگ معروف html2canvas: برگرداندن اسکرول به بالای صفحه قبل از عکس گرفتن
-        window.scrollTo({ top: 0, behavior: 'instant' });
-        
-        // یک مکث کوتاه تا اسکرول انجام بشه و صفحه لود بشه
-        await new Promise(resolve => setTimeout(resolve, 800));
-
-        try {
-            const pages = document.querySelectorAll('.a4-page');
-            
-            for (let i = 0; i < pages.length; i++) {
-                const page = pages[i] as HTMLElement;
-
-                const canvas = await html2canvas(page, {
-                    scale: 2, // کیفیت بالا برای چاپ
-                    useCORS: true, 
-                    allowTaint: true,
-                    backgroundColor: "#ffffff",
-                    logging: false
-                });
-
-                const link = document.createElement('a');
-                // فرمت JPG با کیفیت 90 درصد برای تعادل بین کیفیت و حجم
-                link.download = `KiyaDev-Catalog-Page-${i + 1}.jpg`;
-                link.href = canvas.toDataURL('image/jpeg', 0.9);
-                link.click();
-                
-                // خالی کردن حافظه کانواس به صورت دستی
-                canvas.width = 0;
-                canvas.height = 0;
-
-                // مکث برای جلوگیری از هنگ کردن مرورگر
-                await new Promise(resolve => setTimeout(resolve, 1000));
-            }
-        } catch (error) {
-            console.error("خطا در ایجاد تصویر:", error);
-            alert("مشکلی در ساخت عکس به وجود آمد. لطفاً از مرورگر کروم استفاده کنید یا حافظه مرورگر خود را کمی خالی کنید.");
-        } finally {
-            setIsDownloading(false);
-        }
-    };
-
     return (
         <div className="min-h-screen bg-slate-100 flex flex-col items-center py-10 px-2 print:p-0 print:bg-white selection:bg-blue-500 selection:text-white" dir="rtl">
             
@@ -108,25 +61,6 @@ export default function GuidePage() {
                 >
                     <Printer className="w-5 h-5" />
                     پرینت کاتالوگ
-                </button>
-
-                <button 
-                    id="download-btn" 
-                    onClick={downloadA4Pages} 
-                    disabled={isDownloading}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-black py-3 px-6 rounded-2xl shadow-xl transition-all active:scale-95 text-sm md:text-base border-2 border-white/50"
-                >
-                    {isDownloading ? (
-                        <>
-                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                            در حال آماده‌سازی عکس‌ها...
-                        </>
-                    ) : (
-                        <>
-                            <Download className="w-5 h-5" />
-                            ذخیره کاتالوگ به عنوان عکس
-                        </>
-                    )}
                 </button>
             </div>
 
