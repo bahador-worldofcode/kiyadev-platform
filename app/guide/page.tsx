@@ -4,34 +4,43 @@ import React, { useState } from "react";
 import html2canvas from "html2canvas";
 import { Download, Printer, ArrowRight, ScanLine, Rocket, Mic } from "lucide-react";
 import Link from "next/link";
-import QRCode from "react-qr-code"; // اضافه شدن پکیج تولید کیوآر کد
+import QRCode from "react-qr-code";
 
 export default function GuidePage() {
     const [isDownloading, setIsDownloading] = useState(false);
 
     const downloadA4Pages = async () => {
         setIsDownloading(true);
+        
+        // حل باگ معروف html2canvas: برگرداندن اسکرول به بالای صفحه قبل از عکس گرفتن
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        
+        // یک مکث کوتاه تا اسکرول انجام بشه و صفحه لود بشه
+        await new Promise(resolve => setTimeout(resolve, 500));
+
         try {
             const pages = document.querySelectorAll('.a4-page');
             for (let i = 0; i < pages.length; i++) {
                 const page = pages[i] as HTMLElement;
                 const canvas = await html2canvas(page, {
-                    scale: 4, 
+                    scale: 2, // کیفیت روی 2 تنظیم شد تا رم سیستم کم نیاره و ارور نده
                     useCORS: true, 
+                    allowTaint: true, // برای حل مشکل عکس گرفتن از کیوآرکد و SVG
                     backgroundColor: "#ffffff",
                     logging: false
                 });
                 
                 const link = document.createElement('a');
                 link.download = `KiyaDev-Catalog-Page-${i + 1}.png`;
-                link.href = canvas.toDataURL('image/png');
+                link.href = canvas.toDataURL('image/png', 1.0);
                 link.click();
                 
+                // مکث بین دانلود هر عکس تا مرورگر هنگ نکنه
                 await new Promise(resolve => setTimeout(resolve, 800));
             }
         } catch (error) {
             console.error("خطا در ایجاد تصویر:", error);
-            alert("مشکلی در ساخت عکس به وجود آمد. لطفاً از مرورگر کروم استفاده کنید.");
+            alert("مشکلی در ساخت عکس به وجود آمد. لطفاً از مرورگر کروم استفاده کنید یا حافظه مرورگر خود را کمی خالی کنید.");
         } finally {
             setIsDownloading(false);
         }
@@ -79,9 +88,7 @@ export default function GuidePage() {
                 }
             `}} />
 
-            {/* ========================================== */}
-            {/* بخش ۱: دکمه‌های کنترل (چاپ و دانلود) - مخفی در چاپ */}
-            {/* ========================================== */}
+            {/* دکمه‌های کنترل */}
             <div className="relative z-50 mb-8 flex flex-wrap justify-center gap-4 print:hidden w-full max-w-4xl px-4">
                 <Link href="/" className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-2xl shadow-xl transition-all active:scale-95 text-sm md:text-base border-2 border-white/20">
                     <ArrowRight className="w-5 h-5" />
@@ -116,9 +123,7 @@ export default function GuidePage() {
                 </button>
             </div>
 
-            {/* ========================================== */}
-            {/* بخش ۲: ویس‌های آموزشی (مخصوص نماینده) - مخفی در چاپ و عکس */}
-            {/* ========================================== */}
+            {/* بخش ویس‌ها */}
             <div className="w-full max-w-4xl mx-auto mb-12 print:hidden px-4">
                 <div className="bg-slate-900 rounded-[2.5rem] p-6 md:p-8 shadow-2xl border border-slate-800 relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/10 blur-3xl rounded-full pointer-events-none" />
@@ -173,9 +178,7 @@ export default function GuidePage() {
                 </div>
             </div>
 
-            {/* ========================================== */}
-            {/* بخش ۳: صفحات کاتالوگ (A4) */}
-            {/* ========================================== */}
+            {/* صفحات کاتالوگ */}
             <div className="a4-wrapper text-slate-900">
                 
                 {/* صفحه اول کاتالوگ */}
@@ -389,7 +392,7 @@ export default function GuidePage() {
                     </div>
                 </div>
 
-                {/* صفحه سوم کاتالوگ (جدید: کیوآر کدها و دمو) */}
+                {/* صفحه سوم کاتالوگ (کیوآر کدها) */}
                 <div className="a4-page flex flex-col p-8 bg-white" id="page-3">
                     
                     <div className="flex items-center justify-between border-b-4 border-blue-600 pb-4 mb-8">
@@ -404,7 +407,8 @@ export default function GuidePage() {
 
                     <div className="bg-indigo-50/50 border-2 border-dashed border-indigo-200 p-8 rounded-[2rem] mb-12">
                         <div className="inline-flex items-center justify-center gap-3 text-indigo-700 font-black text-2xl mb-5 w-full">
-                            <Rocket className="w-8 h-8 animate-pulse" />
+                            {/* انیمیشن رو برای جلوگیری از ارور html2canvas حذف کردم */}
+                            <Rocket className="w-8 h-8 text-indigo-600" />
                             شگفت‌زده خواهید شد!
                         </div>
                         <p className="text-slate-700 leading-[2.2] text-lg font-medium text-justify">
