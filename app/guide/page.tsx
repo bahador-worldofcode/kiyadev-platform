@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import html2canvas from "html2canvas";
 import { Download, Printer, ArrowRight, ScanLine, Rocket, Mic } from "lucide-react";
 import Link from "next/link";
-import QRCode from "react-qr-code";
+import { QRCodeCanvas } from "qrcode.react";
 
 export default function GuidePage() {
     const [isDownloading, setIsDownloading] = useState(false);
@@ -25,15 +25,15 @@ export default function GuidePage() {
                 const page = pages[i] as HTMLElement;
 
                 const canvas = await html2canvas(page, {
-                    scale: 1.5, // مقیاس به 1.5 کاهش یافت تا رم سیستم کم نیاره و کرش نکنه
+                    scale: 2, // کیفیت بالا برای چاپ
                     useCORS: true, 
-                    allowTaint: true, // برای حل مشکل عکس گرفتن از کیوآرکد و SVG
+                    allowTaint: true,
                     backgroundColor: "#ffffff",
                     logging: false
                 });
 
                 const link = document.createElement('a');
-                // تغییر به فرمت JPG برای کاهش شدید فشار روی حافظه مرورگر
+                // فرمت JPG با کیفیت 90 درصد برای تعادل بین کیفیت و حجم
                 link.download = `KiyaDev-Catalog-Page-${i + 1}.jpg`;
                 link.href = canvas.toDataURL('image/jpeg', 0.9);
                 link.click();
@@ -42,8 +42,8 @@ export default function GuidePage() {
                 canvas.width = 0;
                 canvas.height = 0;
 
-                // مکث بیشتر بین دانلود هر عکس تا مرورگر هنگ نکنه
-                await new Promise(resolve => setTimeout(resolve, 1200));
+                // مکث برای جلوگیری از هنگ کردن مرورگر
+                await new Promise(resolve => setTimeout(resolve, 1000));
             }
         } catch (error) {
             console.error("خطا در ایجاد تصویر:", error);
@@ -148,7 +148,6 @@ export default function GuidePage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10">
-                        {/* Audio 1 */}
                         <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
                             <div className="flex items-center gap-3 mb-4">
                                 <span className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-500 text-white text-xs font-bold shadow-md">۱</span>
@@ -159,7 +158,6 @@ export default function GuidePage() {
                                 مرورگر شما پشتیبانی نمی‌کند.
                             </audio>
                         </div>
-                        {/* Audio 2 */}
                         <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
                             <div className="flex items-center gap-3 mb-4">
                                 <span className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-500 text-white text-xs font-bold shadow-md">۲</span>
@@ -170,7 +168,6 @@ export default function GuidePage() {
                                 مرورگر شما پشتیبانی نمی‌کند.
                             </audio>
                         </div>
-                        {/* Audio 3 */}
                         <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
                             <div className="flex items-center gap-3 mb-4">
                                 <span className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-500 text-white text-xs font-bold shadow-md">۳</span>
@@ -190,7 +187,6 @@ export default function GuidePage() {
                 
                 {/* صفحه اول کاتالوگ */}
                 <div className="a4-page flex flex-col p-8 bg-white" id="page-1">
-                    
                     <div className="flex items-center justify-between border-b-4 border-blue-600 pb-4 mb-5">
                         <div>
                             <h1 className="text-3xl font-black text-slate-900 mb-1">طراحی و اجرای پلتفرم اختصاصی</h1>
@@ -305,7 +301,6 @@ export default function GuidePage() {
 
                 {/* صفحه دوم کاتالوگ */}
                 <div className="a4-page flex flex-col p-8 bg-white" id="page-2">
-                    
                     <div className="mb-6">
                         <h2 className="text-xl font-black text-slate-800 mb-4 border-b-2 border-slate-100 pb-2 flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
@@ -409,7 +404,6 @@ export default function GuidePage() {
 
                 {/* صفحه سوم کاتالوگ (کیوآر کدها) */}
                 <div className="a4-page flex flex-col p-8 bg-white" id="page-3">
-                    
                     <div className="flex items-center justify-between border-b-4 border-blue-600 pb-4 mb-8">
                         <div>
                             <h1 className="text-3xl font-black text-slate-900 mb-1">تست زنده تکنولوژی (Live Demo)</h1>
@@ -436,7 +430,8 @@ export default function GuidePage() {
                         {/* QR سایت */}
                         <div className="bg-slate-50 p-6 rounded-[2rem] shadow-sm border border-slate-100 text-center flex flex-col items-center flex-1">
                             <div className="bg-white p-4 rounded-2xl mb-5 shadow-sm border border-slate-100">
-                                <QRCode value="https://www.kiyadev.ir/demo-app" size={180} level="M" />
+                                {/* استفاده از QRCodeCanvas که مشکل ارور را حل می‌کند */}
+                                <QRCodeCanvas value="https://www.kiyadev.ir/demo-app" size={180} level="M" />
                             </div>
                             <h4 className="font-bold text-slate-900 text-xl">وب‌سایت نمونه</h4>
                             <p className="text-sm text-slate-500 mt-2 font-medium">اسکن برای مشاهده زنده سایت</p>
@@ -445,7 +440,8 @@ export default function GuidePage() {
                         {/* QR اپلیکیشن */}
                         <div className="bg-slate-50 p-6 rounded-[2rem] shadow-sm border border-slate-100 text-center flex flex-col items-center flex-1">
                             <div className="bg-white p-4 rounded-2xl mb-5 shadow-sm border border-slate-100">
-                                <QRCode value="https://github.com/bahadorbahador11111-cmd/Kiyadev-App/releases/download/v1.0.0/Kiyadev.App.v1.apk" size={180} level="M" />
+                                {/* استفاده از QRCodeCanvas که مشکل ارور را حل می‌کند */}
+                                <QRCodeCanvas value="https://github.com/bahadorbahador11111-cmd/Kiyadev-App/releases/download/v1.0.0/Kiyadev.App.v1.apk" size={180} level="M" />
                             </div>
                             <h4 className="font-bold text-slate-900 text-xl">اپلیکیشن مدیریت</h4>
                             <p className="text-sm text-slate-500 mt-2 font-medium">اسکن برای نصب روی اندروید</p>
