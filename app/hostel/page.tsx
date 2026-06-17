@@ -1,6 +1,7 @@
 // app/hostel/page.tsx
 import React from "react";
 import Image from "next/image";
+import Link from "next/link"; // <--- اضافه کردن لینکِ داخلی نکست
 import { Metadata } from "next";
 import { 
   Phone, Percent, Smartphone, TrendingDown, Clock, ShieldCheck, 
@@ -10,7 +11,7 @@ import {
 // تنظیمات سئو اختصاصی برای گوگل
 export const metadata: Metadata = {
   title: "طراحی وب‌سایت و اپلیکیشن اختصاصی مدیریت اقامتگاه و خوابگاه | کیا دِو",
-  description: "سیستم یکپارچه رزرو و مدیریت اقامتگاه، خوابگاه و هاستل. رهایـی از پورسانت واسطه‌ها، مدیریت لحظه‌ای تخت‌ها و جذب مسافر با سایت اختصاصی.",
+  description: "سیستم یکپارچه رزرو و مدیریت اقامتگاه، خوابگاه و هاستل. رهایی از پورسانت واسطه‌ها، مدیریت لحظه‌ای تخت‌ها و جذب مسافر با سایت اختصاصی.",
   keywords: ["طراحی سایت خوابگاه", "طراحی سایت اقامتگاه", "نرم افزار مدیریت خوابگاه", "اپلیکیشن رزرو تخت", "سایت هاستل", "کیا دو"],
   robots: {
     index: true,
@@ -38,7 +39,7 @@ const jsonLd = {
 };
 
 const reasons = [
-  { icon: Percent, title: "حذف پورسانت سایت‌های واسطه (سود ۱۰۰٪)", desc: "رهایـی از پورسانت‌های سنگین پلتفرم‌های واسطه؛ تمام مبلغ رزرو هر تخت، مستقیماً و بدون کسر یک ریال به حساب خودتان واریز می‌شود." },
+  { icon: Percent, title: "حذف پورسانت سایت‌های واسطه (سود ۱۰۰٪)", desc: "رهایی از پورسانت‌های سنگین پلتفرم‌های واسطه؛ تمام مبلغ رزرو هر تخت، مستقیماً و بدون کسر یک ریال به حساب خودتان واریز می‌شود." },
   { icon: Smartphone, title: "مدیریت لحظه‌ای تخت‌به‌تخت با موبایل", desc: "تخت خالی شد؟ با یک کلیک در اپلیکیشن موبایلتان وضعیت را تغییر دهید تا از رزرو تکراری یک تخت (Overbooking) جلوگیری شود." },
   { icon: TrendingDown, title: "خداحافظی با هزینه‌های نجومی «نردبان»", desc: "با بالا آمدن سایت شما در گوگل روی کلماتی مثل «اقامتگاه در تهران»، مسافران شما را رایگان پیدا می‌کنند و هزینه‌های تبلیغاتی به صفر می‌رسد." },
   { icon: Clock, title: "پذیرشگر ۲۴ ساعته (حتی نیمه‌شب)", desc: "سایت شما عکس‌ها را نشان می‌دهد و پول را می‌گیرد. فردا صبح فقط پیامک واریزی را ببینید؛ بدون نیاز به بیداری و هماهنگی تلفنی نیمه‌شب." },
@@ -52,7 +53,6 @@ const reasons = [
 
 export default function HostelLandingPage() {
   return (
-    // در خط زیر کلاس font-sans رو حذف کردم تا از فونت پروژه ارث‌بری کنه
     <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 overflow-x-hidden">
       
       <script
@@ -63,12 +63,14 @@ export default function HostelLandingPage() {
       {/* ================= HEADER اختصاصی صفحه لندینگ ================= */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-lg border-b border-white/10">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-          <div className="flex flex-col">
+          
+          {/* لینک شدن لوگو به صفحه اصلی */}
+          <Link href="/" className="flex flex-col group cursor-pointer hover:opacity-80 transition-opacity">
             <span className="text-xl md:text-2xl font-black tracking-tighter leading-none text-white">
               Kiya<span className="text-blue-500">Dev</span>
             </span>
             <span className="text-[10px] text-slate-400 font-mono tracking-widest mt-1 hidden sm:block">HOSTEL MANAGEMENT SYSTEM</span>
-          </div>
+          </Link>
           
           <a
             href="tel:09168038017"
@@ -83,7 +85,7 @@ export default function HostelLandingPage() {
 
       {/* ================= HERO SECTION ================= */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 px-4 overflow-hidden min-h-[90vh] flex items-center">
-        {/* تصویر پس‌زمینه (در صورت عدم وجود تصویر در پوشه پابلیک، رنگ ثابت نمایش داده می‌شود) */}
+        {/* تصویر پس‌زمینه */}
         <div className="absolute inset-0 z-0 opacity-40">
           <Image 
             src="/hostel/hero-bg.webp" 
@@ -102,7 +104,7 @@ export default function HostelLandingPage() {
           </div>
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-[1.3] md:leading-[1.2] tracking-tight">
-            رهایـی از پورسانت واسطه‌ها؛ <br className="hidden md:block" />
+            رهایی از پورسانت واسطه‌ها؛ <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">سیستم اختصاصی اقامتگاهِ شما</span>
           </h1>
           
@@ -236,10 +238,11 @@ export default function HostelLandingPage() {
             </a>
           </div>
 
-          <div className="mt-16 text-slate-500 text-sm font-mono flex flex-col sm:flex-row items-center justify-center gap-4">
-             <span>KiyaDev © 2026 - Engineered for Hostels</span>
+          {/* ویرایش مهم: کلاس font-mono فقط به متن انگلیسی اعمال شد تا فونت فارسی خراب نشود */}
+          <div className="mt-16 text-slate-500 text-sm flex flex-col sm:flex-row items-center justify-center gap-4">
+             <span className="font-mono">KiyaDev © 2026 - Engineered for Hostels</span>
              <span className="hidden sm:inline">|</span>
-             <a href="/" className="hover:text-blue-400 transition-colors">مشاهده صفحه اصلی شرکت</a>
+             <Link href="/" className="hover:text-blue-400 transition-colors font-medium">مشاهده صفحه اصلی شرکت</Link>
           </div>
         </div>
       </footer>
