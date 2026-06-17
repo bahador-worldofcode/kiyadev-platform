@@ -8,8 +8,6 @@ import { Phone, Layers } from "lucide-react";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  
-  // دریافت آدرس صفحه فعلی
   const pathname = usePathname();
 
   useEffect(() => {
@@ -20,12 +18,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // شرط ضدگلوله: محو شدن هدر در صفحات کاتالوگ، قرارداد، راهنما و صفحه اختصاصی اقامتگاه
+  // شرط ضدگلوله: محو شدن هدر در صفحات کاتالوگ، قرارداد، راهنما، اقامتگاه و املاک
   if (pathname && (
     pathname.includes('/catalog') || 
     pathname.includes('/contract') || 
     pathname.includes('/guide') ||
-    pathname.includes('/hostel') // <-- این قسمت اضافه شد
+    pathname.includes('/hostel') ||
+    pathname.includes('/real-estate') // <-- این قسمت اضافه شد
   )) {
     return null;
   }

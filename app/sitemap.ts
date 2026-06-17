@@ -21,12 +21,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/portfolio',
     '/partners',
     '/blog', 
-    '/hostel' // <--- این مسیر برای صفحه اختصاصی خوابگاه‌ها اضافه شد
+    '/hostel',      // صفحه خوابگاه‌ها
+    '/real-estate'  // <--- صفحه جدید مشاورین املاک اضافه شد
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
-    priority: 1, // صفحه اصلی و لندینگ‌ها اولویت بالا دارند
+    priority: 1, // صفحه اصلی و لندینگ‌های نیچ اولویت بالا دارند
   }));
 
   // ۳. ترکیب صفحات ثابت و مقالات بلاگ
