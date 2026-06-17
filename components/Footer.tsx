@@ -1,3 +1,4 @@
+// components/Footer.tsx
 "use client";
 
 import { motion } from "framer-motion";
@@ -11,7 +12,8 @@ import {
   MapPin, 
   BookOpen, 
   FileCheck, 
-  HelpCircle 
+  HelpCircle,
+  Building // <--- این آیکون اضافه شد
 } from "lucide-react";
 import Link from "next/link";
 
@@ -124,7 +126,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* ستون دوم (جدید): دسترسی سریع و قراردادها */}
+          {/* ستون دوم: دسترسی سریع و قراردادها */}
           <div className="md:col-span-3 text-center md:text-right space-y-4 flex flex-col items-center md:items-start pt-2 md:pl-4 lg:pl-8">
             <h4 className="text-base font-bold text-white tracking-wider mb-2">
               خدمات و دسترسی سریع
@@ -146,6 +148,17 @@ export default function Footer() {
                 <Link href="/guide" className="flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors">
                   <HelpCircle className="w-4 h-4" />
                   <span>راهنمای کاتالوگ</span>
+                </Link>
+              </li>
+              {/* === این لینک اضافه شد === */}
+              <li>
+                <Link href="/hostel" className="group flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg w-fit">
+                  <Building className="w-4 h-4" />
+                  <span className="font-bold">سیستم اقامتگاه‌ها (جدید)</span>
+                  <span className="relative flex h-2 w-2 mr-1">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
                 </Link>
               </li>
             </ul>
