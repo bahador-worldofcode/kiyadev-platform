@@ -20,8 +20,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
- // شرط ضدگلوله: محو شدن هدر در صفحات کاتالوگ، قرارداد و راهنما
-  if (pathname && (pathname.includes('/catalog') || pathname.includes('/contract') || pathname.includes('/guide'))) {
+  // شرط ضدگلوله: محو شدن هدر در صفحات کاتالوگ، قرارداد، راهنما و صفحه اختصاصی اقامتگاه
+  if (pathname && (
+    pathname.includes('/catalog') || 
+    pathname.includes('/contract') || 
+    pathname.includes('/guide') ||
+    pathname.includes('/hostel') // <-- این قسمت اضافه شد
+  )) {
     return null;
   }
 
