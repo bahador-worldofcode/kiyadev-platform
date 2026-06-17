@@ -52,7 +52,8 @@ const reasons = [
 
 export default function HostelLandingPage() {
   return (
-    <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 overflow-x-hidden font-sans">
+    // در خط زیر کلاس font-sans رو حذف کردم تا از فونت پروژه ارث‌بری کنه
+    <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 overflow-x-hidden">
       
       <script
         type="application/ld+json"
