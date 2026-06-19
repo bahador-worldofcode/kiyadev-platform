@@ -18,13 +18,14 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // شرط ضدگلوله: محو شدن هدر در صفحات کاتالوگ، قرارداد، راهنما، اقامتگاه و املاک
+  // شرط ضدگلوله: محو شدن هدر در صفحات اختصاصی و قیف‌های فروش
   if (pathname && (
     pathname.includes('/catalog') || 
     pathname.includes('/contract') || 
     pathname.includes('/guide') ||
     pathname.includes('/hostel') ||
-    pathname.includes('/real-estate') // <-- این قسمت اضافه شد
+    pathname.includes('/real-estate') ||
+    pathname.includes('/advisor') // <--- این لینک برای صفحه مشاور اضافه شد
   )) {
     return null;
   }

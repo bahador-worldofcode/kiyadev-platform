@@ -14,7 +14,8 @@ import {
   FileCheck, 
   HelpCircle,
   Building,
-  Home // <--- این آیکون برای املاک اضافه شد
+  Home,
+  Mic // <--- این آیکون برای صفحه راهنما اضافه شد
 } from "lucide-react";
 import Link from "next/link";
 
@@ -145,13 +146,19 @@ export default function Footer() {
                   <span>ثبت سفارش و قرارداد رسمی</span>
                 </Link>
               </li>
+              {/* === این لینک برای صفحه راهنمای نمایندگان اضافه شد === */}
               <li>
-                <Link href="/hostel" className="group flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg w-fit">
+                <Link href="/guide" className="flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors">
+                  <Mic className="w-4 h-4 text-purple-400" />
+                  <span>راهنمای نمایندگان (آموزش و کاتالوگ)</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/hostel" className="group flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg w-fit mt-1">
                   <Building className="w-4 h-4" />
                   <span className="font-bold">پلتفرم مدیریت اقامتگاه</span>
                 </Link>
               </li>
-              {/* === این لینک اضافه شد === */}
               <li>
                 <Link href="/real-estate" className="group flex items-center gap-2 text-sm text-amber-400 hover:text-amber-300 transition-colors bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-lg w-fit mt-1">
                   <Home className="w-4 h-4" />
