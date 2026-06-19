@@ -1,7 +1,7 @@
 // app/advisor/page.tsx
 import React from "react";
 import { Metadata } from "next";
-import { QRCodeCanvas } from "qrcode.react";
+import QRCode from "react-qr-code"; // <--- این خط اصلاح شد (کتابخانه سازگار با سرور)
 import { 
   Phone, Smartphone, ShieldCheck, CheckCircle2, ArrowLeft, 
   MessageCircle, Zap, Globe, Code2, ExternalLink, Headset, 
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   }
 };
 
-// لیست اختصاصی نمونه‌کارها برای صفحه مدیر پروژه (جایگزینی آلفا سیستم با الف جم)
+// لیست اختصاصی نمونه‌کارها برای صفحه مدیر پروژه
 const miniPortfolio = [
   { id: 1, title: "Tivan Ex (صرافی)", category: "Web3 & Crypto", link: "https://tivan-ex.vercel.app/" },
   { id: 2, title: "Luxe Shop (فروشگاه لوکس)", category: "E-Commerce", link: "https://luxe-shop-ten.vercel.app/" },
@@ -144,11 +144,10 @@ export default function AdvisorPage() {
         </div>
       </section>
 
-      {/* ================= MINI PORTFOLIO (فوق فشرده) ================= */}
+      {/* ================= MINI PORTFOLIO ================= */}
       <section className="pt-12 pb-20 bg-[#050505]">
         <div className="container mx-auto max-w-6xl px-4">
           
-          {/* هدر بخش نمونه‌کارها */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 border-b border-white/5 pb-6">
             <div className="max-w-2xl">
               <div className="flex items-center gap-3 mb-3">
@@ -161,7 +160,6 @@ export default function AdvisorPage() {
             </div>
           </div>
 
-          {/* گرید کارت‌های بسیار کوچک */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {miniPortfolio.map((project) => (
               <a 
@@ -201,7 +199,6 @@ export default function AdvisorPage() {
             
             <div className="flex flex-col lg:flex-row items-center gap-12 relative z-10">
               
-              {/* متن توضیحات و دعوت به چالش */}
               <div className="lg:w-1/2 text-center lg:text-right">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-pink-500/10 text-pink-400 font-bold mb-6 border border-pink-500/20 shadow-inner">
                   <ScanLine size={18} className="animate-pulse" />
@@ -220,22 +217,20 @@ export default function AdvisorPage() {
                 </div>
               </div>
 
-              {/* باکس QR کدها */}
               <div className="lg:w-1/2 flex flex-col sm:flex-row gap-6 w-full justify-center">
                 
-                {/* QR اپلیکیشن */}
+                {/* <--- اینجا QRCode جایگزین QRCodeCanvas شد ---> */}
                 <div className="bg-black/60 border border-white/10 p-6 rounded-3xl flex flex-col items-center text-center flex-1 hover:border-pink-500/40 hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] transition-all">
                   <div className="bg-white p-3 rounded-2xl mb-5 shadow-lg border-4 border-white/10">
-                    <QRCodeCanvas value="https://github.com/bahadorbahador11111-cmd/Kiyadev-App/releases/download/v1.0.0/Kiyadev.App.v1.apk" size={140} level="M" />
+                    <QRCode value="https://github.com/bahadorbahador11111-cmd/Kiyadev-App/releases/download/v1.0.0/Kiyadev.App.v1.apk" size={140} level="M" />
                   </div>
                   <h4 className="font-bold text-white text-lg mb-1">اپلیکیشن مدیریت</h4>
                   <p className="text-xs text-slate-400 font-medium bg-white/5 px-3 py-1 rounded-full mt-2">اسکن برای نصب (اندروید)</p>
                 </div>
 
-                {/* QR سایت */}
                 <div className="bg-black/60 border border-white/10 p-6 rounded-3xl flex flex-col items-center text-center flex-1 hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] transition-all">
                   <div className="bg-white p-3 rounded-2xl mb-5 shadow-lg border-4 border-white/10">
-                    <QRCodeCanvas value="https://www.kiyadev.ir/demo-app" size={140} level="M" />
+                    <QRCode value="https://www.kiyadev.ir/demo-app" size={140} level="M" />
                   </div>
                   <h4 className="font-bold text-white text-lg mb-1">وب‌سایت دمو</h4>
                   <p className="text-xs text-slate-400 font-medium bg-white/5 px-3 py-1 rounded-full mt-2">اسکن برای مشاهده زنده</p>
