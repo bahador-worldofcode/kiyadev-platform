@@ -10,7 +10,7 @@ import {
 
 // جلوگیری از ایندکس شدن صفحه در گوگل (مخصوص لینک‌دهی اختصاصی)
 export const metadata: Metadata = {
-  title: "مشاوره اختصاصی توسعه پلتفرم | کیا دِو",
+  title: "ارتباط مستقیم با مدیر پروژه | کیا دِو",
   description: "کسب‌وکار خود را با پلتفرم‌های اختصاصی، سریع و امن متحول کنید.",
   robots: {
     index: false,
@@ -20,18 +20,16 @@ export const metadata: Metadata = {
 
 export default function AdvisorPage() {
   return (
-    // کلاس font-sans حذف شد تا فونت زیبای وزیرمتن اعمال شود
-    // سلکشن متن به صورتی تغییر کرد
     <div className="min-h-screen bg-[#050505] text-white selection:bg-pink-500/30 overflow-x-hidden scroll-smooth" dir="rtl">
       
-      {/* ================= هدر اختصاصی مشاور ================= */}
+      {/* ================= هدر اختصاصی مدیر پروژه ================= */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/10">
         <div className="container mx-auto px-4 h-[72px] flex items-center justify-between">
           <div className="flex flex-col">
             <span className="text-xl md:text-2xl font-black tracking-tighter leading-none text-white">
               Kiya<span className="text-pink-500">Dev</span>
             </span>
-            <span className="text-[10px] text-slate-400 font-mono tracking-widest mt-1">VIP ADVISOR</span>
+            <span className="text-[10px] text-slate-400 font-mono tracking-widest mt-1">PROJECT MANAGER</span>
           </div>
           
           <a
@@ -39,7 +37,7 @@ export default function AdvisorPage() {
             className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-pink-600 hover:from-blue-500 hover:to-pink-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all active:scale-95 shadow-lg shadow-pink-600/20 border border-pink-500/30"
           >
             <Headset size={16} className="animate-pulse" />
-            <span className="hidden sm:inline">تماس با مشاور:</span>
+            <span className="hidden sm:inline">تماس با مدیر پروژه:</span>
             <span dir="ltr">0992 423 0576</span>
           </a>
         </div>
@@ -54,7 +52,7 @@ export default function AdvisorPage() {
         <div className="container mx-auto max-w-4xl relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-slate-300 text-xs md:text-sm mb-8 font-medium shadow-sm">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            پاسخگویی سریع و مشاوره رایگان توسط خانم [نام_خانوادگی]
+            ارتباط مستقیم و پیگیری صفر تا صد توسط مدیر پروژه
           </div>
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-[1.3] md:leading-[1.2] tracking-tight">
@@ -236,7 +234,7 @@ export default function AdvisorPage() {
           </div>
           <h2 className="text-2xl md:text-3xl font-black text-white mb-4">آماده‌ی استارت پروژه هستید؟</h2>
           <p className="text-slate-400 mb-8 text-sm md:text-base leading-relaxed">
-            برای دریافت مشاوره تخصصی، بررسی دقیق ایده شما و عقد قرارداد، همین الان با مشاور ارشد سیستم تماس بگیرید.
+            برای دریافت مشاوره تخصصی، بررسی دقیق ایده شما و عقد قرارداد، همین الان با مدیر پروژه تماس بگیرید.
           </p>
           
           <div className="flex flex-col gap-4 max-w-sm mx-auto">
@@ -252,7 +250,7 @@ export default function AdvisorPage() {
 
           <div className="mt-16 text-slate-600 text-xs font-mono">
             © 2026 KiyaDev Engineering. All rights reserved. <br/>
-            Consultant Reference Link.
+            Project Manager Reference Link.
           </div>
         </div>
       </footer>
