@@ -16,18 +16,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // ۲. تعریف صفحات ثابت (استاتیک)
+  // نکته: صفحاتی مثل /advisor یا /catalog به دلیل noindex بودن در این لیست قرار ندارند.
   const routes = [
     '',
     '/portfolio',
     '/partners',
     '/blog', 
-    '/hostel',      // صفحه خوابگاه‌ها
-    '/real-estate'  // <--- صفحه جدید مشاورین املاک اضافه شد
+    '/hostel',        // صفحه خوابگاه‌ها
+    '/real-estate',   // صفحه املاک
+    '/security',      // صفحه جدید سیستم‌های امنیتی
+    '/partnership',   // صفحه جذب نماینده
+    '/guide',         // <--- صفحه آموزش نمایندگان (برای سئو و استخدام) اضافه شد
+    '/demo-app'       // صفحه دموی زنده
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
-    priority: 1, // صفحه اصلی و لندینگ‌های نیچ اولویت بالا دارند
+    priority: route === '' || route === '/hostel' || route === '/real-estate' || route === '/security' ? 1 : 0.8, 
   }));
 
   // ۳. ترکیب صفحات ثابت و مقالات بلاگ

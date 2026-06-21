@@ -15,7 +15,8 @@ import {
   HelpCircle,
   Building,
   Home,
-  Mic // <--- این آیکون برای صفحه راهنما اضافه شد
+  Shield, // <--- آیکون برای دوربین و امنیت
+  Mic
 } from "lucide-react";
 import Link from "next/link";
 
@@ -146,7 +147,6 @@ export default function Footer() {
                   <span>ثبت سفارش و قرارداد رسمی</span>
                 </Link>
               </li>
-              {/* === این لینک برای صفحه راهنمای نمایندگان اضافه شد === */}
               <li>
                 <Link href="/guide" className="flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors">
                   <Mic className="w-4 h-4 text-purple-400" />
@@ -163,9 +163,16 @@ export default function Footer() {
                 <Link href="/real-estate" className="group flex items-center gap-2 text-sm text-amber-400 hover:text-amber-300 transition-colors bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-lg w-fit mt-1">
                   <Home className="w-4 h-4" />
                   <span className="font-bold">سیستم دپارتمان‌های املاک</span>
+                </Link>
+              </li>
+              {/* <--- لینک جدید دوربین مداربسته اضافه شد ---> */}
+              <li>
+                <Link href="/security" className="group flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors bg-cyan-500/10 border border-cyan-500/20 px-3 py-1.5 rounded-lg w-fit mt-1">
+                  <Shield className="w-4 h-4" />
+                  <span className="font-bold">سیستم دوربین مداربسته</span>
                   <span className="relative flex h-2 w-2 mr-1">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
                   </span>
                 </Link>
               </li>
