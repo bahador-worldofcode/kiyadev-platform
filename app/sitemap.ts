@@ -24,15 +24,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/blog', 
     '/hostel',        // صفحه خوابگاه‌ها
     '/real-estate',   // صفحه املاک
-    '/security',      // صفحه جدید سیستم‌های امنیتی
+    '/security',      // صفحه سیستم‌های امنیتی
+    '/beauty',        // <--- صفحه جدید سالن‌های زیبایی
     '/partnership',   // صفحه جذب نماینده
-    '/guide',         // <--- صفحه آموزش نمایندگان (برای سئو و استخدام) اضافه شد
+    '/guide',         // صفحه آموزش نمایندگان
     '/demo-app'       // صفحه دموی زنده
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
-    priority: route === '' || route === '/hostel' || route === '/real-estate' || route === '/security' ? 1 : 0.8, 
+    priority: route === '' || route === '/hostel' || route === '/real-estate' || route === '/security' || route === '/beauty' ? 1 : 0.8, 
   }));
 
   // ۳. ترکیب صفحات ثابت و مقالات بلاگ

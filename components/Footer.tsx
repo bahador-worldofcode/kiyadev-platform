@@ -15,8 +15,9 @@ import {
   HelpCircle,
   Building,
   Home,
-  Shield, // <--- آیکون برای دوربین و امنیت
-  Mic
+  Shield, 
+  Mic,
+  Sparkles // <--- آیکون برای سالن زیبایی
 } from "lucide-react";
 import Link from "next/link";
 
@@ -105,7 +106,6 @@ export default function Footer() {
                 Kiya<span className="text-blue-500">Dev</span>
               </h3>
               
-              {/* لینک پارتنرها */}
               <Link 
                 href="/partners" 
                 title="Partners & Projects"
@@ -119,7 +119,6 @@ export default function Footer() {
               ما یک تیم دانشجویی پیشرو هستیم که با استفاده از تکنولوژی‌های لبه دانش (Next.js, AI, Blockchain) کسب‌وکار شما را متحول می‌کنیم. هدف ما ارائه کیفیت جهانی با قیمت منطقی است.
             </p>
 
-            {/* آدرس دفتر */}
             <div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3 max-w-md mx-auto md:mx-0">
               <MapPin className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
               <p className="text-sm leading-relaxed text-gray-400 text-right">
@@ -165,21 +164,27 @@ export default function Footer() {
                   <span className="font-bold">سیستم دپارتمان‌های املاک</span>
                 </Link>
               </li>
-              {/* <--- لینک جدید دوربین مداربسته اضافه شد ---> */}
               <li>
                 <Link href="/security" className="group flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors bg-cyan-500/10 border border-cyan-500/20 px-3 py-1.5 rounded-lg w-fit mt-1">
                   <Shield className="w-4 h-4" />
                   <span className="font-bold">سیستم دوربین مداربسته</span>
+                </Link>
+              </li>
+              {/* <--- لینک جدید سالن زیبایی اضافه شد ---> */}
+              <li>
+                <Link href="/beauty" className="group flex items-center gap-2 text-sm text-rose-400 hover:text-rose-300 transition-colors bg-rose-500/10 border border-rose-500/20 px-3 py-1.5 rounded-lg w-fit mt-1">
+                  <Sparkles className="w-4 h-4" />
+                  <span className="font-bold">پلتفرم سالن‌های زیبایی</span>
                   <span className="relative flex h-2 w-2 mr-1">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
                   </span>
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* ستون سوم: کپی‌رایت انگلیسی + لینک بلاگ، دمو و جذب نماینده */}
+          {/* ستون سوم: کپی‌رایت انگلیسی */}
           <div className="md:col-span-4 text-center md:text-left space-y-2 h-full flex flex-col justify-end mt-6 md:mt-0 pt-2">
             <p className="text-xs text-gray-500 font-mono" dir="ltr">
               © 2026 KiyaDev. All rights reserved.

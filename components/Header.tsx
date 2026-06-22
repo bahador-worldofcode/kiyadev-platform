@@ -26,7 +26,8 @@ export default function Header() {
     pathname.includes('/hostel') ||
     pathname.includes('/real-estate') ||
     pathname.includes('/advisor') ||
-    pathname.includes('/security') // <--- صفحه سیستم‌های امنیتی اضافه شد
+    pathname.includes('/security') ||
+    pathname.includes('/beauty') // <--- صفحه سالن زیبایی اضافه شد
   )) {
     return null;
   }
