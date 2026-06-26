@@ -5,14 +5,28 @@ import SignatureCanvas from "react-signature-canvas";
 import { supabase } from "@/lib/supabase";
 import { CheckCircle2, Copy, FileSignature, Loader2, Eraser, Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
-// آدرس کامپوننت پیش‌نمایش رو ایمپورت می‌کنیم
 import ContractPreview from "@/components/ContractPreview";
+
+// توابع کمکی برای فرمت کردن ورودی‌های لحظه‌ای ادمین
+const toPersianDigits = (num: string | number) => {
+  const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  return num.toString().replace(/\d/g, (x) => persianDigits[parseInt(x)]);
+};
+
+const formatInputValue = (val: string) => {
+  if (!val) return "";
+  // حذف همه کاراکترها به جز اعداد (فارسی یا انگلیسی)
+  const raw = val.replace(/,/g, '').replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '');
+  if (!raw) return "";
+  // اعمال کاما و تبدیل به اعداد فارسی
+  const formattedWithCommas = raw.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return toPersianDigits(formattedWithCommas);
+};
 
 export default function ContractBuilderPage() {
   const [clientName, setClientName] = useState("");
-  const [projectName, setProjectName] = useState("");
+  const [projectName, setProjectName] = useState("بالکون");
   
-  // متغیرهای قرارداد به صورت یک آبجکت مرتب (همین تو دیتابیس ذخیره میشه)
   const [contractData, setContractData] = useState({
     totalAmount: "",
     phase1Amount: "",
@@ -27,7 +41,14 @@ export default function ContractBuilderPage() {
   const sigCanvas = useRef<any>(null);
 
   const handleInputChange = (field: string, value: string) => {
-    setContractData(prev => ({ ...prev, [field]: value }));
+    // برای فیلدهای مالی، فرمت لحظه‌ای اعمال می‌کنیم
+    if (field.includes('Amount')) {
+      setContractData(prev => ({ ...prev, [field]: formatInputValue(value) }));
+    } else {
+      // برای روز و ماه فقط اعداد رو فارسی می‌کنیم
+      const raw = value.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '');
+      setContractData(prev => ({ ...prev, [field]: toPersianDigits(raw) }));
+    }
   };
 
   const clearSignature = () => {
@@ -44,13 +65,12 @@ export default function ContractBuilderPage() {
     const signatureImage = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
 
     try {
-      // ارسال اطلاعات به فیلد جدید JSONB در سوپابیس
       const { data, error } = await supabase.from("official_contracts").insert([
         {
           client_name: clientName,
           project_name: projectName,
-          contract_amount: contractData.totalAmount, // برای جستجوی راحت‌تر در دیتابیس
-          contract_data: contractData, // ذخیره کل آبجکت JSON
+          contract_amount: contractData.totalAmount, 
+          contract_data: contractData, 
           contractor_signature: signatureImage,
           status: "pending"
         }
@@ -74,10 +94,10 @@ export default function ContractBuilderPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 py-12 px-4 font-sans" dir="rtl">
+    <div className="min-h-screen bg-slate-950 text-slate-200 py-12 px-4 font-sans" dir="rtl" style={{ fontFamily: '"Vazirmatn", "IRANSans", "Tahoma", sans-serif' }}>
       <div className="max-w-7xl mx-auto">
         <div className="mb-10 text-center">
-          <div className="inline-flex p-4 bg-blue-500/10 rounded-full text-blue-400 mb-4 border border-blue-500/20">
+          <div className="inline-flex p-4 bg-blue-500/10 rounded-full text-blue-400 mb-4 border border-blue-500/20 shadow-[0_0_30px_rgba(59,130,246,0.15)]">
             <FileSignature size={32} />
           </div>
           <h1 className="text-3xl font-black text-white mb-2">پنل صدور قرارداد هوشمند | کیا دِو</h1>
@@ -87,94 +107,96 @@ export default function ContractBuilderPage() {
           <div className="max-w-2xl mx-auto bg-emerald-500/10 border border-emerald-500/30 rounded-3xl p-8 text-center animate-in zoom-in">
             <CheckCircle2 size={64} className="text-emerald-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-white mb-4">لینک اختصاصی ساخته شد!</h2>
-            <div className="flex justify-center gap-3 bg-black/50 p-4 rounded-xl border border-white/10 mb-6 text-blue-400 font-mono" dir="ltr">
-              <LinkIcon size={18} /> {generatedLink}
+            <div className="flex justify-center gap-3 bg-black/50 p-4 rounded-xl border border-white/10 mb-6 text-emerald-400 font-mono text-lg" dir="ltr">
+              <LinkIcon size={20} /> {generatedLink}
             </div>
             <div className="flex gap-4 justify-center">
-              <button onClick={copyToClipboard} className="flex gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold">
+              <button onClick={copyToClipboard} className="flex gap-2 items-center bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all">
                 <Copy size={20} /> کپی لینک
               </button>
-              <Link href={generatedLink.replace(window.location.origin, '')} target="_blank" className="flex gap-2 bg-slate-800 text-white px-6 py-3 rounded-xl font-bold">
-                مشاهده قرارداد
+              <Link href={generatedLink.replace(window.location.origin, '')} target="_blank" className="flex gap-2 items-center bg-slate-800 hover:bg-slate-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all border border-slate-700">
+                مشاهده زنده
               </Link>
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {/* ستون سمت راست: فرم تنظیمات */}
-            <form onSubmit={handleCreateContract} className="space-y-6 bg-slate-900 p-8 rounded-[2rem] shadow-2xl h-fit border border-slate-800">
-              <div className="bg-blue-900/20 border border-blue-900/50 p-4 rounded-2xl flex flex-wrap gap-4 justify-between items-center text-sm text-blue-200 mb-6">
-                <span className="font-bold">پیمانکار: بهادر جدیدالاسلام</span>
-                <span className="font-mono">کد ملی: 1741393280</span>
-                <span className="font-mono" dir="ltr">0916 803 8017</span>
+            <form onSubmit={handleCreateContract} className="space-y-6 bg-slate-900/80 backdrop-blur-xl p-8 rounded-[2rem] shadow-2xl h-fit border border-slate-800">
+              <div className="bg-gradient-to-l from-blue-900/30 to-slate-900/30 border border-blue-900/50 p-5 rounded-2xl flex flex-wrap gap-4 justify-between items-center text-sm text-blue-200 mb-8">
+                <span className="font-bold text-base">پیمانکار: بهادر جدیدالاسلام</span>
+                <span className="font-mono bg-black/30 px-3 py-1 rounded-lg border border-white/5">کد ملی: ۱۷۴۱۳۹۳۲۸۰</span>
+                <span className="font-mono bg-black/30 px-3 py-1 rounded-lg border border-white/5" dir="ltr">0916 803 8017</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-400">نام کارفرما</label>
-                  <input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} required className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none" />
+                <div className="space-y-2.5">
+                  <label className="text-sm font-bold text-slate-300">نام کارفرما</label>
+                  <input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3.5 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-400">نام پروژه (مثال: بالکون)</label>
-                  <input type="text" value={projectName} onChange={(e) => setProjectName(e.target.value)} required className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none" />
+                <div className="space-y-2.5">
+                  <label className="text-sm font-bold text-slate-300">نام پروژه (مثال: بالکون)</label>
+                  <input type="text" value={projectName} onChange={(e) => setProjectName(e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3.5 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
                 </div>
               </div>
 
-              <div className="space-y-2 border-t border-slate-800 pt-6">
-                <label className="text-sm font-bold text-slate-400">مبلغ کل قرارداد (تومان)</label>
-                <input type="text" value={contractData.totalAmount} onChange={(e) => handleInputChange("totalAmount", e.target.value)} placeholder="مثال: ۳۰,۰۰۰,۰۰۰" required className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-emerald-400 focus:border-emerald-500 outline-none font-bold text-lg" />
+              <div className="space-y-2.5 border-t border-slate-800/80 pt-6">
+                <label className="text-sm font-bold text-slate-300">مبلغ کل قرارداد (تومان)</label>
+                <input type="text" value={contractData.totalAmount} onChange={(e) => handleInputChange("totalAmount", e.target.value)} placeholder="مثال: ۳۰,۰۰۰,۰۰۰" required className="w-full bg-black/50 border border-slate-700 rounded-xl px-4 py-4 text-emerald-400 focus:border-emerald-500 outline-none font-black text-xl transition-all text-center tracking-wider" dir="ltr" />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div className="space-y-2.5">
                   <label className="text-xs font-bold text-slate-400">پیش‌پرداخت (فاز ۱)</label>
-                  <input type="text" value={contractData.phase1Amount} onChange={(e) => handleInputChange("phase1Amount", e.target.value)} required className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-blue-500 outline-none text-sm" />
+                  <input type="text" value={contractData.phase1Amount} onChange={(e) => handleInputChange("phase1Amount", e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-3 text-white focus:border-blue-500 outline-none text-center font-bold tracking-wide" dir="ltr" />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   <label className="text-xs font-bold text-slate-400">تحویل اولیه (فاز ۲)</label>
-                  <input type="text" value={contractData.phase2Amount} onChange={(e) => handleInputChange("phase2Amount", e.target.value)} required className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-blue-500 outline-none text-sm" />
+                  <input type="text" value={contractData.phase2Amount} onChange={(e) => handleInputChange("phase2Amount", e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-3 text-white focus:border-blue-500 outline-none text-center font-bold tracking-wide" dir="ltr" />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   <label className="text-xs font-bold text-slate-400">تسویه نهایی (فاز ۳)</label>
-                  <input type="text" value={contractData.phase3Amount} onChange={(e) => handleInputChange("phase3Amount", e.target.value)} required className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-blue-500 outline-none text-sm" />
+                  <input type="text" value={contractData.phase3Amount} onChange={(e) => handleInputChange("phase3Amount", e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-3 text-white focus:border-blue-500 outline-none text-center font-bold tracking-wide" dir="ltr" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 border-b border-slate-800/80 pb-6">
+                <div className="space-y-2.5">
                   <label className="text-xs font-bold text-slate-400">زمان تحویل (روز کاری)</label>
-                  <input type="text" value={contractData.deliveryDays} onChange={(e) => handleInputChange("deliveryDays", e.target.value)} required className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-blue-500 outline-none text-sm" />
+                  <input type="text" value={contractData.deliveryDays} onChange={(e) => handleInputChange("deliveryDays", e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-3 text-white focus:border-blue-500 outline-none text-center font-bold text-lg" />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   <label className="text-xs font-bold text-slate-400">مدت پشتیبانی (ماه)</label>
-                  <input type="text" value={contractData.supportMonths} onChange={(e) => handleInputChange("supportMonths", e.target.value)} required className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-blue-500 outline-none text-sm" />
+                  <input type="text" value={contractData.supportMonths} onChange={(e) => handleInputChange("supportMonths", e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-3 text-white focus:border-blue-500 outline-none text-center font-bold text-lg" />
                 </div>
               </div>
 
-              <div className="space-y-2 pt-4 border-t border-slate-800">
+              <div className="space-y-3 pt-2">
                 <div className="flex justify-between items-center mb-2">
-                  <label className="text-sm font-bold text-slate-400">امضای پیمانکار (بهادر جدیدالاسلام)</label>
-                  <button type="button" onClick={clearSignature} className="text-xs flex gap-1 text-red-400 hover:text-red-300 transition-colors"><Eraser size={14} /> پاک کردن</button>
+                  <label className="text-sm font-bold text-slate-300">امضای رسمی مجری (بهادر جدیدالاسلام)</label>
+                  <button type="button" onClick={clearSignature} className="text-xs flex gap-1.5 items-center text-red-400 hover:text-red-300 transition-colors bg-red-500/10 px-3 py-1.5 rounded-lg font-bold"><Eraser size={14} /> پاک کردن امضا</button>
                 </div>
-                <div className="bg-white rounded-xl overflow-hidden border-2 border-slate-700">
-                  <SignatureCanvas ref={sigCanvas} penColor="blue" canvasProps={{ className: "w-full h-40 cursor-crosshair" }} />
+                <div className="bg-slate-100 rounded-xl overflow-hidden border-2 border-slate-600 focus-within:border-blue-500 transition-colors">
+                  <SignatureCanvas ref={sigCanvas} penColor="#1e3a8a" canvasProps={{ className: "w-full h-44 cursor-crosshair" }} />
                 </div>
               </div>
 
-              <button type="submit" disabled={isLoading} className="w-full flex justify-center gap-2 bg-blue-600 text-white py-4 rounded-xl font-black text-lg hover:bg-blue-700 transition-all active:scale-95 mt-4 shadow-lg shadow-blue-600/20">
-                {isLoading ? <Loader2 className="animate-spin" /> : <FileSignature />}
-                ثبت نهایی و دریافت لینک
+              <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white py-4.5 rounded-xl font-black text-lg hover:from-blue-700 hover:to-blue-600 transition-all active:scale-[0.98] mt-4 shadow-[0_10px_20px_rgba(37,99,235,0.2)]">
+                {isLoading ? <Loader2 className="animate-spin" size={24} /> : <FileSignature size={24} />}
+                ثبت حقوقی قرارداد و دریافت لینک
               </button>
             </form>
 
             {/* ستون سمت چپ: پیش‌نمایش زنده */}
-            <div className="relative h-[800px] overflow-y-auto pr-2 custom-scrollbar">
-              <div className="sticky top-0 bg-slate-950/80 backdrop-blur-md z-10 pb-4 mb-4">
+            <div className="relative h-[850px] overflow-y-auto pr-3 custom-scrollbar rounded-2xl">
+              <div className="sticky top-0 bg-slate-950/90 backdrop-blur-md z-10 pb-4 mb-4 pt-2 border-b border-slate-800">
                 <h3 className="text-lg font-bold text-emerald-400 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  پیش‌نمایش زنده قرارداد
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                  </span>
+                  پیش‌نمایش زنده قرارداد کارفرما
                 </h3>
-                <p className="text-xs text-slate-400">این دقیقاً همان چیزی است که کارفرما مشاهده خواهد کرد.</p>
               </div>
               <ContractPreview 
                 clientName={clientName} 
