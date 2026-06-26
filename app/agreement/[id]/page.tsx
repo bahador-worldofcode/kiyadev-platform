@@ -4,8 +4,10 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import SignatureCanvas from "react-signature-canvas";
-import { CheckCircle2, Download, Eraser, Loader2, PenTool, FileText, Printer } from "lucide-react";
-import Image from "next/image";
+import { CheckCircle2, Eraser, Loader2, PenTool, FileText, Printer, ShieldCheck } from "lucide-react";
+
+// ایمپورت کردن فایل تمپلیت جامع قرارداد که ساختیم
+import ContractContent from "@/components/ContractContent";
 
 export default function AgreementPage() {
   const params = useParams();
@@ -44,11 +46,12 @@ export default function AgreementPage() {
   // ثبت امضای کارفرما
   const handleClientSign = async () => {
     if (sigCanvas.current?.isEmpty()) {
-      alert("لطفاً قرارداد را امضا کنید!");
+      alert("لطفاً در کادر مشخص شده امضا کنید.");
       return;
     }
 
     setIsSubmitting(true);
+    // استخراج تصویر امضا با حجم بسیار پایین (base64)
     const signatureImage = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
 
     try {
@@ -64,10 +67,9 @@ export default function AgreementPage() {
 
       // بروزرسانی استیت برای نمایش آنی به کاربر
       setContract({ ...contract, client_signature: signatureImage, status: "completed" });
-      alert("قرارداد با موفقیت امضا و نهایی شد.");
     } catch (error) {
       console.error("خطا در ثبت امضا:", error);
-      alert("مشکلی در ثبت امضا پیش آمد.");
+      alert("مشکلی در ثبت امضا پیش آمد. لطفاً اتصال اینترنت را بررسی کنید.");
     } finally {
       setIsSubmitting(false);
     }
@@ -78,21 +80,38 @@ export default function AgreementPage() {
   };
 
   if (loading) {
-    return <div className="min-h-screen bg-slate-100 flex items-center justify-center"><Loader2 className="animate-spin text-blue-600 w-12 h-12" /></div>;
+    return (
+      <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center gap-4">
+        <Loader2 className="animate-spin text-blue-600 w-12 h-12" />
+        <p className="text-slate-500 font-bold" style={{ fontFamily: '"Vazirmatn", sans-serif' }}>در حال بارگذاری قرارداد امن...</p>
+      </div>
+    );
   }
 
   if (!contract) {
-    return <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center text-slate-800">
-      <h1 className="text-3xl font-black mb-2">قرارداد یافت نشد!</h1>
-      <p>لینک نامعتبر است یا حذف شده.</p>
-    </div>;
+    return (
+      <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center text-slate-800" style={{ fontFamily: '"Vazirmatn", sans-serif' }}>
+        <h1 className="text-3xl font-black mb-2 text-red-600">قرارداد یافت نشد!</h1>
+        <p className="font-bold text-slate-500">لینک نامعتبر است یا قرارداد از سیستم حذف شده است.</p>
+      </div>
+    );
   }
 
   // تبدیل تاریخ میلادی دیتابیس به شمسی
   const contractDate = new Date(contract.created_at).toLocaleDateString("fa-IR");
 
+  // چک کردن اینکه آیا از دیتای JSON جدید استفاده شده یا ساختار قدیمی
+  const contractData = contract.contract_data || {
+    totalAmount: contract.contract_amount,
+    phase1Amount: "۰",
+    phase2Amount: "۰",
+    phase3Amount: "۰",
+    deliveryDays: "۰",
+    supportMonths: "۱۲"
+  };
+
   return (
-    <div className="min-h-screen bg-slate-100 py-8 px-4 print:p-0 print:bg-white text-slate-900 font-sans w-full selection:bg-blue-200" dir="rtl">
+    <div className="min-h-screen bg-slate-200 py-8 px-4 print:p-0 print:bg-white text-slate-900 selection:bg-blue-200" dir="rtl" style={{ fontFamily: '"Vazirmatn", "IRANSans", "Tahoma", sans-serif' }}>
       
       {/* استایل‌های اختصاصی برای حذف حاشیه پرینتر و بهینه‌سازی چاپ */}
       <style dangerouslySetInnerHTML={{__html: `
@@ -104,131 +123,116 @@ export default function AgreementPage() {
         }
       `}} />
 
-      {/* دکمه پرینت (فقط وقتی قرارداد تکمیل شده باشه نمایش داده میشه) */}
+      {/* نوار وضعیت بالای صفحه */}
       {contract.status === "completed" && (
-        <div className="max-w-[210mm] mx-auto mb-6 flex justify-between items-center print-hide w-full bg-emerald-100 text-emerald-800 p-4 rounded-xl border border-emerald-200 shadow-sm">
-          <div className="flex items-center gap-2 font-bold">
-            <CheckCircle2 className="w-5 h-5" />
-            این قرارداد رسماً امضا و نهایی شده است.
+        <div className="max-w-[210mm] mx-auto mb-6 flex justify-between items-center print-hide w-full bg-emerald-100 text-emerald-800 p-5 rounded-2xl border-2 border-emerald-300 shadow-lg">
+          <div className="flex items-center gap-3 font-black text-lg">
+            <ShieldCheck className="w-8 h-8 text-emerald-600" />
+            این قرارداد رسماً امضا و در سیستم حقوقی ثبت نهایی شده است.
           </div>
           <button 
             onClick={() => window.print()}
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-lg font-bold shadow-md transition-all active:scale-95"
+            className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-3 rounded-xl font-bold shadow-md transition-all active:scale-95"
           >
-            <Printer className="w-4 h-4" />
-            ذخیره PDF / پرینت
+            <Printer className="w-5 h-5" />
+            پرینت / ذخیره PDF
           </button>
         </div>
       )}
 
       {/* برگه اصلی A4 */}
-      <div className="max-w-[210mm] min-h-[297mm] mx-auto bg-white p-6 md:p-12 shadow-2xl print-shadow-none rounded-2xl print:rounded-none w-full relative overflow-hidden">
+      <div className="max-w-[210mm] min-h-[297mm] mx-auto bg-white p-6 md:p-14 shadow-2xl print-shadow-none rounded-[2rem] print:rounded-none w-full relative overflow-hidden border border-slate-100">
         
         {/* هدر رسمی */}
-        <div className="flex justify-between items-start border-b-2 border-slate-800 pb-6 mb-8">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-slate-900 rounded-xl flex items-center justify-center p-2 shadow-sm shrink-0">
+        <div className="flex justify-between items-start border-b-4 border-slate-800 pb-6 mb-10">
+          <div className="flex items-center gap-5">
+            <div className="w-20 h-20 bg-slate-950 rounded-2xl flex items-center justify-center p-3 shadow-md shrink-0">
               <img src="/icon.png" alt="لوگو کیادِو" className="w-full h-full object-contain" />
             </div>
             <div>
-              <h1 className="text-2xl md:text-3xl font-black text-slate-900 mb-1">قرارداد رسمی توسعه نرم‌افزار</h1>
-              <p className="text-slate-500 font-bold text-sm">تیم توسعه و مهندسی نرم‌افزار کیادِو | KiyaDev</p>
+              <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">قرارداد رسمی توسعه نرم‌افزار</h1>
+              <p className="text-slate-600 font-bold text-base tracking-wide">تیم توسعه و مهندسی نرم‌افزار کیادِو | KiyaDev</p>
             </div>
           </div>
-          <div className="text-sm font-medium text-slate-600 bg-slate-50 border border-slate-200 p-3 rounded-xl hidden sm:block">
-            <div className="flex justify-between gap-4 mb-2"><span>تاریخ:</span> <span className="font-bold text-slate-900">{contractDate}</span></div>
-            <div className="flex justify-between gap-4"><span>شماره:</span> <span className="font-mono text-slate-900 text-xs">{contract.id.split('-')[0].toUpperCase()}</span></div>
+          <div className="text-sm font-medium text-slate-700 bg-slate-100 border-2 border-slate-200 p-4 rounded-2xl hidden sm:block min-w-[180px]">
+            <div className="flex justify-between gap-4 mb-3 border-b border-slate-200 pb-2"><span>تاریخ:</span> <span className="font-bold text-slate-900">{contractDate}</span></div>
+            <div className="flex justify-between gap-4"><span>شماره:</span> <span className="font-mono text-slate-900 font-bold">{contract.id.split('-')[0].toUpperCase()}</span></div>
           </div>
         </div>
 
-        {/* مشخصات طرفین */}
-        <div className="mb-8 bg-slate-50 p-5 rounded-xl border border-slate-200">
-          <h2 className="flex items-center gap-2 text-lg font-bold text-slate-800 mb-4 border-b border-slate-200 pb-2">
-            <FileText className="w-5 h-5 text-blue-600" /> مشخصات طرفین
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm leading-relaxed">
-            <div>
-              <p className="font-black text-blue-700 mb-2">پیمانکار (مجری):</p>
-              <p><span className="text-slate-500">نام نماینده:</span> <strong>بهادر جدیدالاسلام</strong></p>
-              <p><span className="text-slate-500">سمت:</span> <strong>نماینده رسمی کیا دِو</strong></p>
-              <p><span className="text-slate-500">کد ملی:</span> <span className="font-mono">1741393280</span></p>
-              <p><span className="text-slate-500">شماره تماس:</span> <span className="font-mono" dir="ltr">0916 803 8017</span></p>
-            </div>
-            <div>
-              <p className="font-black text-blue-700 mb-2">کارفرما:</p>
-              <p><span className="text-slate-500">نام شخص / مجموعه:</span> <strong>{contract.client_name}</strong></p>
-              <p><span className="text-slate-500">عنوان پروژه:</span> <strong>{contract.project_name}</strong></p>
-              <p><span className="text-slate-500">مبلغ قرارداد:</span> <strong>{contract.contract_amount}</strong></p>
-            </div>
-          </div>
-        </div>
-
-        {/* متن اصلی قرارداد */}
-        <div className="mb-12">
-          <h2 className="text-lg font-bold text-slate-800 mb-4 border-b-2 border-slate-800 pb-2 inline-block">
-            متن و شرایط قرارداد
-          </h2>
-          {/* کلاس whitespace-pre-wrap باعث میشه تمام اینترها و خطوطی که تو پنلت زدی اینجا دقیقاً همونطور نشون داده بشه */}
-          <div className="text-slate-700 text-sm md:text-base leading-[2.2] text-justify whitespace-pre-wrap">
-            {contract.contract_text}
-          </div>
+        {/* محتوای قرارداد که از تمپلیت خونده میشه */}
+        <div className="mb-16">
+          <ContractContent 
+            clientName={contract.client_name} 
+            projectName={contract.project_name} 
+            data={contractData} 
+          />
         </div>
 
         {/* بخش امضاها */}
-        <div className="mt-16 pt-8 border-t-2 border-slate-200">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-10 px-4">
+        <div className="mt-20 pt-10 border-t-2 border-dashed border-slate-300 print:break-inside-avoid">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-12 px-2">
             
-            {/* امضای شما (همیشه هست) */}
-            <div className="w-full md:w-1/2 text-center">
-              <p className="font-bold text-slate-800 mb-4">امضای پیمانکار (نماینده کیا دِو)</p>
-              <div className="h-40 flex justify-center items-center">
-                <img src={contract.contractor_signature} alt="امضای پیمانکار" className="max-h-full mix-blend-multiply" />
+            {/* امضای شما (کیا دِو) */}
+            <div className="w-full md:w-1/2 text-center bg-slate-50 p-6 rounded-3xl border border-slate-200">
+              <p className="font-black text-lg text-slate-800 mb-6">امضای مجری (نماینده کیا دِو)</p>
+              <div className="h-48 flex justify-center items-center">
+                {contract.contractor_signature ? (
+                  <img src={contract.contractor_signature} alt="امضای پیمانکار" className="max-h-full mix-blend-multiply drop-shadow-md" />
+                ) : (
+                  <span className="text-slate-400">امضا یافت نشد</span>
+                )}
               </div>
-              <p className="text-xs text-slate-500 mt-2">ثبت شده به صورت دیجیتال</p>
+              <p className="text-sm font-bold text-emerald-600 mt-4 flex justify-center items-center gap-1">
+                <CheckCircle2 size={16} /> تایید شده سیستم
+              </p>
             </div>
 
             {/* امضای کارفرما */}
-            <div className="w-full md:w-1/2 text-center">
-              <p className="font-bold text-slate-800 mb-4">امضای کارفرما</p>
+            <div className="w-full md:w-1/2 text-center bg-slate-50 p-6 rounded-3xl border border-slate-200">
+              <p className="font-black text-lg text-slate-800 mb-6">امضای کارفرما</p>
               
               {contract.status === "completed" ? (
-                // اگر امضا کرده بود، عکس امضاش رو نشون بده
+                // حالت تایید شده
                 <div>
-                  <div className="h-40 flex justify-center items-center">
-                    <img src={contract.client_signature} alt="امضای کارفرما" className="max-h-full mix-blend-multiply" />
+                  <div className="h-48 flex justify-center items-center">
+                    <img src={contract.client_signature} alt="امضای کارفرما" className="max-h-full mix-blend-multiply drop-shadow-md" />
                   </div>
-                  <p className="text-xs text-slate-500 mt-2">ثبت شده به صورت دیجیتال در سیستم</p>
+                  <p className="text-sm font-bold text-emerald-600 mt-4 flex justify-center items-center gap-1">
+                    <CheckCircle2 size={16} /> ثبت دیجیتال و نهایی شده
+                  </p>
                 </div>
               ) : (
-                // اگر امضا نکرده بود، باکس امضا براش باز میشه (موقع پرینت این بخش مخفی میشه)
+                // حالت نیاز به امضا
                 <div className="print-hide">
-                  <div className="bg-slate-50 rounded-xl overflow-hidden border-2 border-dashed border-blue-300 relative">
+                  <div className="bg-white rounded-2xl overflow-hidden border-2 border-dashed border-blue-400 relative shadow-inner focus-within:border-blue-600 transition-colors">
+                    {/* کادر امضای بلند و قفل شده برای جلوگیری از اسکرول گوشی */}
                     <SignatureCanvas 
                       ref={sigCanvas}
-                      penColor="black"
-                      canvasProps={{ className: "w-full h-40 cursor-crosshair" }}
+                      penColor="#0f172a"
+                      canvasProps={{ className: "w-full h-72 md:h-80 cursor-crosshair touch-none" }}
                     />
-                    <div className="absolute top-2 right-2 text-xs text-slate-400 pointer-events-none">اینجا امضا کنید...</div>
+                    <div className="absolute top-3 right-3 text-sm font-bold text-slate-300 pointer-events-none">لطفاً اینجا امضا کنید...</div>
                   </div>
                   
-                  <div className="flex gap-2 mt-4">
+                  <div className="flex flex-col sm:flex-row gap-3 mt-6">
                     <button 
                       onClick={clearSignature} 
-                      className="px-4 py-2 text-xs font-bold text-red-500 bg-red-50 hover:bg-red-100 rounded-lg transition-colors flex-1"
+                      className="px-5 py-3 text-sm font-bold text-red-500 bg-red-100 hover:bg-red-200 rounded-xl transition-colors w-full sm:w-auto flex justify-center items-center"
                     >
-                      <Eraser className="w-4 h-4 inline mr-1" /> پاک کردن
+                      <Eraser className="w-5 h-5 inline mr-1" /> پاک کردن
                     </button>
                     <button 
                       onClick={handleClientSign}
                       disabled={isSubmitting}
-                      className="px-4 py-2 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex-[2] flex justify-center items-center"
+                      className="px-5 py-3 text-base font-black text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all shadow-lg shadow-blue-600/30 w-full flex justify-center items-center flex-1 active:scale-95"
                     >
-                      {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <PenTool className="w-4 h-4 inline mr-1" />}
-                      تایید و امضای نهایی
+                      {isSubmitting ? <Loader2 className="w-6 h-6 animate-spin" /> : <PenTool className="w-6 h-6 inline mr-2" />}
+                      تایید و ثبت نهایی قرارداد
                     </button>
                   </div>
-                  <p className="text-[10px] text-slate-500 mt-3 text-justify leading-relaxed">
-                    توجه: با فشردن دکمه "تایید و امضای نهایی"، شما به صورت الکترونیکی مفاد این قرارداد را تایید می‌کنید. پس از ثبت، این سند قفل شده و امکان ویرایش آن وجود نخواهد داشت و به عنوان یک سند معتبر قابل استناد است.
+                  <p className="text-[11px] font-bold text-slate-500 mt-4 text-justify leading-relaxed">
+                    توجه: با فشردن دکمه ثبت نهایی، شما مفاد این قرارداد را به صورت الکترونیکی تایید می‌کنید. پس از ثبت، این سند به عنوان یک نسخه معتبر در سیستم ذخیره شده و قابل استناد می‌باشد.
                   </p>
                 </div>
               )}
@@ -238,9 +242,9 @@ export default function AgreementPage() {
         </div>
 
         {/* پانویس */}
-        <div className="text-center text-[10px] font-bold text-slate-400 mt-16 print:mt-auto pt-8">
-          این قرارداد در سامانه امن کیا دِو ثبت گردیده و دارای اعتبار می‌باشد.
-          <span className="block mt-1">شناسه یکتای سیستم: {contract.id}</span>
+        <div className="text-center text-xs font-bold text-slate-400 mt-20 print:mt-auto pt-6 border-t border-slate-100">
+          این قرارداد در بستر ابری امن کیادِو ایجاد و کدگذاری شده است.
+          <span className="block mt-2 font-mono bg-slate-100 inline-block px-3 py-1 rounded-md">ID: {contract.id}</span>
         </div>
 
       </div>
