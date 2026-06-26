@@ -8,6 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
       disallow: '/private/', // اگر بعدا پنل ادمین داشتیم
+      
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   };

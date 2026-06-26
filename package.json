@@ -22,6 +22,7 @@
     "react-dom": "19.2.3",
     "react-markdown": "^10.1.0",
     "react-qr-code": "^2.0.21",
+    "react-signature-canvas": "^1.1.0-alpha.2",
     "sharp": "^0.34.5",
     "tailwind-merge": "^3.4.0"
   },
@@ -30,6 +31,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-signature-canvas": "^1.0.7",
     "eslint": "^9",
     "eslint-config-next": "16.1.0",
     "tailwindcss": "^4",
