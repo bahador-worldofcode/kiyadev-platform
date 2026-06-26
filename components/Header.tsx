@@ -18,7 +18,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // شرط ضدگلوله: محو شدن هدر در صفحات اختصاصی و قیف‌های فروش
+  // شرط ضدگلوله: محو شدن هدر در صفحات اختصاصی، قیف‌های فروش، پنل مخفی و قرارداد مشتریان
   if (pathname && (
     pathname.includes('/catalog') || 
     pathname.includes('/contract') || 
@@ -27,7 +27,9 @@ export default function Header() {
     pathname.includes('/real-estate') ||
     pathname.includes('/advisor') ||
     pathname.includes('/security') ||
-    pathname.includes('/beauty') // <--- صفحه سالن زیبایی اضافه شد
+    pathname.includes('/beauty') ||
+    pathname.includes('/agreement') || // این خط باعث میشه هدر تو صفحه قرارداد مشتری نیاد
+    pathname.includes('/private')      // این خط باعث میشه هدر تو پنل مخفی خودت نیاد
   )) {
     return null;
   }
