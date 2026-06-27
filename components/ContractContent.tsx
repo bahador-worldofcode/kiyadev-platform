@@ -79,6 +79,25 @@ export default function ContractContent({ clientName, projectName, data }: any) 
           <li><span className="font-bold text-slate-900">تحویل اولیه (فاز ۲):</span> <span className="font-bold text-blue-700">{formatCurrency(data?.phase2Amount) || '۰'} تومان</span> پس از اتمام کدنویسی و رویت سامانه.</li>
           <li><span className="font-bold text-slate-900">تسویه نهایی (فاز ۳):</span> <span className="font-bold text-blue-700">{formatCurrency(data?.phase3Amount) || '۰'} تومان</span> پس از انجام اصلاحات نهایی.</li>
         </ul>
+
+        {/* اطلاعات حساب مجری که جدید اضافه شد */}
+        <div className="mt-5 p-4 bg-slate-50 border-2 border-slate-200 rounded-xl">
+          <p className="font-bold text-slate-800 mb-3">اطلاعات حساب جهت واریز مبالغ قرارداد (به نام مجری):</p>
+          <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center">
+            <div className="flex gap-2">
+              <span className="text-slate-500 font-medium">به نام:</span> 
+              <span className="font-bold text-slate-900">بهادر جدیدالاسلام</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-slate-500 font-medium">شماره کارت:</span> 
+              <span className="font-mono font-bold text-slate-900 tracking-widest" dir="ltr">6104-3376-7080-6973</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-slate-500 font-medium">شماره شبا:</span> 
+              <span className="font-mono font-bold text-slate-900" dir="ltr">IR62-0120-0100-0000-4067-9246-81</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ماده ۵: اضافه شدن بند جریمه تاخیر و دسترسی سرور */}
