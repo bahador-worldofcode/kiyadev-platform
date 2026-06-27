@@ -23,7 +23,7 @@ const formatInputValue = (val: string) => {
 
 export default function ContractBuilderPage() {
   const [clientName, setClientName] = useState("");
-  const [projectName, setProjectName] = useState("بالکون");
+  const [projectName, setProjectName] = useState("بالکن");
   
   // متغیرهای قرارداد آپدیت شد (اطلاعات هویتی جدید بهش اضافه شد)
   const [contractData, setContractData] = useState({
@@ -182,7 +182,7 @@ export default function ContractBuilderPage() {
               {/* اطلاعات پروژه */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b border-slate-800/80 pb-6">
                 <div className="space-y-2.5">
-                  <label className="text-sm font-bold text-slate-300">نام پروژه (مثال: بالکون)</label>
+                  <label className="text-sm font-bold text-slate-300">نام پروژه (مثال: بالکن)</label>
                   <input type="text" value={projectName} onChange={(e) => setProjectName(e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3.5 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
                 </div>
                 <div className="space-y-2.5">
