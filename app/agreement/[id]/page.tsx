@@ -240,6 +240,27 @@ export default function AgreementPage() {
           </div>
         </div>
 
+        {/* بخش جدید: مدارک هویتی پیوست شده */}
+        {(contract.contractor_id_card || contract.client_id_card) && (
+          <div className="mt-12 md:mt-16 pt-8 md:pt-10 border-t-2 border-dashed border-slate-300 print:break-inside-avoid">
+            <h3 className="text-lg font-black text-slate-800 mb-6 text-center">مدارک هویتی پیوست شده</h3>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-6 md:gap-10">
+              {contract.contractor_id_card && (
+                <div className="w-full sm:w-1/2 text-center bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                  <p className="font-bold text-sm text-slate-700 mb-3">کارت ملی مجری (کیا دِو)</p>
+                  <img src={contract.contractor_id_card} alt="کارت ملی پیمانکار" className="max-w-full h-auto rounded-xl mx-auto shadow-sm" style={{ maxHeight: "250px" }} />
+                </div>
+              )}
+              {contract.client_id_card && (
+                <div className="w-full sm:w-1/2 text-center bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                  <p className="font-bold text-sm text-slate-700 mb-3">کارت ملی کارفرما</p>
+                  <img src={contract.client_id_card} alt="کارت ملی کارفرما" className="max-w-full h-auto rounded-xl mx-auto shadow-sm" style={{ maxHeight: "250px" }} />
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* پانویس */}
         <div className="text-center text-[10px] sm:text-xs font-bold text-slate-400 mt-12 md:mt-20 print:mt-auto pt-6 border-t border-slate-100">
           این قرارداد در بستر ابری امن کیادِو ایجاد و کدگذاری شده است.

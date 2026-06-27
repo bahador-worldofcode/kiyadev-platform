@@ -3,7 +3,7 @@
 import React, { useState, useRef } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { supabase } from "@/lib/supabase";
-import { CheckCircle2, Copy, FileSignature, Loader2, Eraser, Link as LinkIcon } from "lucide-react";
+import { CheckCircle2, Copy, FileSignature, Loader2, Eraser, Link as LinkIcon, Upload } from "lucide-react";
 import Link from "next/link";
 import ContractPreview from "@/components/ContractPreview";
 
@@ -15,10 +15,8 @@ const toPersianDigits = (num: string | number) => {
 
 const formatInputValue = (val: string) => {
   if (!val) return "";
-  // حذف همه کاراکترها به جز اعداد (فارسی یا انگلیسی)
   const raw = val.replace(/,/g, '').replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '');
   if (!raw) return "";
-  // اعمال کاما و تبدیل به اعداد فارسی
   const formattedWithCommas = raw.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return toPersianDigits(formattedWithCommas);
 };
@@ -27,32 +25,63 @@ export default function ContractBuilderPage() {
   const [clientName, setClientName] = useState("");
   const [projectName, setProjectName] = useState("بالکون");
   
+  // متغیرهای قرارداد آپدیت شد (اطلاعات هویتی جدید بهش اضافه شد)
   const [contractData, setContractData] = useState({
     totalAmount: "",
     phase1Amount: "",
     phase2Amount: "",
     phase3Amount: "",
     deliveryDays: "۱۲",
-    supportMonths: "۱۲"
+    supportMonths: "۱۲",
+    clientNationalId: "",
+    clientPhone: "",
+    clientAddress: "",
+    clientPostalCode: ""
   });
+
+  // استیت‌های مربوط به آپلود فایل‌های کارت ملی
+  const [contractorIdFile, setContractorIdFile] = useState<File | null>(null);
+  const [clientIdFile, setClientIdFile] = useState<File | null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const [generatedLink, setGeneratedLink] = useState("");
   const sigCanvas = useRef<any>(null);
 
   const handleInputChange = (field: string, value: string) => {
-    // برای فیلدهای مالی، فرمت لحظه‌ای اعمال می‌کنیم
     if (field.includes('Amount')) {
       setContractData(prev => ({ ...prev, [field]: formatInputValue(value) }));
-    } else {
-      // برای روز و ماه فقط اعداد رو فارسی می‌کنیم
+    } else if (field === 'deliveryDays' || field === 'supportMonths') {
       const raw = value.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '');
       setContractData(prev => ({ ...prev, [field]: toPersianDigits(raw) }));
+    } else {
+      // برای فیلدهای متنی جدید (آدرس، کدملی و...) نیازی به فرمت عدد نیست
+      setContractData(prev => ({ ...prev, [field]: value }));
     }
   };
 
   const clearSignature = () => {
     sigCanvas.current?.clear();
+  };
+
+  // تابع آپلود فایل در سوپابیس و دریافت لینک
+  const uploadFileToStorage = async (file: File, folderName: string) => {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+    const filePath = `${folderName}/${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('contracts_attachments')
+      .upload(filePath, file);
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
+    const { data } = supabase.storage
+      .from('contracts_attachments')
+      .getPublicUrl(filePath);
+
+    return data.publicUrl;
   };
 
   const handleCreateContract = async (e: React.FormEvent) => {
@@ -61,10 +90,22 @@ export default function ContractBuilderPage() {
       alert("لطفاً قرارداد را امضا کنید!");
       return;
     }
+    
+    // اجباری کردن آپلود کارت ملی
+    if (!contractorIdFile || !clientIdFile) {
+      alert("لطفاً تصویر کارت ملی پیمانکار و کارفرما را آپلود کنید.");
+      return;
+    }
+
     setIsLoading(true);
     const signatureImage = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
 
     try {
+      // ۱. ابتدا فایل‌ها را آپلود می‌کنیم
+      const contractorIdUrl = await uploadFileToStorage(contractorIdFile, 'contractor_ids');
+      const clientIdUrl = await uploadFileToStorage(clientIdFile, 'client_ids');
+
+      // ۲. ثبت اطلاعات در دیتابیس
       const { data, error } = await supabase.from("official_contracts").insert([
         {
           client_name: clientName,
@@ -72,6 +113,8 @@ export default function ContractBuilderPage() {
           contract_amount: contractData.totalAmount, 
           contract_data: contractData, 
           contractor_signature: signatureImage,
+          contractor_id_card: contractorIdUrl, // ذخیره لینک کارت ملی پیمانکار
+          client_id_card: clientIdUrl, // ذخیره لینک کارت ملی کارفرما
           status: "pending"
         }
       ]).select();
@@ -82,7 +125,7 @@ export default function ContractBuilderPage() {
       }
     } catch (error) {
       console.error(error);
-      alert("خطا در ایجاد قرارداد!");
+      alert("خطا در ایجاد قرارداد یا آپلود فایل‌ها! لطفاً حجم تصاویر را چک کنید.");
     } finally {
       setIsLoading(false);
     }
@@ -123,29 +166,85 @@ export default function ContractBuilderPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {/* ستون سمت راست: فرم تنظیمات */}
             <form onSubmit={handleCreateContract} className="space-y-6 bg-slate-900/80 backdrop-blur-xl p-8 rounded-[2rem] shadow-2xl h-fit border border-slate-800">
-              <div className="bg-gradient-to-l from-blue-900/30 to-slate-900/30 border border-blue-900/50 p-5 rounded-2xl flex flex-wrap gap-4 justify-between items-center text-sm text-blue-200 mb-8">
-                <span className="font-bold text-base">پیمانکار: بهادر جدیدالاسلام</span>
-                <span className="font-mono bg-black/30 px-3 py-1 rounded-lg border border-white/5">کد ملی: ۱۷۴۱۳۹۳۲۸۰</span>
-                <span className="font-mono bg-black/30 px-3 py-1 rounded-lg border border-white/5" dir="ltr">0916 803 8017</span>
+              
+              {/* اطلاعات ثابت پیمانکار */}
+              <div className="bg-gradient-to-l from-blue-900/30 to-slate-900/30 border border-blue-900/50 p-5 rounded-2xl flex flex-col gap-3 text-sm text-blue-200 mb-8">
+                <div className="flex flex-wrap gap-4 justify-between items-center">
+                  <span className="font-bold text-base">پیمانکار: بهادر جدیدالاسلام (کیا دِو)</span>
+                  <span className="font-mono bg-black/30 px-3 py-1 rounded-lg border border-white/5">کد ملی: ۱۷۴۱۳۹۳۲۸۰</span>
+                  <span className="font-mono bg-black/30 px-3 py-1 rounded-lg border border-white/5" dir="ltr">0916 803 8017</span>
+                </div>
+                <div className="text-xs text-blue-300 border-t border-blue-900/50 pt-2 mt-1">
+                  <span className="font-bold">آدرس پیمانکار:</span> تهران، میدان فاطمی، پایین‌تر از میدان جهاد، خیابان غفاری، پلاک ۳۲
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2.5">
-                  <label className="text-sm font-bold text-slate-300">نام کارفرما</label>
-                  <input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3.5 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
-                </div>
+              {/* اطلاعات پروژه */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b border-slate-800/80 pb-6">
                 <div className="space-y-2.5">
                   <label className="text-sm font-bold text-slate-300">نام پروژه (مثال: بالکون)</label>
                   <input type="text" value={projectName} onChange={(e) => setProjectName(e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3.5 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
                 </div>
+                <div className="space-y-2.5">
+                  <label className="text-sm font-bold text-slate-300">مبلغ کل قرارداد (تومان)</label>
+                  <input type="text" value={contractData.totalAmount} onChange={(e) => handleInputChange("totalAmount", e.target.value)} required className="w-full bg-black/50 border border-slate-700 rounded-xl px-4 py-3.5 text-emerald-400 focus:border-emerald-500 outline-none font-black text-xl transition-all text-center tracking-wider" dir="ltr" />
+                </div>
               </div>
 
-              <div className="space-y-2.5 border-t border-slate-800/80 pt-6">
-                <label className="text-sm font-bold text-slate-300">مبلغ کل قرارداد (تومان)</label>
-                <input type="text" value={contractData.totalAmount} onChange={(e) => handleInputChange("totalAmount", e.target.value)} placeholder="مثال: ۳۰,۰۰۰,۰۰۰" required className="w-full bg-black/50 border border-slate-700 rounded-xl px-4 py-4 text-emerald-400 focus:border-emerald-500 outline-none font-black text-xl transition-all text-center tracking-wider" dir="ltr" />
+              {/* بخش جدید: اطلاعات هویتی کارفرما */}
+              <div className="space-y-4">
+                <h3 className="text-sm font-bold text-emerald-400 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  اطلاعات هویتی کارفرما
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-400">نام شخص / مجموعه</label>
+                    <input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-white focus:border-blue-500 outline-none text-sm" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-400">کد ملی / شناسه ملی</label>
+                    <input type="text" value={contractData.clientNationalId} onChange={(e) => handleInputChange("clientNationalId", e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-white focus:border-blue-500 outline-none text-sm font-mono text-left" dir="ltr" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-400">شماره تماس (الزامی)</label>
+                    <input type="text" value={contractData.clientPhone} onChange={(e) => handleInputChange("clientPhone", e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-white focus:border-blue-500 outline-none text-sm font-mono text-left" dir="ltr" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-400">کد پستی (اختیاری)</label>
+                    <input type="text" value={contractData.clientPostalCode} onChange={(e) => handleInputChange("clientPostalCode", e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-white focus:border-blue-500 outline-none text-sm font-mono text-left" dir="ltr" />
+                  </div>
+                </div>
+                <div className="space-y-2 border-b border-slate-800/80 pb-6">
+                  <label className="text-xs font-bold text-slate-400">آدرس دقیق کارفرما</label>
+                  <textarea value={contractData.clientAddress} onChange={(e) => handleInputChange("clientAddress", e.target.value)} required rows={2} className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-white focus:border-blue-500 outline-none text-sm resize-none"></textarea>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {/* بخش جدید: آپلود کارت ملی */}
+              <div className="space-y-4">
+                <h3 className="text-sm font-bold text-blue-400 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                  مدارک هویتی (آپلود تصویر کارت ملی)
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-b border-slate-800/80 pb-6">
+                  <div className="bg-slate-950/50 border border-slate-700 border-dashed rounded-xl p-4 text-center hover:border-blue-500 transition-colors cursor-pointer relative">
+                    <input type="file" accept="image/*" onChange={(e) => setContractorIdFile(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required />
+                    <Upload className="mx-auto text-slate-500 mb-2 w-6 h-6" />
+                    <p className="text-xs font-bold text-slate-300">کارت ملی پیمانکار (شما)</p>
+                    <p className="text-[10px] text-emerald-400 mt-1 truncate">{contractorIdFile ? contractorIdFile.name : "انتخاب فایل..."}</p>
+                  </div>
+                  <div className="bg-slate-950/50 border border-slate-700 border-dashed rounded-xl p-4 text-center hover:border-blue-500 transition-colors cursor-pointer relative">
+                    <input type="file" accept="image/*" onChange={(e) => setClientIdFile(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required />
+                    <Upload className="mx-auto text-slate-500 mb-2 w-6 h-6" />
+                    <p className="text-xs font-bold text-slate-300">کارت ملی کارفرما (مشتری)</p>
+                    <p className="text-[10px] text-emerald-400 mt-1 truncate">{clientIdFile ? clientIdFile.name : "انتخاب فایل..."}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* مبالغ فازها و زمان‌بندی */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
                 <div className="space-y-2.5">
                   <label className="text-xs font-bold text-slate-400">پیش‌پرداخت (فاز ۱)</label>
                   <input type="text" value={contractData.phase1Amount} onChange={(e) => handleInputChange("phase1Amount", e.target.value)} required className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-3 text-white focus:border-blue-500 outline-none text-center font-bold tracking-wide" dir="ltr" />
@@ -183,7 +282,7 @@ export default function ContractBuilderPage() {
 
               <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white py-4.5 rounded-xl font-black text-lg hover:from-blue-700 hover:to-blue-600 transition-all active:scale-[0.98] mt-4 shadow-[0_10px_20px_rgba(37,99,235,0.2)]">
                 {isLoading ? <Loader2 className="animate-spin" size={24} /> : <FileSignature size={24} />}
-                ثبت حقوقی قرارداد و دریافت لینک
+                {isLoading ? "در حال آپلود مدارک و ثبت..." : "ثبت حقوقی قرارداد و دریافت لینک"}
               </button>
             </form>
 

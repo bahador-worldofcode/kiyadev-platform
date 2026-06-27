@@ -1,14 +1,14 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://kiyadev.ir'; // آدرس دامنه نهایی
+  const baseUrl = 'https://kiyadev.ir';
 
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/private/', // اگر بعدا پنل ادمین داشتیم
-      
+      // اضافه کردن پوشه قراردادها (agreement) به لیست سیاه گوگل
+      disallow: ['/private/', '/agreement/'], 
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   };
