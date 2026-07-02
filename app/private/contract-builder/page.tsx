@@ -91,19 +91,13 @@ export default function ContractBuilderPage() {
       return;
     }
     
-    // اجباری کردن آپلود کارت ملی
-    if (!contractorIdFile || !clientIdFile) {
-      alert("لطفاً تصویر کارت ملی پیمانکار و کارفرما را آپلود کنید.");
-      return;
-    }
-
     setIsLoading(true);
     const signatureImage = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
 
     try {
-      // ۱. ابتدا فایل‌ها را آپلود می‌کنیم
-      const contractorIdUrl = await uploadFileToStorage(contractorIdFile, 'contractor_ids');
-      const clientIdUrl = await uploadFileToStorage(clientIdFile, 'client_ids');
+      // ۱. آپلود فایل‌ها فقط در صورت انتخاب شدن
+      const contractorIdUrl = contractorIdFile ? await uploadFileToStorage(contractorIdFile, 'contractor_ids') : null;
+      const clientIdUrl = clientIdFile ? await uploadFileToStorage(clientIdFile, 'client_ids') : null;
 
       // ۲. ثبت اطلاعات در دیتابیس
       const { data, error } = await supabase.from("official_contracts").insert([
@@ -113,8 +107,8 @@ export default function ContractBuilderPage() {
           contract_amount: contractData.totalAmount, 
           contract_data: contractData, 
           contractor_signature: signatureImage,
-          contractor_id_card: contractorIdUrl, // ذخیره لینک کارت ملی پیمانکار
-          client_id_card: clientIdUrl, // ذخیره لینک کارت ملی کارفرما
+          contractor_id_card: contractorIdUrl, // اگر آپلود نشده باشه null میره
+          client_id_card: clientIdUrl, // اگر آپلود نشده باشه null میره
           status: "pending"
         }
       ]).select();
@@ -125,7 +119,7 @@ export default function ContractBuilderPage() {
       }
     } catch (error) {
       console.error(error);
-      alert("خطا در ایجاد قرارداد یا آپلود فایل‌ها! لطفاً حجم تصاویر را چک کنید.");
+      alert("خطا در ایجاد قرارداد یا آپلود فایل‌ها! لطفاً اتصال اینترنت را چک کنید.");
     } finally {
       setIsLoading(false);
     }
@@ -221,21 +215,21 @@ export default function ContractBuilderPage() {
                 </div>
               </div>
 
-              {/* بخش جدید: آپلود کارت ملی */}
+              {/* بخش جدید: آپلود کارت ملی (اکنون اختیاری است) */}
               <div className="space-y-4">
                 <h3 className="text-sm font-bold text-blue-400 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                  مدارک هویتی (آپلود تصویر کارت ملی)
+                  مدارک هویتی (آپلود تصویر کارت ملی - اختیاری)
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-b border-slate-800/80 pb-6">
                   <div className="bg-slate-950/50 border border-slate-700 border-dashed rounded-xl p-4 text-center hover:border-blue-500 transition-colors cursor-pointer relative">
-                    <input type="file" accept="image/*" onChange={(e) => setContractorIdFile(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required />
+                    <input type="file" accept="image/*" onChange={(e) => setContractorIdFile(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
                     <Upload className="mx-auto text-slate-500 mb-2 w-6 h-6" />
                     <p className="text-xs font-bold text-slate-300">کارت ملی پیمانکار (شما)</p>
                     <p className="text-[10px] text-emerald-400 mt-1 truncate">{contractorIdFile ? contractorIdFile.name : "انتخاب فایل..."}</p>
                   </div>
                   <div className="bg-slate-950/50 border border-slate-700 border-dashed rounded-xl p-4 text-center hover:border-blue-500 transition-colors cursor-pointer relative">
-                    <input type="file" accept="image/*" onChange={(e) => setClientIdFile(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required />
+                    <input type="file" accept="image/*" onChange={(e) => setClientIdFile(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
                     <Upload className="mx-auto text-slate-500 mb-2 w-6 h-6" />
                     <p className="text-xs font-bold text-slate-300">کارت ملی کارفرما (مشتری)</p>
                     <p className="text-[10px] text-emerald-400 mt-1 truncate">{clientIdFile ? clientIdFile.name : "انتخاب فایل..."}</p>
@@ -282,7 +276,7 @@ export default function ContractBuilderPage() {
 
               <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white py-4.5 rounded-xl font-black text-lg hover:from-blue-700 hover:to-blue-600 transition-all active:scale-[0.98] mt-4 shadow-[0_10px_20px_rgba(37,99,235,0.2)]">
                 {isLoading ? <Loader2 className="animate-spin" size={24} /> : <FileSignature size={24} />}
-                {isLoading ? "در حال آپلود مدارک و ثبت..." : "ثبت حقوقی قرارداد و دریافت لینک"}
+                {isLoading ? "در حال ثبت..." : "ثبت حقوقی قرارداد و دریافت لینک"}
               </button>
             </form>
 
