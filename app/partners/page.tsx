@@ -13,13 +13,26 @@ import {
   Bot,             // برای Mind Orbit
   LayoutDashboard, // برای Alpha System
   Shirt,           // برای Luxe Shop
-  Sparkles         // برای قلاب جادویی
+  Sparkles,        // برای قلاب جادویی
+  Search           // برای جابیکس اضافه شد
 } from "lucide-react";
 import Link from "next/link";
 
-// لیست کامل ۹ همکار تجاری و پروژه
+// لیست کامل همکاران تجاری و پروژه
 const partners = [
-  // 1. Tivan Ex
+  // 1. Jobix (پروژه جدید)
+  {
+    id: 10,
+    title: "جابیکس | بازار هوشمند استخدام",
+    description: "پلتفرم جامع و هوشمند کاریابی و منابع انسانی در ایران. مجهز به پنل پیشرفته مدیریت متقاضیان (ATS)، رزومه‌ساز آنلاین، نقشه زنده مشاغل و سیستم چت اختصاصی.",
+    features: ["سیستم ATS", "پلتفرم استخدامی", "مچینگ هوشمند"],
+    url: "https://jobixx.ir", 
+    icon: Search,
+    color: "text-blue-400",
+    borderColor: "group-hover:border-blue-500/50",
+    glow: "group-hover:shadow-blue-500/20"
+  },
+  // 2. Tivan Ex
   {
     id: 1,
     title: "صرافی تیوان اکس | TivanEx",
@@ -31,7 +44,7 @@ const partners = [
     borderColor: "group-hover:border-emerald-500/50",
     glow: "group-hover:shadow-emerald-500/20"
   },
-  // 2. Nexus Solana
+  // 3. Nexus Solana
   {
     id: 2,
     title: "نکسوس سولانا | توکن‌ساز",
@@ -43,7 +56,7 @@ const partners = [
     borderColor: "group-hover:border-fuchsia-500/50",
     glow: "group-hover:shadow-fuchsia-500/20"
   },
-  // 3. Mind Orbit
+  // 4. Mind Orbit
   {
     id: 3,
     title: "مایند اوربیت | هوش مصنوعی",
@@ -55,7 +68,7 @@ const partners = [
     borderColor: "group-hover:border-cyan-500/50",
     glow: "group-hover:shadow-cyan-500/20"
   },
-  // 4. Alpha System
+  // 5. Alpha System
   {
     id: 4,
     title: "آلفا سیستم | داشبورد مدیریتی",
@@ -67,7 +80,7 @@ const partners = [
     borderColor: "group-hover:border-orange-500/50",
     glow: "group-hover:shadow-orange-500/20"
   },
-  // 5. Luxe Shop
+  // 6. Luxe Shop
   {
     id: 5,
     title: "لوکس شاپ | استایل و مد",
@@ -79,7 +92,7 @@ const partners = [
     borderColor: "group-hover:border-amber-500/50",
     glow: "group-hover:shadow-amber-500/20"
   },
-  // 6. Coconut
+  // 7. Coconut
   {
     id: 6,
     title: "فروشگاه آنلاین کوکونات",
@@ -91,7 +104,7 @@ const partners = [
     borderColor: "group-hover:border-green-500/50",
     glow: "group-hover:shadow-green-500/20"
   },
-  // 7. Alef Gem
+  // 8. Alef Gem
   {
     id: 7,
     title: "گالری جواهرات اَلِف جِم",
@@ -103,7 +116,7 @@ const partners = [
     borderColor: "group-hover:border-purple-500/50",
     glow: "group-hover:shadow-purple-500/20"
   },
-  // 8. Soughat Shop
+  // 9. Soughat Shop
   {
     id: 8,
     title: "سوغات شاپ اینترنشنال",
@@ -115,7 +128,7 @@ const partners = [
     borderColor: "group-hover:border-rose-500/50",
     glow: "group-hover:shadow-rose-500/20"
   },
-  // 9. Gholab Jadooi
+  // 10. Gholab Jadooi
   {
     id: 9,
     title: "قلاب جادویی | دست‌بافت‌های فانتزی",
