@@ -126,8 +126,13 @@ export default function GuidePage() {
                             <h1 className="text-3xl font-black text-slate-900 mb-1">طراحی و اجرای پلتفرم اختصاصی</h1>
                             <p className="text-slate-500 font-bold text-base">تحولی واقعی در فروش دیجیتال شما با تکنولوژی روز</p>
                         </div>
-                        <div className="bg-blue-600 text-white px-5 py-2.5 rounded-2xl font-black text-xl tracking-widest shadow-lg">
-                            KIYADEV
+                        <div className="flex flex-col items-end gap-1.5">
+                            <div className="bg-blue-600 text-white px-5 py-2.5 rounded-2xl font-black text-xl tracking-widest shadow-lg">
+                                KIYADEV
+                            </div>
+                            <div className="bg-red-500 text-white px-3 py-1 rounded-full font-black text-xs shadow-md">
+                                ٪۷۰ تخفیف ویژه
+                            </div>
                         </div>
                     </div>
 
@@ -217,11 +222,17 @@ export default function GuidePage() {
                                         <td className="p-2.5 text-center text-slate-400 border-l border-slate-100 bg-blue-50/20">❌</td>
                                         <td className="p-2.5 text-center text-blue-600 font-black">✔ ۵ مقاله سئوشده</td>
                                     </tr>
+                                    <tr className="bg-slate-100">
+                                        <td className="p-2 text-slate-500 border-l border-slate-200 text-xs font-bold">قیمت قبل از تخفیف</td>
+                                        <td className="p-2 text-center text-slate-400 border-l border-slate-200 text-xs line-through">۸۱.۵ میلیون تومان</td>
+                                        <td className="p-2 text-center text-slate-400 bg-blue-50 border-l border-blue-200 text-xs line-through">۱۱۵ میلیون تومان</td>
+                                        <td className="p-2 text-center text-slate-400 text-xs line-through">۱۴۸.۵ میلیون تومان</td>
+                                    </tr>
                                     <tr className="bg-slate-100 font-black">
-                                        <td className="p-3 text-slate-900 border-l border-slate-200 text-sm">قیمت نهایی پکیج</td>
-                                        <td className="p-3 text-center text-slate-900 border-l border-slate-200 text-base">۱۶ میلیون تومان</td>
-                                        <td className="p-3 text-center text-white bg-blue-600 text-lg border-l border-blue-700 shadow-md scale-105">۲۰ میلیون تومان</td>
-                                        <td className="p-3 text-center text-slate-900 text-base">۲۶ میلیون تومان</td>
+                                        <td className="p-3 text-slate-900 border-l border-slate-200 text-sm">قیمت نهایی پکیج (٪۷۰ تخفیف)</td>
+                                        <td className="p-3 text-center text-slate-900 border-l border-slate-200 text-base">۲۴.۵ میلیون تومان</td>
+                                        <td className="p-3 text-center text-white bg-blue-600 text-lg border-l border-blue-700 shadow-md scale-105">۳۴.۵ میلیون تومان</td>
+                                        <td className="p-3 text-center text-slate-900 text-base">۴۴.۵ میلیون تومان</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -397,4 +408,3 @@ export default function GuidePage() {
             </div>
         </div>
     );
-}

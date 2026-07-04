@@ -65,8 +65,12 @@ export default function CatalogPage() {
             {/* پکیج ۱: اقتصادی */}
             <div className="bg-white rounded-[2rem] p-8 lg:p-10 shadow-lg border border-slate-100 hover:-translate-y-2 transition-transform duration-300">
               <h3 className="text-2xl font-bold text-slate-500 mb-2">اقتصادی</h3>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-sm text-slate-400 line-through">۸۱.۵ میلیون تومان</span>
+                <span className="bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
+              </div>
               <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-5xl font-black text-slate-900">۱۶</span>
+                <span className="text-5xl font-black text-slate-900">۲۴.۵</span>
                 <span className="text-lg font-bold text-slate-500">میلیون تومان</span>
               </div>
               <div className="h-px w-full bg-slate-100 mb-8" />
@@ -92,8 +96,12 @@ export default function CatalogPage() {
                 پیشنهاد استاندارد
               </div>
               <h3 className="text-2xl font-bold text-blue-400 mb-2">استاندارد</h3>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-sm text-slate-400 line-through">۱۱۵ میلیون تومان</span>
+                <span className="bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
+              </div>
               <div className="flex items-baseline gap-2 mb-8 text-white">
-                <span className="text-5xl font-black">۲۰</span>
+                <span className="text-5xl font-black">۳۴.۵</span>
                 <span className="text-lg font-bold text-slate-400">میلیون تومان</span>
               </div>
               <div className="h-px w-full bg-slate-700 mb-8" />
@@ -118,8 +126,12 @@ export default function CatalogPage() {
             {/* پکیج ۳: ویژه */}
             <div className="bg-white rounded-[2rem] p-8 lg:p-10 shadow-lg border border-slate-100 hover:-translate-y-2 transition-transform duration-300">
               <h3 className="text-2xl font-bold text-slate-500 mb-2">ویژه</h3>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-sm text-slate-400 line-through">۱۴۸.۵ میلیون تومان</span>
+                <span className="bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
+              </div>
               <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-5xl font-black text-slate-900">۲۶</span>
+                <span className="text-5xl font-black text-slate-900">۴۴.۵</span>
                 <span className="text-lg font-bold text-slate-500">میلیون تومان</span>
               </div>
               <div className="h-px w-full bg-slate-100 mb-8" />
@@ -207,4 +219,3 @@ export default function CatalogPage() {
       </div>
     </div>
   );
-}

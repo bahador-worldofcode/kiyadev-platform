@@ -29,7 +29,7 @@ const jsonLd = {
   "description": "پلتفرم اختصاصی شامل وب‌سایت لوکس نوبت‌دهی و اپلیکیشن موبایل مدیریت مشتریان (CRM) ویژه سالن‌های زیبایی و کلینیک‌ها.",
   "offers": {
     "@type": "Offer",
-    "price": "16000000",
+    "price": "24500000",
     "priceCurrency": "IRT"
   },
   "provider": {
@@ -201,8 +201,12 @@ export default function BeautyLandingPage() {
             {/* پکیج ۱: اقتصادی */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all">
               <h3 className="text-2xl font-bold text-slate-300 mb-2">سالن‌های در حال رشد</h3>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-slate-500 line-through">۸۱.۵ میلیون تومان</span>
+                <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
+              </div>
               <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-4xl font-black text-white">۱۶</span>
+                <span className="text-4xl font-black text-white">۲۴.۵</span>
                 <span className="text-sm font-bold text-slate-500">میلیون تومان</span>
               </div>
               <ul className="space-y-4 mb-8">
@@ -219,8 +223,12 @@ export default function BeautyLandingPage() {
             <div className="bg-slate-900 border-2 border-rose-400 rounded-3xl p-8 relative transform md:-translate-y-4 shadow-2xl shadow-rose-500/20">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-rose-400 to-amber-500 text-slate-950 px-4 py-1 rounded-full text-xs font-black shadow-lg">پیشنهاد VIP</div>
               <h3 className="text-2xl font-bold text-rose-400 mb-2">کلینیک‌ها و سالن‌های معروف</h3>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-slate-400 line-through">۱۱۵ میلیون تومان</span>
+                <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
+              </div>
               <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-5xl font-black text-white">۲۰</span>
+                <span className="text-5xl font-black text-white">۳۴.۵</span>
                 <span className="text-sm font-bold text-slate-400">میلیون تومان</span>
               </div>
               <ul className="space-y-4 mb-8">
@@ -236,8 +244,12 @@ export default function BeautyLandingPage() {
             {/* پکیج ۳: ویژه */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all">
               <h3 className="text-2xl font-bold text-slate-300 mb-2">عمارت‌های بزرگ عروس</h3>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-slate-500 line-through">۱۴۸.۵ میلیون تومان</span>
+                <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
+              </div>
               <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-4xl font-black text-white">۲۶</span>
+                <span className="text-4xl font-black text-white">۴۴.۵</span>
                 <span className="text-sm font-bold text-slate-500">میلیون تومان</span>
               </div>
               <ul className="space-y-4 mb-8">
@@ -287,4 +299,3 @@ export default function BeautyLandingPage() {
 
     </div>
   );
-}

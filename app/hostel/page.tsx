@@ -29,7 +29,7 @@ const jsonLd = {
   "description": "پلتفرم اختصاصی شامل وب‌سایت رزرو برای مسافران و اپلیکیشن مدیریت تخت‌ها برای مدیران خوابگاه و اقامتگاه.",
   "offers": {
     "@type": "Offer",
-    "price": "16000000",
+    "price": "24500000",
     "priceCurrency": "IRT"
   },
   "provider": {
@@ -165,8 +165,12 @@ export default function HostelLandingPage() {
                   <h3 className="text-3xl md:text-4xl font-black text-white mb-2">پکیج اقتصادی و جامع</h3>
                   <p className="text-slate-400 mb-8 font-medium">طراحی شده دقیقاً برای نیازهای مدیران اقامتگاه</p>
                   
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-sm text-slate-500 line-through">۸۱,۵۰۰,۰۰۰ تومان</span>
+                    <span className="bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
+                  </div>
                   <div className="flex items-baseline gap-2 mb-8">
-                    <span className="text-5xl font-black text-blue-400">۱۶,۰۰۰,۰۰۰</span>
+                    <span className="text-5xl font-black text-blue-400">۲۴,۵۰۰,۰۰۰</span>
                     <span className="text-lg text-slate-500 font-bold">تومان (یک‌بار برای همیشه)</span>
                   </div>
 
@@ -249,4 +253,3 @@ export default function HostelLandingPage() {
 
     </div>
   );
-}

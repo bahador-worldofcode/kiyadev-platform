@@ -29,7 +29,7 @@ const jsonLd = {
   "description": "پلتفرم اختصاصی شامل وب‌سایت لوکس برای جستجوی ملک و اپلیکیشن موبایل برای مدیریت فایل‌ها توسط مشاورین املاک.",
   "offers": {
     "@type": "Offer",
-    "price": "16000000",
+    "price": "24500000",
     "priceCurrency": "IRT"
   },
   "provider": {
@@ -199,8 +199,12 @@ export default function RealEstateLandingPage() {
             {/* پکیج ۱: اقتصادی */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all">
               <h3 className="text-2xl font-bold text-slate-300 mb-2">دفاتر کوچک</h3>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-slate-500 line-through">۸۱.۵ میلیون تومان</span>
+                <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
+              </div>
               <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-4xl font-black text-white">۱۶</span>
+                <span className="text-4xl font-black text-white">۲۴.۵</span>
                 <span className="text-sm font-bold text-slate-500">میلیون تومان</span>
               </div>
               <ul className="space-y-4 mb-8">
@@ -217,8 +221,12 @@ export default function RealEstateLandingPage() {
             <div className="bg-slate-900 border-2 border-amber-500 rounded-3xl p-8 relative transform md:-translate-y-4 shadow-2xl shadow-amber-500/20">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-500 text-slate-950 px-4 py-1 rounded-full text-xs font-black">پیشنهاد طلایی</div>
               <h3 className="text-2xl font-bold text-amber-400 mb-2">آژانس‌های فعال</h3>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-slate-400 line-through">۱۱۵ میلیون تومان</span>
+                <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
+              </div>
               <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-5xl font-black text-white">۲۰</span>
+                <span className="text-5xl font-black text-white">۳۴.۵</span>
                 <span className="text-sm font-bold text-slate-400">میلیون تومان</span>
               </div>
               <ul className="space-y-4 mb-8">
@@ -234,8 +242,12 @@ export default function RealEstateLandingPage() {
             {/* پکیج ۳: ویژه */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all">
               <h3 className="text-2xl font-bold text-slate-300 mb-2">دپارتمان‌های VIP</h3>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-slate-500 line-through">۱۴۸.۵ میلیون تومان</span>
+                <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
+              </div>
               <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-4xl font-black text-white">۲۶</span>
+                <span className="text-4xl font-black text-white">۴۴.۵</span>
                 <span className="text-sm font-bold text-slate-500">میلیون تومان</span>
               </div>
               <ul className="space-y-4 mb-8">
@@ -285,4 +297,3 @@ export default function RealEstateLandingPage() {
 
     </div>
   );
-}
