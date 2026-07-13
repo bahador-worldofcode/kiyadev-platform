@@ -209,7 +209,7 @@ export default function AgreementPage() {
                     <SignatureCanvas 
                       ref={sigCanvas}
                       penColor="#0f172a"
-                      canvasProps={{ className: "w-full h-64 sm:h-72 md:h-80 cursor-crosshair touch-none" }}
+                      canvasProps={{ className: "w-full h-96 sm:h-[27rem] md:h-[30rem] cursor-crosshair touch-none" }}
                     />
                     <div className="absolute top-3 right-3 text-xs sm:text-sm font-bold text-slate-300 pointer-events-none">لطفاً اینجا امضا کنید...</div>
                   </div>

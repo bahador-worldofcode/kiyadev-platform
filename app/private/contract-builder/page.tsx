@@ -31,7 +31,7 @@ export default function ContractBuilderPage() {
     phase1Amount: "",
     phase2Amount: "",
     phase3Amount: "",
-    deliveryDays: "۱۲",
+    deliveryDays: "۲۰",
     supportMonths: "۱۲",
     clientNationalId: "",
     clientPhone: "",
@@ -270,7 +270,7 @@ export default function ContractBuilderPage() {
                   <button type="button" onClick={clearSignature} className="text-xs flex gap-1.5 items-center text-red-400 hover:text-red-300 transition-colors bg-red-500/10 px-3 py-1.5 rounded-lg font-bold"><Eraser size={14} /> پاک کردن امضا</button>
                 </div>
                 <div className="bg-slate-100 rounded-xl overflow-hidden border-2 border-slate-600 focus-within:border-blue-500 transition-colors">
-                  <SignatureCanvas ref={sigCanvas} penColor="#1e3a8a" canvasProps={{ className: "w-full h-44 cursor-crosshair" }} />
+                  <SignatureCanvas ref={sigCanvas} penColor="#1e3a8a" canvasProps={{ className: "w-full h-[264px] cursor-crosshair" }} />
                 </div>
               </div>
 
