@@ -159,16 +159,16 @@ export default function AgreementPage() {
           />
         </div>
 
-        {/* بخش امضاها */}
+        {/* بخش امضاها - دو ستون کاملاً هم‌اندازه و یکسان با فرم صدور قرارداد */}
         <div className="mt-12 md:mt-20 pt-8 md:pt-10 border-t-2 border-dashed border-slate-300 print:break-inside-avoid">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 px-1 sm:px-2">
+          <div className="flex flex-col md:flex-row justify-between items-stretch gap-8 md:gap-12 px-1 sm:px-2">
             
             {/* امضای شما (کیا دِو) */}
-            <div className="w-full md:w-1/2 text-center bg-slate-50 p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200">
+            <div className="w-full md:w-1/2 flex flex-col text-center bg-slate-50 p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200">
               <p className="font-black text-base sm:text-lg text-slate-800 mb-4 sm:mb-6">امضای مجری (نماینده کیا دِو)</p>
-              <div className="h-40 sm:h-48 flex justify-center items-center">
+              <div className="h-56 sm:h-64 md:h-72 w-full flex justify-center items-center bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm">
                 {contract.contractor_signature ? (
-                  <img src={contract.contractor_signature} alt="امضای پیمانکار" className="max-h-full mix-blend-multiply drop-shadow-md" />
+                  <img src={contract.contractor_signature} alt="امضای پیمانکار" className="max-h-[85%] max-w-[85%] mix-blend-multiply drop-shadow-md" />
                 ) : (
                   <span className="text-slate-400 text-sm">امضا یافت نشد</span>
                 )}
@@ -179,14 +179,14 @@ export default function AgreementPage() {
             </div>
 
             {/* امضای کارفرما */}
-            <div className="w-full md:w-1/2 text-center bg-slate-50 p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200">
+            <div className="w-full md:w-1/2 flex flex-col text-center bg-slate-50 p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200">
               <p className="font-black text-base sm:text-lg text-slate-800 mb-4 sm:mb-6">امضای کارفرما</p>
               
               {contract.status === "completed" ? (
                 // حالت تایید شده - نمایش امضا و دکمه پرینت
-                <div className="flex flex-col items-center w-full">
-                  <div className="h-40 sm:h-48 w-full flex justify-center items-center bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm mb-4">
-                    <img src={contract.client_signature} alt="امضای کارفرما" className="max-h-full mix-blend-multiply drop-shadow-md" />
+                <div className="flex flex-col items-center w-full flex-1">
+                  <div className="h-56 sm:h-64 md:h-72 w-full flex justify-center items-center bg-white rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm mb-4">
+                    <img src={contract.client_signature} alt="امضای کارفرما" className="max-h-[85%] max-w-[85%] mix-blend-multiply drop-shadow-md" />
                   </div>
                   <p className="text-xs sm:text-sm font-bold text-emerald-600 mb-6 flex items-center gap-1">
                     <CheckCircle2 size={16} /> ثبت دیجیتال و نهایی شده
@@ -203,13 +203,13 @@ export default function AgreementPage() {
                 </div>
               ) : (
                 // حالت نیاز به امضا
-                <div className="print-hide">
-                  <div className="bg-white rounded-xl sm:rounded-2xl overflow-hidden border-2 border-dashed border-blue-400 relative shadow-inner focus-within:border-blue-600 transition-colors">
-                    {/* کادر امضا - ارتفاع مناسب برای موبایل */}
+                <div className="print-hide flex flex-col flex-1">
+                  <div className="h-56 sm:h-64 md:h-72 w-full bg-white rounded-xl sm:rounded-2xl overflow-hidden border-2 border-dashed border-blue-400 relative shadow-inner focus-within:border-blue-600 transition-colors">
+                    {/* کادر امضا - دقیقاً هم‌اندازه با کادر امضای مجری */}
                     <SignatureCanvas 
                       ref={sigCanvas}
                       penColor="#0f172a"
-                      canvasProps={{ className: "w-full h-96 sm:h-[27rem] md:h-[30rem] cursor-crosshair touch-none" }}
+                      canvasProps={{ className: "w-full h-full cursor-crosshair touch-none" }}
                     />
                     <div className="absolute top-3 right-3 text-xs sm:text-sm font-bold text-slate-300 pointer-events-none">لطفاً اینجا امضا کنید...</div>
                   </div>

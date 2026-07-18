@@ -264,13 +264,15 @@ export default function ContractBuilderPage() {
                 </div>
               </div>
 
+              {/* بخش امضا - کادر یکسان با صفحه نهایی قرارداد */}
               <div className="space-y-3 pt-2">
                 <div className="flex justify-between items-center mb-2">
                   <label className="text-sm font-bold text-slate-300">امضای رسمی مجری (بهادر جدیدالاسلام)</label>
                   <button type="button" onClick={clearSignature} className="text-xs flex gap-1.5 items-center text-red-400 hover:text-red-300 transition-colors bg-red-500/10 px-3 py-1.5 rounded-lg font-bold"><Eraser size={14} /> پاک کردن امضا</button>
                 </div>
-                <div className="bg-slate-100 rounded-xl overflow-hidden border-2 border-slate-600 focus-within:border-blue-500 transition-colors">
-                  <SignatureCanvas ref={sigCanvas} penColor="#1e3a8a" canvasProps={{ className: "w-full h-[264px] cursor-crosshair" }} />
+                <div className="bg-white rounded-2xl overflow-hidden border-2 border-dashed border-slate-400 focus-within:border-blue-500 transition-colors relative shadow-inner">
+                  <SignatureCanvas ref={sigCanvas} penColor="#1e3a8a" canvasProps={{ className: "w-full h-56 sm:h-64 md:h-72 cursor-crosshair touch-none" }} />
+                  <div className="absolute top-3 right-4 text-xs sm:text-sm font-bold text-slate-300 pointer-events-none">امضای خود را در این کادر ثبت کنید...</div>
                 </div>
               </div>
 
