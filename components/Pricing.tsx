@@ -8,8 +8,7 @@ import ProjectModal from "./ProjectModal";
 const plans = [
   {
     name: "پکیج اقتصادی",
-    price: "۲۴,۵۰۰,۰۰۰",
-    originalPrice: "۸۱,۵۰۰,۰۰۰",
+    price: "۸۱,۵۰۰,۰۰۰",
     period: "شروع قیمت از",
     description: "شروعی قدرتمند با امکانات کامل و مدیریت آسان",
     features: [
@@ -26,8 +25,7 @@ const plans = [
   },
   {
     name: "پکیج استاندارد",
-    price: "۳۴,۵۰۰,۰۰۰",
-    originalPrice: "۱۱۵,۰۰۰,۰۰۰",
+    price: "۱۱۵,۰۰۰,۰۰۰",
     period: "شروع قیمت از",
     description: "پیشنهاد ویژه برای سرعت، امنیت و سئوی بهتر",
     features: [
@@ -44,8 +42,7 @@ const plans = [
   },
   {
     name: "پکیج ویژه",
-    price: "۴۴,۵۰۰,۰۰۰",
-    originalPrice: "۱۴۸,۵۰۰,۰۰۰",
+    price: "۱۴۸,۵۰۰,۰۰۰",
     period: "شروع قیمت از",
     description: "حداکثر قدرت و سئو برای تسخیر بازار هدف",
     features: [
@@ -94,9 +91,6 @@ export default function Pricing() {
         <div className="container mx-auto max-w-7xl">
           
           <div className="text-center mb-16">
-            <span className="inline-block bg-red-500 text-white text-sm font-black px-4 py-1.5 rounded-full mb-4 shadow-lg shadow-red-500/20">
-              ٪۷۰ تخفیف ویژه برای مدت محدود
-            </span>
             <h2 className="text-3xl font-bold text-white md:text-5xl mb-4">
               پکیج‌های <span className="text-blue-500">سرمایه‌گذاری دیجیتال</span>
             </h2>
@@ -127,13 +121,7 @@ export default function Pricing() {
 
                 <div className="mb-6">
                   <h3 className="text-lg font-bold text-gray-300">{plan.name}</h3>
-                  {plan.originalPrice && (
-                    <div className="mt-3 flex items-center gap-2">
-                      <span className="text-xs text-gray-500 line-through">{plan.originalPrice} تومان</span>
-                      <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full whitespace-nowrap">٪۷۰ تخفیف</span>
-                    </div>
-                  )}
-                  <div className={`${plan.originalPrice ? "mt-1" : "mt-4"} flex items-baseline gap-1`}>
+                  <div className="mt-4 flex items-baseline gap-1">
                         <span className="text-2xl lg:text-3xl font-black text-white">{plan.price}</span>
                         {plan.price !== "توافقی" && <span className="text-sm text-gray-500">تومان</span>}
                   </div>

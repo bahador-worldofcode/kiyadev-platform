@@ -255,12 +255,8 @@ export default function AdvisorPage() {
             {/* پکیج ۱ */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col hover:border-blue-500/30 transition-all">
               <h3 className="text-xl font-bold text-slate-300 mb-2">پکیج اقتصادی</h3>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs text-slate-500 line-through">۸۱.۵ میلیون تومان</span>
-                <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
-              </div>
               <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-4xl font-black text-white">۲۴.۵</span>
+                <span className="text-4xl font-black text-white">۸۱.۵</span>
                 <span className="text-sm text-slate-500 font-bold">میلیون تومان</span>
               </div>
               <ul className="space-y-4 mb-8 flex-1">
@@ -274,12 +270,8 @@ export default function AdvisorPage() {
             <div className="bg-pink-900/10 border-2 border-pink-500/50 rounded-3xl p-8 flex flex-col relative transform md:-translate-y-4 shadow-xl shadow-pink-900/20">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-1 rounded-full text-xs font-bold whitespace-nowrap shadow-lg shadow-pink-500/30">پیشنهاد استاندارد</div>
               <h3 className="text-xl font-bold text-pink-400 mb-2">پکیج استاندارد</h3>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs text-pink-300/60 line-through">۱۱۵ میلیون تومان</span>
-                <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
-              </div>
               <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-4xl font-black text-white">۳۴.۵</span>
+                <span className="text-4xl font-black text-white">۱۱۵</span>
                 <span className="text-sm text-pink-300/80 font-bold">میلیون تومان</span>
               </div>
               <ul className="space-y-4 mb-8 flex-1">
@@ -292,12 +284,8 @@ export default function AdvisorPage() {
             {/* پکیج ۳ */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col hover:border-pink-500/30 transition-all">
               <h3 className="text-xl font-bold text-slate-300 mb-2">پکیج پادشاهی</h3>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs text-slate-500 line-through">۱۴۸.۵ میلیون تومان</span>
-                <span className="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">٪۷۰ تخفیف</span>
-              </div>
               <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-4xl font-black text-white">۴۴.۵</span>
+                <span className="text-4xl font-black text-white">۱۴۸.۵</span>
                 <span className="text-sm text-slate-500 font-bold">میلیون تومان</span>
               </div>
               <ul className="space-y-4 mb-8 flex-1">
