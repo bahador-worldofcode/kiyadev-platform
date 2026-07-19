@@ -138,6 +138,9 @@ export default function ContractBuilderPage() {
             <FileSignature size={32} />
           </div>
           <h1 className="text-3xl font-black text-white mb-2">پنل صدور قرارداد هوشمند | کیا دِو</h1>
+          <Link href="/private/contracts" className="text-sm font-bold text-blue-400 hover:text-blue-300 transition-colors underline underline-offset-4">
+            مشاهده لیست قراردادها و مدیریت وضعیت آن‌ها
+          </Link>
         </div>
 
         {generatedLink ? (

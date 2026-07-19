@@ -97,6 +97,19 @@ export default function AgreementPage() {
     );
   }
 
+  // اگر قرارداد توسط ادمین غیرفعال شده باشه (مثلا چون یک نسخه جدیدتر جایگزینش شده)
+  // دیگه محتوا و فرم امضا نمایش داده نمیشه
+  if (contract.is_active === false) {
+    return (
+      <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center text-slate-800 px-4 text-center" style={{ fontFamily: '"Vazirmatn", sans-serif' }}>
+        <h1 className="text-2xl sm:text-3xl font-black mb-2 text-amber-600">این قرارداد دیگر معتبر نیست</h1>
+        <p className="font-bold text-slate-500 max-w-md">
+          این نسخه از قرارداد توسط تیم کیا دِو غیرفعال شده است. لطفاً از آخرین لینکی که برایتان ارسال شده استفاده کنید.
+        </p>
+      </div>
+    );
+  }
+
   // تبدیل تاریخ میلادی دیتابیس به شمسی
   const contractDate = new Date(contract.created_at).toLocaleDateString("fa-IR");
 
